@@ -1,0 +1,9 @@
+dist
+out
+coverage
+node_modules
+playwright-report
+.vercel
+.next
+.turbo
+lighthouse

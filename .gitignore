@@ -1,0 +1,8 @@
+node_modules
+dist
+.vite
+LOG.md
+lighthouse
+src/assets/svgl
+src/assets/svgl.json
+src/assets/names.json
