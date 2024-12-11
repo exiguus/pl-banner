@@ -1,75 +1,67 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import preselectedItems from '../../src/assets/names-preselect.json';
-import './MenuLogoSelectIcon';
+import './MenuLogoSelectItem';
 import './MenuLogoSelectOptions';
-
-interface Icon {
-  name: string;
-  path: string;
-}
+import { LogoItem } from '../types/LogoItem';
+import { filterPreselected } from '../utils/preselectedSvgs';
 
 @customElement('my-menu-logo-select')
 export class MenuSelect extends LitElement {
-  @property({ type: Array }) icons: Icon[] = [];
-  @property({ type: Array }) selectedIcons: Icon[] = [];
+  @property({ type: Array }) items: LogoItem[] = [];
+  @property({ type: Array }) selectedItems: LogoItem[] = [];
   @property({ type: Function }) onRandomize!: () => void;
   @property({ type: Function }) onSort!: (order: 'asc' | 'desc') => void;
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.initializeSelectedIcons();
+    this.initializeSelectedItems();
   }
 
   private dispatchSelectionChangeEvent(): void {
     this.dispatchEvent(
       new CustomEvent('selection-changed', {
-        detail: { selectedIcons: this.selectedIcons },
+        detail: { selectedItems: this.selectedItems },
         bubbles: true,
         composed: true,
       })
     );
   }
 
-  private initializeSelectedIcons(): void {
-    if (this.selectedIcons.length === 0) {
-      this.selectedIcons = [...this.icons];
+  private initializeSelectedItems(): void {
+    if (this.selectedItems.length === 0) {
+      this.selectedItems = [...this.items];
     }
   }
 
-  private onToggleIcon(icon: Icon): void {
-    const isSelected = this.selectedIcons.some(
-      (item) => item.name === icon.name
-    );
-    this.selectedIcons = isSelected
-      ? this.selectedIcons.filter((item) => item.name !== icon.name)
-      : [...this.selectedIcons, icon];
+  private onToggleItem(item: LogoItem): void {
+    const isSelected = this.selectedItems.some((i) => i.id === item.id);
+    this.selectedItems = isSelected
+      ? this.selectedItems.filter((i) => i.id !== item.id)
+      : [...this.selectedItems, item];
     this.dispatchSelectionChangeEvent();
   }
 
-  private unselectAllIcons(): void {
-    this.selectedIcons = [];
+  private unselectAllItems(): void {
+    this.selectedItems = [];
     this.dispatchSelectionChangeEvent();
   }
 
-  private selectAllIcons(): void {
-    this.selectedIcons = [...this.icons];
+  private selectAllItems(): void {
+    this.selectedItems = [...this.items];
     this.dispatchSelectionChangeEvent();
   }
 
-  private selectPreselectedIcons(): void {
-    this.selectedIcons = this.icons.filter((icon) =>
-      preselectedItems.includes(icon.name)
-    );
+  private selectPreselectedItems(): void {
+    this.selectedItems = filterPreselected(this.items);
     this.dispatchSelectionChangeEvent();
   }
 
-  private selectRandomIcons(): void {
-    // select 6x20 icons
-    const randomIcons = this.icons
+  private selectRandomItems(): void {
+    // select 6x20 items
+    const randomItems = this.items
       .sort(() => Math.random() - 0.5)
       .slice(0, 120);
-    this.selectedIcons = randomIcons;
+    this.selectedItems = randomItems;
     this.dispatchSelectionChangeEvent();
   }
 
@@ -117,20 +109,20 @@ export class MenuSelect extends LitElement {
       <div class="container-fluid">
         <div class="container">
         <my-menu-logo-select-options
-          .onSelectAll=${this.selectAllIcons.bind(this)}
-          .onUnselectAll=${this.unselectAllIcons.bind(this)}
-          .onSelectPreselected=${this.selectPreselectedIcons.bind(this)}
-          .onSelectRandom=${this.selectRandomIcons.bind(this)}
+          .onSelectAll=${this.selectAllItems.bind(this)}
+          .onUnselectAll=${this.unselectAllItems.bind(this)}
+          .onSelectPreselected=${this.selectPreselectedItems.bind(this)}
+          .onSelectRandom=${this.selectRandomItems.bind(this)}
           .onRandomize=${this.onRandomize.bind(this)}
           .onSort=${this.onSort.bind(this)}
         ></my-menu-select-options>
         </div>
       </div>
-      <my-menu-logo-select-icons
-        .icons=${this.icons}
-        .selectedIcons=${this.selectedIcons}
-        .onToggleIcon=${this.onToggleIcon.bind(this)}
-      ></my-menu-logo-select-icons>
+      <my-menu-logo-select-item
+        .items=${this.items}
+        .selectedItems=${this.selectedItems}
+        .onToggleItem=${this.onToggleItem.bind(this)}
+      ></my-menu-logo-select-item>
     `;
   }
 }

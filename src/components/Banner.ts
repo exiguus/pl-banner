@@ -1,13 +1,14 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
+import { LogoItem } from '../types/LogoItem';
 import './SVGInjector';
 import './LoadingSpinner';
 import './Logo';
 
 @customElement('my-banner')
 export class Banner extends LitElement {
-  @property({ type: Array }) items: { name: string; svgContent: string }[] = [];
+  @property({ type: Array }) items: LogoItem[] = [];
   @property({ type: Boolean }) isLoading: boolean = false;
 
   static styles = css`
@@ -66,7 +67,7 @@ export class Banner extends LitElement {
               <div class="banner">
                 ${repeat(
                   this.items,
-                  (item) => item.name,
+                  (item) => item.id,
                   (item) => html`<my-logo .item=${item}></my-logo>`
                 )}
               </div>

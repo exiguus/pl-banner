@@ -2,7 +2,6 @@ import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import './Menu';
 import './Banner';
-import { SvgLoader } from '../utils/svg-loader';
 import { LogoItem } from '../types/LogoItem';
 
 @customElement('my-home')
@@ -10,7 +9,7 @@ export class Home extends LitElement {
   @property({ type: Array }) allItems: LogoItem[] = [];
   @property({ type: Array }) preselectedItems: LogoItem[] = [];
 
-  @state() private items: LogoItem[] = [...this.preselectedItems];
+  @state() private items: LogoItem[] = [];
   @state() private isLoading: boolean = true;
   @state() private isLoadingDownload: boolean = false;
 
@@ -45,26 +44,10 @@ export class Home extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.loadGridData();
-  }
-
-  private async loadGridData(): Promise<void> {
-    this.isLoading = true;
-    try {
-      const loadedItems = await SvgLoader.loadAll(this.allItems);
-      this.allItems = loadedItems;
-      this.items = this.allItems
-        .filter((item) =>
-          this.preselectedItems.some(
-            (preselectedItem) => preselectedItem.name === item.name
-          )
-        )
-        .sort(() => Math.random() - 0.5);
-    } catch (error) {
-      console.error('Error during grid initialization:', error);
-    } finally {
+    this.items = [...this.preselectedItems];
+    setTimeout(() => {
       this.isLoading = false;
-    }
+    }, 300);
   }
 
   private randomizeOrder(): void {
@@ -73,9 +56,7 @@ export class Home extends LitElement {
 
   private sortItems(direction: 'asc' | 'desc' = 'asc'): void {
     this.items = [...this.items].sort((a, b) =>
-      direction === 'asc'
-        ? a.name.localeCompare(b.name)
-        : b.name.localeCompare(a.name)
+      direction === 'asc' ? a.id.localeCompare(b.id) : b.id.localeCompare(a.id)
     );
   }
 
@@ -111,8 +92,8 @@ export class Home extends LitElement {
   private handleSelectionChanged(event: CustomEvent): void {
     this.items = this.allItems
       .filter((item) =>
-        event.detail.selectedIcons.some(
-          (selectedIcon: LogoItem) => selectedIcon.name === item.name
+        event.detail.selectedItems.some(
+          (selectedIcon: LogoItem) => selectedIcon.id === item.id
         )
       )
       .sort(() => Math.random() - 0.5);
@@ -131,8 +112,8 @@ export class Home extends LitElement {
                 .isLoadingDownload=${this.isLoadingDownload}
                 .onPickColor=${this.setBackground.bind(this)}
                 .onPickGradient=${this.setBackground.bind(this)}
-                .icons=${this.allItems}
-                .selectedIcons=${this.items}
+                .items=${this.allItems}
+                .selectedItems=${this.items}
                 .onSort=${this.sortItems.bind(this)}
                 @selection-changed=${this.handleSelectionChanged.bind(this)}
               ></my-menu>

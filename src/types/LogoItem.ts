@@ -1,14 +1,27 @@
-export interface LogoItem {
-  name: string;
+import { Categories } from './Categories';
+
+export type LogoItem = {
+  id: string;
+  title: string;
+  description: string;
+  category: Categories | Categories[];
   path: string;
-  svgContent?: string;
-}
+  svgContent: string;
+  url: string;
+};
 
 export const isLogoItem = (value: unknown): value is LogoItem =>
   typeof value === 'object' &&
   value !== null &&
-  'name' in value &&
-  typeof value.name === 'string' &&
+  'id' in value &&
+  typeof value.id === 'string' &&
+  'title' in value &&
+  typeof value.title === 'string' &&
+  'category' in value &&
+  typeof value.category === 'string' &&
   'path' in value &&
   typeof value.path === 'string' &&
-  ('svgContent' in value ? typeof value.svgContent === 'string' : true);
+  'svgContent' in value &&
+  typeof value.svgContent === 'string' &&
+  'url' in value &&
+  typeof value.url === 'string';

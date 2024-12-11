@@ -1,16 +1,18 @@
+#!/usr/bin/env node
+'use strict';
+
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
-/** @const {string} Path to the JSON file with file metadata */
-const JSON_FILE = path.join(__dirname, '../src/assets/svgl.json');
+/** Path to the JSON file with file metadata. */
+const JSON_FILE = path.join(__dirname, '../src/data/svgs.json');
 
-/** @const {string} Target folder for downloaded SVGs */
+/** Target folder for downloaded SVGs. */
 const TARGET_FOLDER = path.join(__dirname, '../src/assets/svgl');
 
-/** @const {string} Base URL for file downloads */
-const BASE_URL =
-  'https://raw.githubusercontent.com/pheralb/svgl/main/static/library';
+/** Base URL for file downloads. */
+const BASE_URL = 'https://raw.githubusercontent.com/pheralb/svgl/main/static/';
 
 /**
  * Ensures the target folder exists, creating it if necessary.
@@ -46,25 +48,22 @@ async function downloadFile(url, filePath) {
     console.log(`Downloaded: ${filePath}`);
   } catch (error) {
     console.error(`Failed to download ${url}: ${error.message}`);
-    throw error;
   }
 }
 
 /**
- * Sanatizes a file name by removing invalid characters.
+ * Sanitizes a file name by removing invalid characters.
  * @param {string} name - The file name to sanitize.
  * @return {string} The sanitized file name.
  */
-
 function sanitizeFileName(name) {
-  // allow only a-z, 0-9, dot, minus and replace it with a dash
   return name.replace(/[^a-z0-9.-]/gi, '-');
 }
 
 /**
- * Downloads all SVG files listed in the JSON file.
- * Skips files that already exist unless `forceDownload` is true.
- * @param {boolean} forceDownload - Whether to download files even if they already exist.
+ * Processes and downloads the files based on the JSON data structure.
+ * Downloads files that do not exist or forces downloads if `forceDownload` is true.
+ * @param {boolean} forceDownload - Whether to force download files that already exist.
  * @return {Promise<void>}
  */
 async function downloadAllFiles(forceDownload = false) {
@@ -73,29 +72,58 @@ async function downloadAllFiles(forceDownload = false) {
     const files = JSON.parse(fileData);
 
     for (const file of files) {
-      if (!file.name.endsWith('.svg')) {
-        console.log(`Skipping non-SVG file: ${file.name}`);
-        continue;
+      const routes = [];
+      if (typeof file.route === 'string') {
+        routes.push({ url: file.route, type: 'default' });
+      } else if (typeof file.route === 'object') {
+        if (file.route.light) {
+          routes.push({ url: file.route.light, type: 'light' });
+        }
+        if (file.route.dark) {
+          routes.push({ url: file.route.dark, type: 'dark' });
+        }
       }
 
-      const localFilePath = path.join(
-        TARGET_FOLDER,
-        sanitizeFileName(file.name)
-      );
-      const fileExists = fs.existsSync(localFilePath);
-
-      if (fileExists && !forceDownload) {
-        console.log(`File already exists (skipped): ${file.name}`);
-        continue;
+      if (file.wordmark) {
+        if (typeof file.wordmark === 'string') {
+          routes.push({ url: file.wordmark, type: 'wordmark' });
+        } else {
+          if (file.wordmark.light) {
+            routes.push({ url: file.wordmark.light, type: 'wordmark-light' });
+          }
+          if (file.wordmark.dark) {
+            routes.push({ url: file.wordmark.dark, type: 'wordmark-dark' });
+          }
+        }
       }
 
-      const fileUrl = `${BASE_URL}/${file.name}`;
-      console.log(`Downloading: ${file.name}`);
-      await downloadFile(fileUrl, localFilePath);
+      const downloadFiles = async (routes) => {
+        const downloadTasks = routes.map(async ({ url, type }) => {
+          const fileName = sanitizeFileName(
+            `${path.basename(url, '.svg')}.svg`
+          );
+          const localFilePath = path.join(TARGET_FOLDER, fileName);
+
+          if (!forceDownload && fs.existsSync(localFilePath)) {
+            console.log(`File already exists (skipped): ${fileName}`);
+            return; // Skip the download
+          }
+
+          const fileUrl = `${BASE_URL}${url}`;
+          console.log(`Downloading: ${fileName}`);
+          await downloadFile(fileUrl, localFilePath);
+        });
+
+        await Promise.all(downloadTasks); // Wait for all downloads to complete
+      };
+
+      // Call the function with your routes
+      downloadFiles(routes).catch((error) => {
+        console.error('Error downloading files:', error);
+      });
     }
   } catch (error) {
     console.error(`Error: ${error.message}`);
-    throw error;
   }
 }
 
@@ -113,6 +141,8 @@ async function main(forceDownload = false) {
   }
 }
 
-// Execute the main function
+// Check for the `--force` flag in command-line arguments.
 const forceDownload = process.argv.includes('--force');
+
+// Execute the main function.
 main(forceDownload);

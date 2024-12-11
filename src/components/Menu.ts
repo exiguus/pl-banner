@@ -3,11 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import './MenuGradient';
 import './MenuCanvas';
 import './MenuLogoSelect';
-
-interface Icon {
-  name: string;
-  path: string;
-}
+import { LogoItem } from '../types/LogoItem';
 
 @customElement('my-menu')
 export class Menu extends LitElement {
@@ -20,8 +16,8 @@ export class Menu extends LitElement {
   @property({ type: Function }) onPickGradient!: (gradient: string) => void;
   @property({ type: Function }) onSelectionChange!: () => {};
 
-  @property({ type: Array }) icons: Icon[] = [];
-  @property({ type: Array }) selectedIcons: Icon[] = [];
+  @property({ type: Array }) items: LogoItem[] = [];
+  @property({ type: Array }) selectedItems: LogoItem[] = [];
   @property({ type: Function }) onSort: (order: 'asc' | 'desc') => void =
     () => {};
   @property({ type: Boolean }) isLoadingDownload: boolean = false;
@@ -82,11 +78,11 @@ export class Menu extends LitElement {
       </div>
       <div class="container">
         <my-menu-logo-select
-          .icons=${this.icons}
-          .selectedIcons=${this.selectedIcons}
+          .items=${this.items}
+          .selectedItems=${this.selectedItems}
           .onRandomize=${this.onRandomize}
           .onSort=${this.onSort}
-          @selection-changed=${this.onselectionchange}
+          @selection-changed=${this.onSelectionChange}
         ></my-menu-logo-select>
       </div>
     `;

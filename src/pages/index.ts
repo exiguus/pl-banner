@@ -1,27 +1,25 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import 'lit-html/private-ssr-support.js';
-import names from '../assets/names.json';
-import preselectedItems from '../assets/names-preselect.json';
+import svgs from '../data/categories/all.json';
+import { filterPreselected } from '../utils/preselectedSvgs';
+import { LogoItem } from '../types/LogoItem';
 import './_layout';
 import './_page';
 import '../components/Home';
 import '../components/Logo';
-import { LogoItem } from '../types/LogoItem';
 
 @customElement('my-index')
 export class Index extends LitElement {
   @property({ type: String }) title = '';
   @property({ type: String }) description = '';
   @property({ type: String }) disclaimer = '';
-  @property({ type: Object }) logoItem: LogoItem = {
-    name: 'linkedin',
-    path: '/assets/svgl/linkedin.svg',
-  };
+  @property({ type: Object }) logoItem: LogoItem | null =
+    (svgs.find((item) => item.id === 'linkedin') as LogoItem) || null;
 
-  @state() private allItems: LogoItem[] = names as LogoItem[];
-  @state() private preselectedItems: LogoItem[] = this.allItems.filter((item) =>
-    preselectedItems.includes(item.name)
+  @state() private allItems: LogoItem[] = svgs as LogoItem[];
+  @state() private preselectedItems: LogoItem[] = filterPreselected(
+    this.allItems
   );
 
   static styles = css`

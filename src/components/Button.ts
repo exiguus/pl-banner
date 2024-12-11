@@ -126,13 +126,13 @@ export class AppButton extends LitElement {
         @click=${(e: MouseEvent) => this._handleClick(e)}
       >
         ${this.isLoading
-        ? html`<div class="container-fluid-spinner">
+          ? html`<div class="container-fluid-spinner">
               <div class="container-spinner">
                 <my-loading-spinner></my-loading-spinner>
               </div>
               <span class="visible-hidden"><slot></slot></span>
             </div>`
-        : html`<slot></slot>`}
+          : html`<slot></slot>`}
       </button>
     `;
   }

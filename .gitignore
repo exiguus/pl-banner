@@ -2,7 +2,7 @@ node_modules
 dist
 .vite
 LOG.md
+TODO.md
 lighthouse
+src/data
 src/assets/svgl
-src/assets/svgl.json
-src/assets/names.json
