@@ -40,7 +40,7 @@ export class Home extends LitElement {
     }
     @media (min-width: 1025px) {
       .menu-container {
-        max-width: 1025px;
+        max-width: var(--container-desktop-width);
       }
     }
   `;
@@ -89,7 +89,8 @@ export class Home extends LitElement {
 
   private async downloadGridAsImage(): Promise<void> {
     const bannerContainer = this.shadowRoot?.querySelector('my-banner');
-    const bannerElement = bannerContainer?.shadowRoot?.querySelector('.banner');
+    const bannerElement =
+      bannerContainer?.shadowRoot?.querySelector('.banner-outer');
     if (!bannerElement) {
       console.error('Grid element not found!');
       return;

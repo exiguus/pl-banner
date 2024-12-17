@@ -4,13 +4,11 @@ import { LogoItem } from '../types/LogoItem';
 import { filterPreselected } from '../utils/preselectedSvgs';
 import './MenuLogoSelectItem';
 import './MenuLogoSelectOptions';
-import './MenuCategories';
+
 @customElement('my-menu-logo-select')
 export class MenuSelect extends LitElement {
   @property({ type: Array }) items: LogoItem[] = [];
   @property({ type: Array }) selectedItems: LogoItem[] = [];
-  @property({ type: Function }) onRandomize!: () => void;
-  @property({ type: Function }) onSort!: (order: 'asc' | 'desc') => void;
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -56,12 +54,10 @@ export class MenuSelect extends LitElement {
     this.dispatchSelectionChangeEvent();
   }
 
-  private selectRandomItems(): void {
-    // select 6x20 items
-    const randomItems = this.items
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 120);
-    this.selectedItems = randomItems;
+  private selectRandom(): void {
+    this.selectedItems = this.items
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 114);
     this.dispatchSelectionChangeEvent();
   }
 
@@ -108,11 +104,14 @@ export class MenuSelect extends LitElement {
       <p>Select the logos you want to include in the banner and determine the order.</p>
       <div class="container-fluid">
         <div class="container">
-          <my-menu-categories
+          <my-menu-logo-select-options
             .items=${this.items}
             .onToggleItem=${this.onToggleItem.bind(this)}
-          >
-          </my-menu-categories>
+            .onSelectAll=${this.selectAllItems.bind(this)}
+            .onUnselectAll=${this.unselectAllItems.bind(this)}
+            .onSelectPreselected=${this.selectPreselectedItems.bind(this)}
+            .onSelectRandom=${this.selectRandom.bind(this)}
+          ></my-menu-select-options>
         </div>
       </div>
       <my-menu-logo-select-item

@@ -24,12 +24,8 @@ export class Menu extends LitElement {
     }
     .menu {
       display: flex;
-      flex-wrap: wrap;
-      gap: var(--menu-gap, 16px);
-      padding: var(--menu-padding, 16px) 0;
       color: var(--default-color-light);
       background: var(--default-background-light);
-      border-bottom: 2px solid #d76d77;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -63,15 +59,14 @@ export class Menu extends LitElement {
 
     details > summary {
       display: block;
-      padding: var(--input-button-padding, 15px);
-      font-size: var(--input-button-font-size, 14px);
+      padding: var(--button-padding, 16px);
+      font-size: var(--button-font-size, 14px);
       cursor: pointer;
       border: none;
-      border-radius: var(--input-button-border-radius, 5px);
-      background-color: var(--input-button-bg-color, #639381);
-      color: var(--input-button-color, #fff);
+      border-radius: var(--button-border-radius, 5px);
+      background-color: var(--button-bg-color, #639381);
+      color: var(--button-color, #fff);
       transition: background-color 0.3s;
-      cursor: pointer;
     }
 
     details > select {
@@ -135,17 +130,19 @@ export class Menu extends LitElement {
 
   render(): ReturnType<typeof html> {
     return html`
-      <details class="menu">
-        <summary>Select Categories</summary>
-        <label class="sr-only" for="categories">Categories</label>
-        <select id="categories" @change=${this.handleSelect} multiple>
-          ${this.categories.map(
-            (category) => html`
-              <option value="${category.id}">${category.title}</option>
-            `
-          )}
-        </select>
-      </details>
+      <div class="menu">
+        <details>
+          <summary>Categories</summary>
+          <label class="sr-only" for="categories">Categories</label>
+          <select id="categories" @change=${this.handleSelect} multiple>
+            ${this.categories.map(
+              (category) => html`
+                <option value="${category.id}">${category.title}</option>
+              `
+            )}
+          </select>
+        </details>
+      </div>
     `;
   }
 }

@@ -29,10 +29,10 @@ export class Banner extends LitElement {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: var(--grid-padding, 24px 0);
+      padding: var(--grid-padding, 20px 0);
       margin: 0 auto;
       width: var(--banner-width, 1584px);
-      height: calc(var(--banner-height, 396px) - 2 * 24px);
+      height: calc(var(--banner-height, 396px) - 2 * 20px);
       background: var(
         --bg-color,
         linear-gradient(
@@ -52,8 +52,8 @@ export class Banner extends LitElement {
     .banner-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-      grid-template-rows: repeat(auto-fill, minmax(24px, 1fr));
-      gap: var(--grid-gap, 32px 0);
+      grid-template-rows: repeat(auto-fill, minmax(40px, 1fr));
+      gap: var(--grid-gap, 32px 16px);
       place-items: center;
       place-content: center;
       width: 100%;

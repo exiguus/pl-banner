@@ -74,7 +74,7 @@ export class MenuGradient extends LitElement {
     .gradient-container {
       display: flex;
       flex-wrap: nowrap;
-      gap: 8px;
+      gap: 0 8px;
       overflow-x: auto;
       scroll-behavior: smooth;
     }

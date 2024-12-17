@@ -82,8 +82,6 @@ export class Menu extends LitElement {
         <my-menu-logo-select
           .items=${this.items}
           .selectedItems=${this.selectedItems}
-          .onRandomize=${this.onRandomize}
-          .onSort=${this.onSort}
           @selection-changed=${this.onSelectionChange}
         ></my-menu-logo-select>
       </div>

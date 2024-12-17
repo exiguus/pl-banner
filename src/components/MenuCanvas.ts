@@ -86,7 +86,7 @@ export class MenuCanvas extends LitElement {
           @click=${this.onDownload}
           .isLoading=${this.isLoadingDownload}
         >
-          Download as PNG
+          Save Banner
         </my-button>
         <my-button @click=${this.onRandomize}>Randomize</my-button>
         <my-button @click=${() => this.onSort('asc')}>Sort A-Z</my-button>
@@ -106,6 +106,7 @@ export class MenuCanvas extends LitElement {
             min="0"
             max="100"
             step="1"
+            value="100"
             @change=${this.handeWidthRange}
           />
         </label>

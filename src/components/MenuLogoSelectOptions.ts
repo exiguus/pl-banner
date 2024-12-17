@@ -1,15 +1,17 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { LogoItem } from '../types/LogoItem';
 import './Button';
+import './MenuCategories';
 
 @customElement('my-menu-logo-select-options')
 export class MyMenuSelectOptions extends LitElement {
+  @property({ type: Array }) items!: LogoItem[];
+  @property({ type: Function }) onToggleItem!: (item: LogoItem) => void;
   @property({ type: Function }) onSelectAll!: () => void;
   @property({ type: Function }) onUnselectAll!: () => void;
   @property({ type: Function }) onSelectPreselected!: () => void;
   @property({ type: Function }) onSelectRandom!: () => void;
-  @property({ type: Function }) onRandomize!: () => void;
-  @property({ type: Function }) onSort!: (order: 'asc' | 'desc') => void;
 
   static styles = css`
     :host {
@@ -30,6 +32,12 @@ export class MyMenuSelectOptions extends LitElement {
         background: var(--default-background-dark);
       }
     }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      width: 100%;
+    }
     .container {
       display: flex;
       flex-wrap: no-wrap;
@@ -44,15 +52,15 @@ export class MyMenuSelectOptions extends LitElement {
     return html`
       <div class="menu">
         <div class="container">
-          <my-button @click=${this.onSelectAll}>Select all</my-button>
-          <my-button @click=${this.onUnselectAll}>Unselect all</my-button>
-          <my-button @click=${this.onSelectPreselected}>
-            Select preselected
-          </my-button>
-          <my-button @click=${this.onSelectRandom}>Select random</my-button>
-          <my-button @click=${this.onRandomize}>Randomize order</my-button>
-          <my-button @click=${() => this.onSort('asc')}>Sort A-Z</my-button>
-          <my-button @click=${() => this.onSort('desc')}>Sort Z-A</my-button>
+          <my-button @click=${this.onSelectAll}>All</my-button>
+          <my-button @click=${this.onUnselectAll}>None</my-button>
+          <my-button @click=${this.onSelectPreselected}> Pre-Set </my-button>
+          <my-button @click=${this.onSelectRandom}>Random</my-button>
+          <my-menu-categories
+            .items=${this.items}
+            .onToggleItem=${this.onToggleItem.bind(this)}
+          >
+          </my-menu-categories>
         </div>
       </div>
     `;
