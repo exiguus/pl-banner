@@ -52,6 +52,20 @@ export class AppButton extends LitElement {
       background-color: var(--button-selected-bg-color, #639381);
     }
 
+    .button.left {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .button.right {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .button.center {
+      border-radius: 0;
+    }
+
     .button-img {
       display: flex;
       align-items: center;

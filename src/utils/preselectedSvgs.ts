@@ -1,7 +1,8 @@
 import { LogoItem } from '../types/LogoItem';
 
 const PRESELECTED = [
-  'apple',
+  'apple-light',
+  'apple-dark',
   'astro',
   'atlassian',
   'atom',
@@ -34,7 +35,6 @@ const PRESELECTED = [
   'gitlab',
   'gmail',
   'golang',
-  'google',
   'grafana',
   'graphql',
   'headless-ui',

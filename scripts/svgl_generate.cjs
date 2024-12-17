@@ -48,7 +48,7 @@ class SvgProcessor {
         if (!acc[categoryKey]) {
           acc[categoryKey] = {
             id: categoryKey,
-            title: categories[i],
+            title: categoryKey === 'design' ? 'Design' : categories[i],
             items: [],
             count: 0,
           };

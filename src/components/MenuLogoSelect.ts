@@ -1,10 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import './MenuLogoSelectItem';
-import './MenuLogoSelectOptions';
 import { LogoItem } from '../types/LogoItem';
 import { filterPreselected } from '../utils/preselectedSvgs';
-
+import './MenuLogoSelectItem';
+import './MenuLogoSelectOptions';
+import './MenuCategories';
 @customElement('my-menu-logo-select')
 export class MenuSelect extends LitElement {
   @property({ type: Array }) items: LogoItem[] = [];
@@ -108,14 +108,11 @@ export class MenuSelect extends LitElement {
       <p>Select the logos you want to include in the banner and determine the order.</p>
       <div class="container-fluid">
         <div class="container">
-        <my-menu-logo-select-options
-          .onSelectAll=${this.selectAllItems.bind(this)}
-          .onUnselectAll=${this.unselectAllItems.bind(this)}
-          .onSelectPreselected=${this.selectPreselectedItems.bind(this)}
-          .onSelectRandom=${this.selectRandomItems.bind(this)}
-          .onRandomize=${this.onRandomize.bind(this)}
-          .onSort=${this.onSort.bind(this)}
-        ></my-menu-select-options>
+          <my-menu-categories
+            .items=${this.items}
+            .onToggleItem=${this.onToggleItem.bind(this)}
+          >
+          </my-menu-categories>
         </div>
       </div>
       <my-menu-logo-select-item
