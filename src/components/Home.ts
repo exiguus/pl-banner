@@ -13,6 +13,9 @@ export class Home extends LitElement {
   @state() private isLoading: boolean = true;
   @state() private isLoadingDownload: boolean = false;
 
+  static BANNER_WIDTH = 1584;
+  static BANNER_HEIGHT = 396;
+
   static styles = css`
     :host {
       --spinner-color1: #639381;
@@ -22,9 +25,9 @@ export class Home extends LitElement {
         var(--spinner-color1),
         var(--spinner-color2)
       );
-      --banner-width: 1584px;
-      --banner-height: 396px;
-      --container-gap: 20px;
+      --banner-width: ${Home.BANNER_WIDTH}px;
+      --banner-height: ${Home.BANNER_HEIGHT}px;
+      --container-gap: 20px 10px;
     }
     .container {
       display: flex;
@@ -37,7 +40,7 @@ export class Home extends LitElement {
     }
     @media (min-width: 1025px) {
       .menu-container {
-        max-width: var(--container-desktop-width);
+        max-width: 1025px;
       }
     }
   `;
@@ -47,7 +50,22 @@ export class Home extends LitElement {
     this.items = [...this.preselectedItems];
     setTimeout(() => {
       this.isLoading = false;
+      this.scrollBannerIntoView();
     }, 300);
+  }
+
+  private scrollBannerIntoView(): void {
+    setTimeout(() => {
+      const bannerComponent = this.shadowRoot?.querySelector('my-banner');
+      const bannerContainer =
+        bannerComponent?.shadowRoot?.querySelector('.banner-container');
+      const bannerGrid =
+        bannerComponent?.shadowRoot?.querySelector('.banner-inner');
+      if (bannerContainer && bannerGrid) {
+        bannerContainer.scrollLeft =
+          Home.BANNER_WIDTH / 2 - window.innerWidth / 2;
+      }
+    }, 100);
   }
 
   private randomizeOrder(): void {
@@ -62,6 +80,11 @@ export class Home extends LitElement {
 
   private setBackground(color: string): void {
     this.style.setProperty('--bg-color', color);
+  }
+
+  private setWidth(width: string): void {
+    this.style.setProperty('--banner-inner-width', width);
+    this.scrollBannerIntoView();
   }
 
   private async downloadGridAsImage(): Promise<void> {
@@ -112,6 +135,7 @@ export class Home extends LitElement {
                 .isLoadingDownload=${this.isLoadingDownload}
                 .onPickColor=${this.setBackground.bind(this)}
                 .onPickGradient=${this.setBackground.bind(this)}
+                .onWidthChange=${this.setWidth.bind(this)}
                 .items=${this.allItems}
                 .selectedItems=${this.items}
                 .onSort=${this.sortItems.bind(this)}

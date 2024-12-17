@@ -5,6 +5,8 @@ import { customElement, property } from 'lit/decorators.js';
 export class MenuCanvas extends LitElement {
   @property({ type: Function }) onDownload!: () => void;
   @property({ type: Function }) onRandomize!: () => void;
+  @property({ type: Function }) onSort!: (order: 'asc' | 'desc') => void;
+  @property({ type: Function }) onWidthChange!: (width: string) => void;
   @property({ type: Function }) onPickColor!: (color: string) => void;
   @property({ type: Function }) onRandomBackgroundGradient!: (
     gradient: string
@@ -29,7 +31,7 @@ export class MenuCanvas extends LitElement {
   static styles = css`
     label {
       display: block;
-      padding: var(--input-button-padding, 15px);
+      padding: var(--input-button-padding, 10px);
       font-size: var(--input-button-font-size, 14px);
       cursor: pointer;
       border: none;
@@ -66,6 +68,16 @@ export class MenuCanvas extends LitElement {
     }
   `;
 
+  private handeWidthRange(e: Event) {
+    const width = (e.target as HTMLInputElement).value + '%';
+    this.onWidthChange?.(width);
+  }
+
+  private handeColorChange(e: Event) {
+    const color = (e.target as HTMLInputElement).value;
+    this.onPickColor?.(color);
+  }
+
   render() {
     return html`
       <div class="container">
@@ -76,18 +88,64 @@ export class MenuCanvas extends LitElement {
         >
           Download as PNG
         </my-button>
-        <my-button @click=${this.onRandomize}>Randomize Order</my-button>
+        <my-button @click=${this.onRandomize}>Randomize</my-button>
+        <my-button @click=${() => this.onSort('asc')}>Sort A-Z</my-button>
+        <my-button @click=${() => this.onSort('desc')}>Sort Z-A</my-button>
         <my-button @click=${this.handleRandomBackgroundGradient}>
-          Random Background Gradient
+          Random Gradient
         </my-button>
         <label>
-          <span>Select Background Color</span>
+          <span>Color</span>
+          <input type="color" @input=${this.handeColorChange} />
+        </label>
+        <label id="width">
+          <span>Width</span>
           <input
-            type="color"
-            @input=${(e: Event) =>
-              this.onPickColor?.((e.target as HTMLInputElement).value)}
+            id="width"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            @change=${this.handeWidthRange}
           />
         </label>
+        <div class="button-group">
+          <my-button
+            variant="button left"
+            @click=${() => this.onWidthChange('100%')}
+            >Full Width</my-button
+          >
+          <my-button
+            variant="button center"
+            @click=${() => this.onWidthChange('75%')}
+            >75%</my-button
+          >
+          <my-button
+            variant="button center"
+            @click=${() => this.onWidthChange('50%')}
+            >50%</my-button
+          >
+          <my-button
+            variant="button center"
+            @click=${() => this.onWidthChange('25%')}
+            >25%</my-button
+          >
+          <my-button
+            variant="button center"
+            @click=${() => this.onWidthChange('10%')}
+            >10%</my-button
+          >
+          <my-button
+            variant="button center"
+            @click=${() => this.onWidthChange('33.333%')}
+            >33%</my-button
+          >
+          <my-button
+            variant="button right"
+            @click=${() => this.onWidthChange('66.666%')}
+            >66%</my-button
+          >
+        </div>
       </div>
     `;
   }

@@ -15,11 +15,11 @@ export class Menu extends LitElement {
   @property({ type: Function }) onPickColor!: (color: string) => void;
   @property({ type: Function }) onPickGradient!: (gradient: string) => void;
   @property({ type: Function }) onSelectionChange!: () => {};
+  @property({ type: Function }) onSort!: (order: 'asc' | 'desc') => void;
+  @property({ type: Function }) onWidthChange!: (width: string) => void;
 
   @property({ type: Array }) items: LogoItem[] = [];
   @property({ type: Array }) selectedItems: LogoItem[] = [];
-  @property({ type: Function }) onSort: (order: 'asc' | 'desc') => void =
-    () => {};
   @property({ type: Boolean }) isLoadingDownload: boolean = false;
 
   static styles = css`
@@ -68,6 +68,8 @@ export class Menu extends LitElement {
             .onDownload=${this.onDownload}
             .isLoadingDownload=${this.isLoadingDownload}
             .onRandomize=${this.onRandomize}
+            .onSort=${this.onSort}
+            .onWidthChange=${this.onWidthChange}
             .onRandomBackgroundGradient=${this.onRandomBackgroundGradient}
             .onPickColor=${this.onPickColor}
           ></my-menu-canvas>
