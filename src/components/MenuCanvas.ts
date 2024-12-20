@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { repeat } from 'lit-html/directives/repeat.js';
 import { customElement, property } from 'lit/decorators.js';
 
 @customElement('my-menu-canvas')
@@ -6,12 +7,12 @@ export class MenuCanvas extends LitElement {
   @property({ type: Function }) onDownload!: () => void;
   @property({ type: Function }) onRandomize!: () => void;
   @property({ type: Function }) onSort!: (order: 'asc' | 'desc') => void;
-  @property({ type: Function }) onWidthChange!: (width: string) => void;
   @property({ type: Function }) onPickColor!: (color: string) => void;
   @property({ type: Function }) onRandomBackgroundGradient!: (
     gradient: string
   ) => void;
   @property({ type: Boolean }) isLoadingDownload: boolean = false;
+  @property({ type: Number }) bannerWidth!: number;
 
   private generateRandomGradient(): string {
     const randomColor1 = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${
@@ -68,14 +69,54 @@ export class MenuCanvas extends LitElement {
     }
   `;
 
-  private handeWidthRange(e: Event) {
-    const width = (e.target as HTMLInputElement).value + '%';
-    this.onWidthChange?.(width);
+  private dispatchWidthChangeCustomEvent(width: number) {
+    console.log({ width });
+    this.dispatchEvent(
+      new CustomEvent('width-changed', {
+        detail: { width },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  private handleWidthChangeRange(e: Event) {
+    const width = parseFloat((e.target as HTMLInputElement).value);
+    if (!isNaN(width)) {
+      this.dispatchWidthChangeCustomEvent(width);
+    }
+  }
+
+  private onWidthChange(width: number) {
+    this.dispatchWidthChangeCustomEvent(width);
   }
 
   private handeColorChange(e: Event) {
     const color = (e.target as HTMLInputElement).value;
     this.onPickColor?.(color);
+  }
+
+  private optionsWidth = [100, 75, 50, 25, 10, 33.333, 66.666];
+
+  private renderButtonChangeWidth(value: number): ReturnType<typeof html> {
+    let option = 'center';
+    let text = `${value.toFixed(0)}%`;
+
+    if (value === this.optionsWidth[0]) {
+      option = 'left';
+      text = 'Full width';
+    } else if (value === this.optionsWidth[this.optionsWidth.length - 1]) {
+      option = 'right';
+    }
+
+    return html`
+      <my-button
+        variant="button ${option}"
+        @click=${() => this.onWidthChange(value)}
+        disabled=${this.bannerWidth === value ? 'disabled' : undefined}
+        >${text}</my-button
+      >
+    `;
   }
 
   render() {
@@ -103,49 +144,19 @@ export class MenuCanvas extends LitElement {
           <input
             id="width"
             type="range"
-            min="0"
+            min="5"
             max="100"
-            step="1"
-            value="100"
-            @change=${this.handeWidthRange}
+            step="5"
+            value=${this.bannerWidth}
+            @change=${this.handleWidthChangeRange}
           />
         </label>
         <div class="button-group">
-          <my-button
-            variant="button left"
-            @click=${() => this.onWidthChange('100%')}
-            >Full Width</my-button
-          >
-          <my-button
-            variant="button center"
-            @click=${() => this.onWidthChange('75%')}
-            >75%</my-button
-          >
-          <my-button
-            variant="button center"
-            @click=${() => this.onWidthChange('50%')}
-            >50%</my-button
-          >
-          <my-button
-            variant="button center"
-            @click=${() => this.onWidthChange('25%')}
-            >25%</my-button
-          >
-          <my-button
-            variant="button center"
-            @click=${() => this.onWidthChange('10%')}
-            >10%</my-button
-          >
-          <my-button
-            variant="button center"
-            @click=${() => this.onWidthChange('33.333%')}
-            >33%</my-button
-          >
-          <my-button
-            variant="button right"
-            @click=${() => this.onWidthChange('66.666%')}
-            >66%</my-button
-          >
+          ${repeat(
+            this.optionsWidth,
+            (value: number) => `button-change-width-${value}`,
+            (value: number) => this.renderButtonChangeWidth(value)
+          )}
         </div>
       </div>
     `;

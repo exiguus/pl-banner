@@ -12,6 +12,7 @@ export class Home extends LitElement {
   @state() private items: LogoItem[] = [];
   @state() private isLoading: boolean = true;
   @state() private isLoadingDownload: boolean = false;
+  @state() private bannerWidth: number = 100;
 
   static BANNER_WIDTH = 1584;
   static BANNER_HEIGHT = 396;
@@ -52,6 +53,12 @@ export class Home extends LitElement {
       this.isLoading = false;
       this.scrollBannerIntoView();
     }, 300);
+
+    window.addEventListener('resize', this.scrollBannerIntoView.bind(this));
+    window.addEventListener(
+      'orientationchange',
+      this.scrollBannerIntoView.bind(this)
+    );
   }
 
   private scrollBannerIntoView(): void {
@@ -80,11 +87,6 @@ export class Home extends LitElement {
 
   private setBackground(color: string): void {
     this.style.setProperty('--bg-color', color);
-  }
-
-  private setWidth(width: string): void {
-    this.style.setProperty('--banner-inner-width', width);
-    this.scrollBannerIntoView();
   }
 
   private async downloadGridAsImage(): Promise<void> {
@@ -121,6 +123,17 @@ export class Home extends LitElement {
         )
       )
       .sort(() => Math.random() - 0.5);
+
+    this.scrollBannerIntoView();
+  }
+
+  private handleWithChange(event: CustomEvent): void {
+    const hasWidth = typeof event.detail.width === 'number';
+    if (hasWidth && event.detail.width !== this.bannerWidth) {
+      this.bannerWidth = event.detail.width;
+      this.style.setProperty('--banner-inner-width', `${this.bannerWidth}%`);
+      this.scrollBannerIntoView();
+    }
   }
 
   private renderMenu(): ReturnType<typeof html> {
@@ -130,17 +143,18 @@ export class Home extends LitElement {
           ? nothing
           : html`
               <my-menu
+                .isLoadingDownload=${this.isLoadingDownload}
+                .items=${this.allItems}
+                .bannerWidth=${this.bannerWidth}
                 .onRandomize=${this.randomizeOrder.bind(this)}
                 .onRandomBackgroundGradient=${this.setBackground.bind(this)}
                 .onDownload=${this.downloadGridAsImage.bind(this)}
-                .isLoadingDownload=${this.isLoadingDownload}
                 .onPickColor=${this.setBackground.bind(this)}
                 .onPickGradient=${this.setBackground.bind(this)}
-                .onWidthChange=${this.setWidth.bind(this)}
-                .items=${this.allItems}
                 .selectedItems=${this.items}
                 .onSort=${this.sortItems.bind(this)}
                 @selection-changed=${this.handleSelectionChanged.bind(this)}
+                @width-changed=${this.handleWithChange.bind(this)}
               ></my-menu>
             `}
       </div>

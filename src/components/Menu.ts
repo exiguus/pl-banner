@@ -14,13 +14,11 @@ export class Menu extends LitElement {
   @property({ type: Function }) onDownload!: () => void;
   @property({ type: Function }) onPickColor!: (color: string) => void;
   @property({ type: Function }) onPickGradient!: (gradient: string) => void;
-  @property({ type: Function }) onSelectionChange!: () => {};
   @property({ type: Function }) onSort!: (order: 'asc' | 'desc') => void;
-  @property({ type: Function }) onWidthChange!: (width: string) => void;
-
-  @property({ type: Array }) items: LogoItem[] = [];
-  @property({ type: Array }) selectedItems: LogoItem[] = [];
-  @property({ type: Boolean }) isLoadingDownload: boolean = false;
+  @property({ type: Array }) items!: LogoItem[];
+  @property({ type: Array }) selectedItems!: LogoItem[];
+  @property({ type: Boolean }) isLoadingDownload!: boolean;
+  @property({ type: Number }) bannerWidth!: number;
 
   static styles = css`
     :host {
@@ -69,9 +67,9 @@ export class Menu extends LitElement {
             .isLoadingDownload=${this.isLoadingDownload}
             .onRandomize=${this.onRandomize}
             .onSort=${this.onSort}
-            .onWidthChange=${this.onWidthChange}
             .onRandomBackgroundGradient=${this.onRandomBackgroundGradient}
             .onPickColor=${this.onPickColor}
+            .bannerWidth=${this.bannerWidth}
           ></my-menu-canvas>
           <my-menu-gradient
             .onPickGradient=${this.onPickGradient}
@@ -82,7 +80,6 @@ export class Menu extends LitElement {
         <my-menu-logo-select
           .items=${this.items}
           .selectedItems=${this.selectedItems}
-          @selection-changed=${this.onSelectionChange}
         ></my-menu-logo-select>
       </div>
     `;

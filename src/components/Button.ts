@@ -6,7 +6,7 @@ import './LoadingSpinner';
 @customElement('my-button')
 export class AppButton extends LitElement {
   @property({ type: String }) variant: string = 'button'; // e.g., primary, secondary
-  @property({ type: Boolean }) disabled!: boolean;
+  @property({ type: String }) disabled: string = '';
   @property({ type: Boolean }) selected: boolean = false;
   @property({ type: Boolean }) preventDefault: boolean = true; // Prevent default behavior on click
   @property({ type: Boolean }) preserveScroll: boolean = true; // Preserve scroll position
@@ -43,7 +43,7 @@ export class AppButton extends LitElement {
       background-color: var(--button-primary-hover-bg-color, #639381);
     }
     .button:disabled {
-      background-color: var(--button-disabled-bg-color, #aaa);
+      filter: grayscale(90%);
       cursor: not-allowed;
     }
     .button:selection,
