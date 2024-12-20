@@ -2,18 +2,19 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { LogoItem } from '../types/LogoItem';
 import { Categories } from '../types/Categories';
-import categories from '../data/categories.json';
+import './Button';
 
 export type CategoryItem = {
   id: string;
   title: keyof Categories;
   selected: boolean;
-  items: string[];
+  items: LogoItem[];
+  count: number;
 };
 
 @customElement('my-menu-categories')
-export class Menu extends LitElement {
-  @property({ type: Array }) items: LogoItem[] = [];
+export class MenuCategories extends LitElement {
+  @property({ type: Array }) items!: LogoItem[];
   @property({ type: Function }) onToggleItem!: (item: LogoItem) => void;
 
   @state() private categories: CategoryItem[] = [];
@@ -59,11 +60,16 @@ export class Menu extends LitElement {
 
     details > summary {
       display: block;
-      padding: var(--button-padding, 16px);
+      padding: var(--button-padding, 15px);
+      min-width: 200px;
       font-size: var(--button-font-size, 14px);
+      font-weight: var(--button-font-weight, 700);
+      line-height: var(--button-line-height, 1);
       cursor: pointer;
       border: none;
       border-radius: var(--button-border-radius, 5px);
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
       background-color: var(--button-bg-color, #639381);
       color: var(--button-color, #fff);
       transition: background-color 0.3s;
@@ -78,22 +84,36 @@ export class Menu extends LitElement {
     details > select > option {
       padding: 0.5rem;
     }
+
+    details > select > option > small {
+      margin-left: 0.5rem;
+      color: var(--default-color-light);
+      font-size: 0.8rem;
+      padding: 0 0.5rem;
+      border-radius: 5px;
+      background-color: var(--default-background-light);
+    }
+
+    .button-group {
+      display: flex;
+      gap: var(--button-group-gap, 1px);
+    }
   `;
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.categories = categories.map((category) => ({
-      id: category.id,
-      title: category.title as keyof Categories,
-      items: category.items,
-      selected: false,
-    }));
+    this.initializeCategories();
   }
 
-  private validCategory(category: string): boolean {
-    return (
-      typeof category === 'string' && categories.some((c) => c.id === category)
+  private async initializeCategories(): Promise<void> {
+    const categories = await import('../data/categories.json').then(
+      (module) => module.default
     );
+    this.categories = categories.map((category) => ({
+      ...category,
+      selected: true,
+      count: category.items.length,
+    })) as CategoryItem[];
   }
 
   private handleSelect(event: Event): void {
@@ -101,47 +121,68 @@ export class Menu extends LitElement {
       (event.target as HTMLSelectElement).selectedOptions
     ).map((option) => option.value);
 
-    if (selectedCategories.every(this.validCategory)) {
-      this.categories = this.categories.map((c) => ({
-        ...c,
-        selected: selectedCategories.includes(c.id),
-      }));
+    this.categories = this.categories.map((c) => ({
+      ...c,
+      selected: selectedCategories.includes(c.id),
+    }));
 
-      this.selectCategory(
-        this.categories.filter((category) => category.selected)
-      );
-    } else {
-      console.warn('Category not found or invalid', selectedCategories);
-    }
+    this.selectCategory(
+      this.categories.filter((category) => category.selected)
+    );
   }
 
   private async selectCategory(categories: CategoryItem[]): Promise<void> {
-    const items = categories.map((category) => category.items).flat();
-    const selectedItems = this.items.filter((item) => items.includes(item.id));
+    const categoryItems = categories.map((category) => category.items);
+    const selectedItems = this.items.filter((item) =>
+      categoryItems.some((ci) => ci.some((i) => i.id === item.id))
+    );
 
     this.dispatchEvent(
-      new CustomEvent('selection-changed', {
-        detail: { selectedItems: selectedItems },
+      new CustomEvent('change-display-items', {
+        detail: { displayItems: selectedItems },
         bubbles: true,
         composed: true,
       })
     );
   }
 
+  private reset(): void {
+    this.categories = this.categories.map((category) => ({
+      ...category,
+      selected: true,
+    }));
+    this.selectCategory(this.categories);
+  }
+
   render(): ReturnType<typeof html> {
     return html`
       <div class="menu">
-        <details>
-          <summary>Categories</summary>
-          <label class="sr-only" for="categories">Categories</label>
-          <select id="categories" @change=${this.handleSelect} multiple>
-            ${this.categories.map(
-              (category) => html`
-                <option value="${category.id}">${category.title}</option>
-              `
-            )}
-          </select>
-        </details>
+        <div class="button-group">
+          <details>
+            <summary>Filter Categories</summary>
+            <label class="sr-only" for="categories">Categories</label>
+            <select id="categories" @change=${this.handleSelect} multiple>
+              ${this.categories.map(
+                (category) => html`
+                  <option
+                    value="${category.id}"
+                    .selected=${category.selected && 'selected'}
+                  >
+                    ${category.title}
+                    <small
+                      >${category.count}<span class="sr-only"
+                        >Items</span
+                      ></small
+                    >
+                  </option>
+                `
+              )}
+            </select>
+          </details>
+          <my-button variant="button right" @click=${this.reset}
+            >Reset</my-button
+          >
+        </div>
       </div>
     `;
   }

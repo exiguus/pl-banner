@@ -1,7 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import 'lit-html/private-ssr-support.js';
-import svgs from '../data/categories/all.json';
 import { filterPreselected } from '../utils/preselectedSvgs';
 import { LogoItem } from '../types/LogoItem';
 import './_layout';
@@ -14,13 +13,11 @@ export class Index extends LitElement {
   @property({ type: String }) title = '';
   @property({ type: String }) description = '';
   @property({ type: String }) disclaimer = '';
-  @property({ type: Object }) logoItem: LogoItem | null =
-    (svgs.find((item) => item.id === 'linkedin') as LogoItem) || null;
 
-  @state() private allItems: LogoItem[] = svgs as LogoItem[];
-  @state() private preselectedItems: LogoItem[] = filterPreselected(
-    this.allItems
-  );
+  @state() private allItems: LogoItem[] = [];
+  @state() private preselectedItems: LogoItem[] = [];
+  @state() private logoItem: LogoItem | null = null;
+  @state() private isLoading: boolean = true;
 
   static styles = css`
     :host {
@@ -70,6 +67,14 @@ export class Index extends LitElement {
       margin-top: -10px;
     }
 
+    .loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: var(--banner-height, 396px);
+    }
+
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -80,15 +85,35 @@ export class Index extends LitElement {
     }
   `;
 
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.initializeItems().then(() => {
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 100);
+    });
+  }
+
+  private async initializeItems(): Promise<void> {
+    const items = await import('../data/categories/all.json').then(
+      (module) => module.default
+    );
+    this.allItems = items as LogoItem[];
+    this.preselectedItems = filterPreselected(this.allItems);
+    this.logoItem = this.allItems.filter((item) => item.id === 'linkedin')?.[0];
+  }
+
   render(): ReturnType<typeof html> {
     return html`
       <my-page title=${this.title} description=${this.description}>
         <my-layout slot="layout">
           <div slot="header">
             <div class="logo-container">
-              <div class="logo">
-                <my-logo .item=${this.logoItem}></my-logo>
-              </div>
+              ${this.isLoading
+                ? nothing
+                : html` <div class="logo">
+                    <my-logo .item=${this.logoItem}></my-logo>
+                  </div>`}
               <h1>${this.title}</h1>
               <p class="disclaimer">${this.disclaimer}</p>
             </div>
@@ -97,10 +122,14 @@ export class Index extends LitElement {
             </div>
           </div>
           <div slot="main">
-            <my-home
-              .allItems=${this.allItems}
-              .preselectedItems=${this.preselectedItems}
-            ></my-home>
+            ${this.isLoading
+              ? html`<div class="loading-container">
+                  <my-loading-spinner></my-loading-spinner>
+                </div>`
+              : html`<my-home
+                  .allItems=${this.allItems}
+                  .preselectedItems=${this.preselectedItems}
+                ></my-home> `}
           </div>
           <div slot="footer">
             <p>${this.title} &ndash; ${this.description}</p>

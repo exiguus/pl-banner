@@ -100,7 +100,7 @@ export class MenuSelect extends LitElement {
   private selectRandom(): void {
     this.selectedItems = this.displayItems
       .sort(() => 0.5 - Math.random())
-      .slice(0, 114);
+      .slice(0, this.displayItems.length / 2);
     this.dispatchSelectionChangeEvent();
   }
 

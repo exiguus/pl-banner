@@ -81,6 +81,8 @@ export class MenuGradient extends LitElement {
     .gradient-list {
       display: flex;
       flex-wrap: nowrap;
+      align-items: center;
+
       gap: 8px;
       padding-bottom: 8px;
       margin-right: 48px;

@@ -9,7 +9,6 @@ import './Logo';
 @customElement('my-banner')
 export class Banner extends LitElement {
   @property({ type: Array }) items: LogoItem[] = [];
-  @property({ type: Boolean }) isLoading: boolean = false;
 
   static styles = css`
     :host {
@@ -62,39 +61,24 @@ export class Banner extends LitElement {
       overscroll-behavior: contain;
       will-change: transform;
     }
-    .loading-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 396px;
-    }
   `;
 
   render(): ReturnType<typeof html> {
     return html`
       <div class="banner-container">
-        ${this.isLoading
-          ? html`
-              <div class="loading-container">
-                <my-loading-spinner></my-loading-spinner>
+        <div class="banner">
+          <div class="banner-outer">
+            <div class="banner-inner">
+              <div class="banner-grid">
+                ${repeat(
+                  this.items,
+                  (item) => item.id,
+                  (item) => html`<my-logo .item=${item}></my-logo>`
+                )}
               </div>
-            `
-          : html`
-              <div class="banner">
-                <div class="banner-outer">
-                  <div class="banner-inner">
-                    <div class="banner-grid">
-                      ${repeat(
-                        this.items,
-                        (item) => item.id,
-                        (item) => html`<my-logo .item=${item}></my-logo>`
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            `}
+            </div>
+          </div>
+        </div>
       </div>
     `;
   }

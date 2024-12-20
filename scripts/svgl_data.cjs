@@ -181,10 +181,7 @@ function generateCategoriesFile() {
     .map((item) => item.trim().replace(/'/g, ''))
     .filter(Boolean);
 
-  const enumContent = `
-import { tCategory } from './svgl/categories';
-
-export enum Categories {
+  const enumContent = `export enum Categories {
 ${categories.map((category) => `  '${category.replace(/\s+/g, ' ').replace(/\(.*?\)/g, '')}' = '${category}',`).join('\n')}
 }
 `;

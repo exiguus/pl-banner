@@ -69,13 +69,15 @@ export class MyMenuSelectLogos extends LitElement {
       a.id.localeCompare(b.id)
     );
     return html`
-      <div class="item-selector">
-        ${repeat(
-          sortedLogoItems,
-          (item) => item.id,
-          (item) => this.renderItem(item)
-        )}
-      </div>
+      ${sortedLogoItems.length > 0
+        ? html` <div class="item-selector">
+            ${repeat(
+              sortedLogoItems,
+              (item) => item.id,
+              (item) => this.renderItem(item)
+            )}
+          </div>`
+        : html`<p>No items to display</p>`}
     `;
   }
 }

@@ -31,9 +31,13 @@ export class MenuCanvas extends LitElement {
 
   static styles = css`
     label {
-      display: block;
+      display: flex;
+      gap: 0 10px;
+      align-items: center;
       padding: var(--input-button-padding, 10px);
-      font-size: var(--input-button-font-size, 14px);
+      font-size: var(--button-font-size, 14px);
+      font-weight: var(--button-font-weight, 700);
+      line-height: var(--button-line-height, 1);
       cursor: pointer;
       border: none;
       border-radius: var(--input-button-border-radius, 5px);
@@ -44,33 +48,38 @@ export class MenuCanvas extends LitElement {
     label:hover {
       background-color: var(--input-button-hover-bg-color, #533ebb);
     }
-    label {
-      display: flex;
-      gap: 0 10px;
-      align-items: center;
-    }
     input[type='color'] {
       border: none;
       border-radius: var(--input-border-radius, 5px);
       cursor: pointer;
-      width: 30px;
-      height: 30px;
-      padding: 0;
-      margin: calc(-1 * var(--input-button-padding, 15px)) 0;
+      width: calc(
+        var(--input-button-padding, 10px) * 2 +
+          var(--input-button-font-size, 14px)
+      );
+      height: calc(
+        var(--input-button-padding, 10px) * 2 +
+          var(--input-button-font-size, 14px)
+      );
+      margin: calc(var(--input-button-padding, 10px) / -2) 0;
       background: none;
     }
     .container {
       display: flex;
       flex-wrap: no-wrap;
       white-space: nowrap;
+      align-items: center;
+
       gap: var(--container-gap, 8px);
       width: 100%;
       overflow-x: auto;
     }
+    .button-group {
+      display: flex;
+      gap: var(--button-group-gap, 1px);
+    }
   `;
 
   private dispatchWidthChangeCustomEvent(width: number) {
-    console.log({ width });
     this.dispatchEvent(
       new CustomEvent('width-changed', {
         detail: { width },
@@ -113,7 +122,7 @@ export class MenuCanvas extends LitElement {
       <my-button
         variant="button ${option}"
         @click=${() => this.onWidthChange(value)}
-        disabled=${this.bannerWidth === value ? 'disabled' : undefined}
+        .disabled=${this.bannerWidth === value ? 'disabled' : undefined}
         >${text}</my-button
       >
     `;

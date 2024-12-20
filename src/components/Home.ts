@@ -1,4 +1,4 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import './Menu';
 import './Banner';
@@ -10,7 +10,6 @@ export class Home extends LitElement {
   @property({ type: Array }) preselectedItems: LogoItem[] = [];
 
   @state() private items: LogoItem[] = [];
-  @state() private isLoading: boolean = true;
   @state() private isLoadingDownload: boolean = false;
   @state() private bannerWidth: number = 100;
 
@@ -49,10 +48,7 @@ export class Home extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     this.items = [...this.preselectedItems];
-    setTimeout(() => {
-      this.isLoading = false;
-      this.scrollBannerIntoView();
-    }, 300);
+    this.scrollBannerIntoView();
 
     window.addEventListener('resize', this.scrollBannerIntoView.bind(this));
     window.addEventListener(
@@ -127,36 +123,36 @@ export class Home extends LitElement {
     this.scrollBannerIntoView();
   }
 
+  private updateWidth(width: number): void {
+    this.bannerWidth = width;
+    this.style.setProperty('--banner-inner-width', `${this.bannerWidth}%`);
+    this.scrollBannerIntoView();
+  }
+
   private handleWithChange(event: CustomEvent): void {
     const hasWidth = typeof event.detail.width === 'number';
     if (hasWidth && event.detail.width !== this.bannerWidth) {
-      this.bannerWidth = event.detail.width;
-      this.style.setProperty('--banner-inner-width', `${this.bannerWidth}%`);
-      this.scrollBannerIntoView();
+      this.updateWidth(event.detail.width);
     }
   }
 
   private renderMenu(): ReturnType<typeof html> {
     return html`
       <div class="menu-container">
-        ${this.isLoading
-          ? nothing
-          : html`
-              <my-menu
-                .isLoadingDownload=${this.isLoadingDownload}
-                .items=${this.allItems}
-                .bannerWidth=${this.bannerWidth}
-                .onRandomize=${this.randomizeOrder.bind(this)}
-                .onRandomBackgroundGradient=${this.setBackground.bind(this)}
-                .onDownload=${this.downloadGridAsImage.bind(this)}
-                .onPickColor=${this.setBackground.bind(this)}
-                .onPickGradient=${this.setBackground.bind(this)}
-                .selectedItems=${this.items}
-                .onSort=${this.sortItems.bind(this)}
-                @selection-changed=${this.handleSelectionChanged.bind(this)}
-                @width-changed=${this.handleWithChange.bind(this)}
-              ></my-menu>
-            `}
+        <my-menu
+          .isLoadingDownload=${this.isLoadingDownload}
+          .items=${this.allItems}
+          .bannerWidth=${this.bannerWidth}
+          .onRandomize=${this.randomizeOrder.bind(this)}
+          .onRandomBackgroundGradient=${this.setBackground.bind(this)}
+          .onDownload=${this.downloadGridAsImage.bind(this)}
+          .onPickColor=${this.setBackground.bind(this)}
+          .onPickGradient=${this.setBackground.bind(this)}
+          .selectedItems=${this.items}
+          .onSort=${this.sortItems.bind(this)}
+          @selection-changed=${this.handleSelectionChanged.bind(this)}
+          @width-changed=${this.handleWithChange.bind(this)}
+        ></my-menu>
       </div>
     `;
   }
@@ -164,10 +160,7 @@ export class Home extends LitElement {
   render(): ReturnType<typeof html> {
     return html`
       <div class="container">
-        <my-banner
-          .items=${this.items}
-          .isLoading=${this.isLoading}
-        ></my-banner>
+        <my-banner .items=${this.items}></my-banner>
         ${this.renderMenu()}
       </div>
     `;

@@ -1,6 +1,3 @@
-
-import { tCategory } from './svgl/categories';
-
 export enum Categories {
   'All' = 'All',
   'AI' = 'AI',

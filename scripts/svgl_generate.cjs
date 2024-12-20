@@ -39,32 +39,35 @@ class SvgProcessor {
       return this.charAt(0).toUpperCase() + this.slice(1);
     };
 
-    const categorized = categorizedItems.reduce((acc, item) => {
-      const categories = Array.isArray(item.category)
-        ? item.category
-        : [item.category];
-      const categoryKeys = categories.map((category) =>
-        category.toLowerCase().replace(/ /g, '-')
-      );
-
-      let i = 0;
-      for (const categoryKey of categoryKeys) {
-        if (!acc[categoryKey]) {
-          acc[categoryKey] = {
-            id: categoryKey,
-            title: categoryKey.toUppercase(),
-            items: [],
-            count: 0,
-          };
-          i++;
+    const allCategories = categorizedItems
+      .reduce((acc, item) => {
+        const categories = Array.isArray(item.category)
+          ? item.category
+          : [item.category];
+        for (const category of categories) {
+          if (!acc.includes(category)) {
+            acc.push(category);
+          }
         }
-        acc[categoryKey].items.push(item.id);
-        acc[categoryKey].count++;
-      }
+        return acc;
+      }, [])
+      .sort((a, b) => a.localeCompare(b));
 
-      return acc;
-    }, {});
-
+    const categorized = allCategories
+      .map((category) => {
+        const categoryKey = category.toLowerCase().replace(/ /g, '-');
+        const items = allItems.filter((item) =>
+          item.category.includes(category)
+        );
+        return {
+          id: categoryKey.toLowerCase().replace(/ /g, '-'),
+          title: category.toUppercase(),
+          items: items,
+          count: items.length,
+        };
+      })
+      .filter((item) => item.count > 0)
+      .sort((a, b) => a.title.localeCompare(b.title));
     return { categorized, allItems };
   }
 
@@ -78,7 +81,7 @@ class SvgProcessor {
       const logoItems = [];
       const id = item.id || item.title.toLowerCase().replace(/ /g, '-');
       const title = item.title;
-      const description = `Logo for ${title}`;
+      const description = `Logo for ${title} for Category: ${[item.category].flat().join(', ')}`;
       const category = Array.isArray(item.category)
         ? item.category
         : [item.category || 'Uncategorized'];
@@ -123,11 +126,6 @@ class SvgProcessor {
           category,
           url
         );
-      }
-
-      // replace _(dark|light) with -(dark|light)
-      for (const logoItem of logoItems) {
-        logoItem.path = logoItem.path.replace(/_(dark|light)/, '-$1');
       }
 
       return logoItems;
@@ -242,7 +240,8 @@ class SvgProcessor {
    * @returns {string} - The resolved path.
    */
   static resolvePath(route) {
-    return CONFIG.svgBasePath + route.replace('/library', '');
+    const routePath = route.replaceAll('library/', '').replaceAll('_', '-');
+    return CONFIG.svgBasePath + '/' + routePath;
   }
 
   /**
@@ -251,7 +250,10 @@ class SvgProcessor {
    * @returns {string} - The output path.
    */
   static getPathForOutput(route) {
-    return CONFIG.svgPublicPath + route.replace('/library', '');
+    const routePath = route.replaceAll('library/', '').replaceAll('_', '-');
+    return CONFIG.svgPublicPath + routePath.startsWith('/')
+      ? routePath
+      : `/${routePath}`;
   }
 
   /**
@@ -288,12 +290,9 @@ class SvgProcessor {
     fs.mkdirSync(CONFIG.outputDir, { recursive: true });
   }
 
-  for (const [category, categoryData] of Object.entries(categorized)) {
-    const outputFilePath = path.join(CONFIG.outputDir, `${category}.json`);
-    fs.writeFileSync(
-      outputFilePath,
-      JSON.stringify(categoryData.items, null, 2)
-    );
+  for (const category of Object.values(categorized)) {
+    const outputFilePath = path.join(CONFIG.outputDir, `${category.id}.json`);
+    fs.writeFileSync(outputFilePath, JSON.stringify(category.items, null, 2));
     console.log(`Written category file: ${outputFilePath}`);
   }
 

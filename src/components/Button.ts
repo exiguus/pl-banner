@@ -26,6 +26,8 @@ export class AppButton extends LitElement {
       display: block;
       padding: var(--button-padding, 15px);
       font-size: var(--button-font-size, 14px);
+      font-weight: var(--button-font-weight, 700);
+      line-height: var(--button-line-height, 1);
       cursor: pointer;
       border: none;
       border-radius: var(--button-border-radius, 5px);
