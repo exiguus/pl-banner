@@ -66,6 +66,11 @@ export class AppButton extends LitElement {
       border-radius: 0;
     }
 
+    .button.close {
+      font-size: calc(var(--button-font-size, 14px) * 2);
+      line-height: calc(var(--button-line-height, 1) / 2);
+    }
+
     .button-img {
       display: flex;
       align-items: center;

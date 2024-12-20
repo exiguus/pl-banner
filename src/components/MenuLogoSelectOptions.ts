@@ -3,10 +3,12 @@ import { customElement, property } from 'lit/decorators.js';
 import { LogoItem } from '../types/LogoItem';
 import './Button';
 import './MenuCategories';
+import './MenuSearch';
 
 @customElement('my-menu-logo-select-options')
 export class MyMenuSelectOptions extends LitElement {
   @property({ type: Array }) items!: LogoItem[];
+  @property({ type: Array }) displayItems!: LogoItem[];
   @property({ type: Function }) onToggleItem!: (item: LogoItem) => void;
   @property({ type: Function }) onSelectAll!: () => void;
   @property({ type: Function }) onUnselectAll!: () => void;
@@ -42,9 +44,14 @@ export class MyMenuSelectOptions extends LitElement {
       display: flex;
       flex-wrap: no-wrap;
       white-space: nowrap;
+      align-items: center;
       gap: var(--container-gap, 8px);
       width: 100%;
       overflow-x: auto;
+    }
+    .button-group {
+      display: flex;
+      gap: var(--button-group-gap, 1px);
     }
   `;
 
@@ -52,15 +59,32 @@ export class MyMenuSelectOptions extends LitElement {
     return html`
       <div class="menu">
         <div class="container">
-          <my-button @click=${this.onSelectAll}>All</my-button>
-          <my-button @click=${this.onUnselectAll}>None</my-button>
-          <my-button @click=${this.onSelectPreselected}> Pre-Set </my-button>
-          <my-button @click=${this.onSelectRandom}>Random</my-button>
+          <div class="button-group">
+            <my-button variant="button left" @click=${this.onSelectAll}
+              >Select All</my-button
+            >
+            <my-button variant="button center" @click=${this.onUnselectAll}
+              >None</my-button
+            >
+            <my-button
+              variant="button center"
+              @click=${this.onSelectPreselected}
+            >
+              Pre-Set
+            </my-button>
+            <my-button variant="button right" @click=${this.onSelectRandom}
+              >Random</my-button
+            >
+          </div>
           <my-menu-categories
             .items=${this.items}
             .onToggleItem=${this.onToggleItem.bind(this)}
           >
           </my-menu-categories>
+          <my-menu-search
+            .items=${this.items}
+            .displayItems=${this.displayItems}
+          ></my-menu-search>
         </div>
       </div>
     `;

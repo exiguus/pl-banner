@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { LogoItem } from '../types/LogoItem';
 import { filterPreselected } from '../utils/preselectedSvgs';
 import './MenuLogoSelectItem';
@@ -7,59 +7,10 @@ import './MenuLogoSelectOptions';
 
 @customElement('my-menu-logo-select')
 export class MenuSelect extends LitElement {
-  @property({ type: Array }) items: LogoItem[] = [];
-  @property({ type: Array }) selectedItems: LogoItem[] = [];
+  @property({ type: Array }) items!: LogoItem[];
+  @property({ type: Array }) selectedItems!: LogoItem[];
 
-  connectedCallback(): void {
-    super.connectedCallback();
-    this.initializeSelectedItems();
-  }
-
-  private dispatchSelectionChangeEvent(): void {
-    this.dispatchEvent(
-      new CustomEvent('selection-changed', {
-        detail: { selectedItems: this.selectedItems },
-        bubbles: true,
-        composed: true,
-      })
-    );
-  }
-
-  private initializeSelectedItems(): void {
-    if (this.selectedItems.length === 0) {
-      this.selectedItems = [...this.items];
-    }
-  }
-
-  private onToggleItem(item: LogoItem): void {
-    const isSelected = this.selectedItems.some((i) => i.id === item.id);
-    this.selectedItems = isSelected
-      ? this.selectedItems.filter((i) => i.id !== item.id)
-      : [...this.selectedItems, item];
-    this.dispatchSelectionChangeEvent();
-  }
-
-  private unselectAllItems(): void {
-    this.selectedItems = [];
-    this.dispatchSelectionChangeEvent();
-  }
-
-  private selectAllItems(): void {
-    this.selectedItems = [...this.items];
-    this.dispatchSelectionChangeEvent();
-  }
-
-  private selectPreselectedItems(): void {
-    this.selectedItems = filterPreselected(this.items);
-    this.dispatchSelectionChangeEvent();
-  }
-
-  private selectRandom(): void {
-    this.selectedItems = this.items
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 114);
-    this.dispatchSelectionChangeEvent();
-  }
+  @state() private displayItems: LogoItem[] = [];
 
   static styles = css`
     :host {
@@ -97,6 +48,67 @@ export class MenuSelect extends LitElement {
     }
   `;
 
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.initializeDisplayItems();
+    this.initializeSelectedItems();
+  }
+
+  private dispatchSelectionChangeEvent(): void {
+    this.dispatchEvent(
+      new CustomEvent('selection-changed', {
+        detail: { selectedItems: this.selectedItems },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  private initializeDisplayItems(): void {
+    this.displayItems = this.items;
+  }
+
+  private initializeSelectedItems(): void {
+    if (this.selectedItems.length === 0) {
+      this.selectedItems = [...this.displayItems];
+    }
+  }
+
+  private onToggleItem(item: LogoItem): void {
+    const isSelected = this.selectedItems.some((i) => i.id === item.id);
+    this.selectedItems = isSelected
+      ? this.selectedItems.filter((i) => i.id !== item.id)
+      : [...this.selectedItems, item];
+    this.dispatchSelectionChangeEvent();
+  }
+
+  private unselectAllItems(): void {
+    this.selectedItems = [];
+    this.dispatchSelectionChangeEvent();
+  }
+
+  private selectAllItems(): void {
+    this.selectedItems = [...this.displayItems];
+    this.dispatchSelectionChangeEvent();
+  }
+
+  private selectPreselectedItems(): void {
+    this.selectedItems = filterPreselected(this.displayItems);
+    this.dispatchSelectionChangeEvent();
+  }
+
+  private selectRandom(): void {
+    this.selectedItems = this.displayItems
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 114);
+    this.dispatchSelectionChangeEvent();
+  }
+
+  private handleChangeDisplayItems(event: CustomEvent): void {
+    const { displayItems } = event.detail;
+    this.displayItems = displayItems;
+  }
+
   render() {
     return html`
     <div class="container-select">
@@ -106,18 +118,21 @@ export class MenuSelect extends LitElement {
         <div class="container">
           <my-menu-logo-select-options
             .items=${this.items}
+            .displayItems=${this.displayItems}
             .onToggleItem=${this.onToggleItem.bind(this)}
             .onSelectAll=${this.selectAllItems.bind(this)}
             .onUnselectAll=${this.unselectAllItems.bind(this)}
             .onSelectPreselected=${this.selectPreselectedItems.bind(this)}
             .onSelectRandom=${this.selectRandom.bind(this)}
+            @change-display-items=${this.handleChangeDisplayItems.bind(this)}
           ></my-menu-select-options>
         </div>
       </div>
       <my-menu-logo-select-item
-        .items=${this.items}
+        .items=${this.displayItems}
         .selectedItems=${this.selectedItems}
         .onToggleItem=${this.onToggleItem.bind(this)}
+        @change-display-items=${this.handleChangeDisplayItems.bind(this)}
       ></my-menu-logo-select-item>
     `;
   }
