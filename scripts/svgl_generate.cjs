@@ -35,6 +35,10 @@ class SvgProcessor {
       }
     }
 
+    String.prototype.toUppercase = function () {
+      return this.charAt(0).toUpperCase() + this.slice(1);
+    };
+
     const categorized = categorizedItems.reduce((acc, item) => {
       const categories = Array.isArray(item.category)
         ? item.category
@@ -48,7 +52,7 @@ class SvgProcessor {
         if (!acc[categoryKey]) {
           acc[categoryKey] = {
             id: categoryKey,
-            title: categoryKey === 'design' ? 'Design' : categories[i],
+            title: categoryKey.toUppercase(),
             items: [],
             count: 0,
           };

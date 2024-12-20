@@ -1,3 +1,4 @@
+
 import { tCategory } from './svgl/categories';
 
 export enum Categories {
@@ -32,5 +33,3 @@ export enum Categories {
   'IoT' = 'IoT',
   'Home Automation' = 'Home Automation',
 }
-
-export const categories: tCategory[] = Object.values(Categories);
