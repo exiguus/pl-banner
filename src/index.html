@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark light" />
+    <meta name="description" content="<%= description %>" />
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <title>SVG Logo Grid</title>
+    <title><%= title %></title>
     <style>
       :root {
         color-scheme: light dark;
@@ -21,9 +22,9 @@
 
   <body>
     <my-index
-      title="My LinkedIn Banner"
-      description="Get your personalized LinkedIn banner with your favorite engineering SVG logos"
-      disclaimer="This tool is not affiliated with LinkedIn &trade;"
+      title="<%= title %>"
+      description="<%= description %>"
+      disclaimer="<%= disclaimer %>"
     ></my-index>
     <script type="module" src="pages/index.ts"></script>
   </body>
