@@ -12,6 +12,8 @@
     "build:assets": "cp -r src/assets/ dist/",
     "build": "pnpm build:bundle && pnpm build:assets",
     "dev": "vite",
+    "check": "pnpm check:types",
+    "check:types": "tsc --noEmit",
     "serve": "vite preview",
     "test": "vite test",
     "lint": "eslint . ",
@@ -47,6 +49,9 @@
   "homepage": "https://github.com/exiguus/pl-banner#readme",
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@commitlint/prompt-cli": "^19.6.1",
     "@lit-labs/compiler": "^1.1.0",
     "@rollup/plugin-typescript": "^12.1.2",
     "@types/jest": "^29.5.14",
