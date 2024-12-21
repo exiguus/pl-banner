@@ -1,9 +1,11 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { repeat } from 'lit-html/directives/repeat.js';
 import { customElement, property } from 'lit/decorators.js';
+import type { WidthChangeEventDetail } from 'types/MyEvents';
+import { MyElement } from 'types/MyElement';
 
 @customElement('my-menu-canvas')
-export class MenuCanvas extends LitElement {
+export class MenuCanvas extends MyElement {
   @property({ type: Function }) onDownload!: () => void;
   @property({ type: Function }) onRandomize!: () => void;
   @property({ type: Function }) onSort!: (order: 'asc' | 'desc') => void;
@@ -80,13 +82,10 @@ export class MenuCanvas extends LitElement {
   `;
 
   private dispatchWidthChangeCustomEvent(width: number) {
-    this.dispatchEvent(
-      new CustomEvent('width-changed', {
-        detail: { width },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this.dispatchCustomEvent<WidthChangeEventDetail>({
+      target: 'width-changed',
+      detail: { width },
+    });
   }
 
   private handleWidthChangeRange(e: Event) {
@@ -156,7 +155,7 @@ export class MenuCanvas extends LitElement {
             min="5"
             max="100"
             step="5"
-            value=${this.bannerWidth}
+            .value=${this.bannerWidth}
             @change=${this.handleWidthChangeRange}
           />
         </label>

@@ -1,4 +1,4 @@
-import { iSVG } from './svgl/svg';
+import { iSVG } from 'types/svgl/svg';
 export interface SvglItem extends iSVG {}
 
 export const isSvglItem = (value: unknown): value is SvglItem =>

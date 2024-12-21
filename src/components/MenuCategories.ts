@@ -1,8 +1,10 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { LogoItem } from '../types/LogoItem';
-import { Categories } from '../types/Categories';
-import './Button';
+import type { LogoItem } from 'types/LogoItem';
+import type { Categories } from 'types/Categories';
+import { MyElement } from 'types/MyElement';
+import 'components/Button';
+import { ChangeDisplayItemsEventDetails } from 'types/MyEvents';
 
 export type CategoryItem = {
   id: string;
@@ -13,7 +15,7 @@ export type CategoryItem = {
 };
 
 @customElement('my-menu-categories')
-export class MenuCategories extends LitElement {
+export class MenuCategories extends MyElement {
   @property({ type: Array }) items!: LogoItem[];
   @property({ type: Function }) onToggleItem!: (item: LogoItem) => void;
 
@@ -137,13 +139,10 @@ export class MenuCategories extends LitElement {
       categoryItems.some((ci) => ci.some((i) => i.id === item.id))
     );
 
-    this.dispatchEvent(
-      new CustomEvent('change-display-items', {
-        detail: { displayItems: selectedItems },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this.dispatchCustomEvent<ChangeDisplayItemsEventDetails>({
+      target: 'change-display-items',
+      detail: { displayItems: selectedItems },
+    });
   }
 
   private reset(): void {

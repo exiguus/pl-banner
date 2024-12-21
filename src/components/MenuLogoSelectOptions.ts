@@ -1,12 +1,13 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { LogoItem } from '../types/LogoItem';
-import './Button';
-import './MenuCategories';
-import './MenuSearch';
+import type { LogoItem } from 'types/LogoItem';
+import { MyElement } from 'types/MyElement';
+import 'components/Button';
+import 'components/MenuCategories';
+import 'components/MenuSearch';
 
 @customElement('my-menu-logo-select-options')
-export class MyMenuSelectOptions extends LitElement {
+export class MyMenuSelectOptions extends MyElement {
   @property({ type: Array }) items!: LogoItem[];
   @property({ type: Array }) displayItems!: LogoItem[];
   @property({ type: Function }) onToggleItem!: (item: LogoItem) => void;

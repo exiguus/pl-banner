@@ -1,11 +1,12 @@
-import { html, css, LitElement, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { guard } from 'lit/directives/guard.js';
-import './LoadingSpinner';
-import { LogoItem } from '../types/LogoItem';
+import type { LogoItem } from 'types/LogoItem';
+import { MyElement } from 'types/MyElement';
+import 'components/LoadingSpinner';
 
 @customElement('my-logo')
-export class Logo extends LitElement {
+export class Logo extends MyElement {
   @property({ type: Object }) item: LogoItem | null = null;
 
   static styles = css`
@@ -28,7 +29,13 @@ export class Logo extends LitElement {
       ${guard([this.item], () =>
         this.item
           ? html`
-              <div class="logo" title=${this.item.title}>
+              <div
+                class="logo"
+                title=${`    ${this.item.title}
+    ${this.item.description}
+    ${this.item.url}
+`}
+              >
                 <my-svg-injector
                   .svgContent="${this.item.svgContent}"
                 ></my-svg-injector>

@@ -1,8 +1,9 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { MyElement } from 'types/MyElement';
 
 @customElement('my-loading-spinner')
-export class LoadingSpinner extends LitElement {
+export class LoadingSpinner extends MyElement {
   static styles = css`
     :host {
       display: flex;

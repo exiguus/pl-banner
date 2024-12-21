@@ -1,10 +1,10 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-
-import './LoadingSpinner';
+import { MyElement } from 'types/MyElement';
+import 'components/LoadingSpinner';
 
 @customElement('my-button')
-export class AppButton extends LitElement {
+export class AppButton extends MyElement {
   @property({ type: String }) variant: string = 'button'; // e.g., primary, secondary
   @property({ type: String }) disabled: string = '';
   @property({ type: Boolean }) selected: boolean = false;
@@ -73,6 +73,12 @@ export class AppButton extends LitElement {
       line-height: calc(var(--button-line-height, 1) / 2);
     }
 
+    .button-banner {
+      all: unset;
+      display: block;
+      cursor: pointer;
+    }
+
     .button-img {
       display: flex;
       align-items: center;
@@ -138,24 +144,18 @@ export class AppButton extends LitElement {
     }
   `;
 
-  render(): ReturnType<typeof html> {
-    return html`
-      <button
-        class="${this.variant}${this.selected ? ' selected' : ''}"
-        ?disabled=${this.disabled}
-        title=${this.title}
-        @click=${(e: MouseEvent) => this._handleClick(e)}
-      >
-        ${this.isLoading
-          ? html`<div class="container-fluid-spinner">
-              <div class="container-spinner">
-                <my-loading-spinner></my-loading-spinner>
-              </div>
-              <span class="visible-hidden"><slot></slot></span>
-            </div>`
-          : html`<slot></slot>`}
-      </button>
-    `;
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('button-click', () => {
+      this.dispatchEvent(new Event('click'));
+    });
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('button-click', () => {
+      this.dispatchEvent(new Event('click'));
+    });
   }
 
   private _handleClick(event: MouseEvent) {
@@ -182,5 +182,24 @@ export class AppButton extends LitElement {
     }
 
     this.dispatchEvent(new Event('button-click'));
+  }
+
+  render(): ReturnType<typeof html> {
+    return html`
+      <button
+        class="${this.variant}${this.selected ? ' selected' : ''}"
+        ?disabled=${this.disabled}
+        title=${this.title}
+      >
+        ${this.isLoading
+          ? html`<div class="container-fluid-spinner">
+              <div class="container-spinner">
+                <my-loading-spinner></my-loading-spinner>
+              </div>
+              <span class="visible-hidden"><slot></slot></span>
+            </div>`
+          : html`<slot></slot>`}
+      </button>
+    `;
   }
 }

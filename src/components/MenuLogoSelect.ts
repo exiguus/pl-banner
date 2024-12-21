@@ -1,12 +1,14 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { LogoItem } from '../types/LogoItem';
-import { filterPreselected } from '../utils/preselectedSvgs';
-import './MenuLogoSelectItem';
-import './MenuLogoSelectOptions';
+import type { LogoItem } from 'types/LogoItem';
+import type { SelectionChangeEventDetail } from 'types/MyEvents';
+import { filterPreselected } from 'utils/preselectedSvgs';
+import { MyElement } from 'types/MyElement';
+import 'components/MenuLogoSelectItem';
+import 'components/MenuLogoSelectOptions';
 
 @customElement('my-menu-logo-select')
-export class MenuSelect extends LitElement {
+export class MenuSelect extends MyElement {
   @property({ type: Array }) items!: LogoItem[];
   @property({ type: Array }) selectedItems!: LogoItem[];
 
@@ -55,13 +57,12 @@ export class MenuSelect extends LitElement {
   }
 
   private dispatchSelectionChangeEvent(): void {
-    this.dispatchEvent(
-      new CustomEvent('selection-changed', {
-        detail: { selectedItems: this.selectedItems },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this.dispatchCustomEvent<SelectionChangeEventDetail>({
+      target: 'selection-changed',
+      detail: {
+        selectedItems: this.selectedItems,
+      },
+    });
   }
 
   private initializeDisplayItems(): void {

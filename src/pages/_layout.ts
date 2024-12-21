@@ -1,10 +1,12 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import '../components/Footer';
-import '../components/Header';
+import { MyElement } from 'types/MyElement';
+import 'components/Footer';
+import 'components/Header';
+import 'components/Notify';
 
 @customElement('my-layout')
-export class Layout extends LitElement {
+export class Layout extends MyElement {
   static styles = css`
     :host {
       --default-padding: 20px;
@@ -56,10 +58,6 @@ export class Layout extends LitElement {
     }
   `;
 
-  connectedCallback(): void {
-    super.connectedCallback();
-  }
-
   render(): ReturnType<typeof html> {
     return html`
       <header>
@@ -83,6 +81,7 @@ export class Layout extends LitElement {
           </my-footer>
         </div>
       </footer>
+      <my-notify></my-notify>
     `;
   }
 }

@@ -1,4 +1,4 @@
-import { Categories } from './Categories';
+import { Categories } from 'types/Categories';
 
 export type LogoItem = {
   id: string;

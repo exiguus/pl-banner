@@ -1,12 +1,13 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import './MenuGradient';
-import './MenuCanvas';
-import './MenuLogoSelect';
-import { LogoItem } from '../types/LogoItem';
+import type { LogoItem } from 'types/LogoItem';
+import { MyElement } from 'types/MyElement';
+import 'components/MenuGradient';
+import 'components/MenuCanvas';
+import 'components/MenuLogoSelect';
 
 @customElement('my-menu')
-export class Menu extends LitElement {
+export class Menu extends MyElement {
   @property({ type: Function }) onRandomize!: () => void;
   @property({ type: Function }) onRandomBackgroundGradient!: (
     gradient: string

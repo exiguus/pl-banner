@@ -1,10 +1,10 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-
-import './_layout';
+import { MyElement } from 'types/MyElement';
+import 'pages/_layout';
 
 @customElement('my-page')
-export class Page extends LitElement {
+export class Page extends MyElement {
   @property({ type: String }) title = 'Default Page Title';
   @property({ type: String }) description = 'Default description for the page.';
 

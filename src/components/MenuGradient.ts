@@ -1,9 +1,10 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import './Button';
+import { MyElement } from 'types/MyElement';
+import 'components/Button';
 
 @customElement('my-menu-gradient')
-export class MenuGradient extends LitElement {
+export class MenuGradient extends MyElement {
   @property({ type: Function }) onPickGradient!: (gradient: string) => void;
 
   private static gradients: string[] = [

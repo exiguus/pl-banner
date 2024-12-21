@@ -1,12 +1,14 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { LogoItem } from '../types/LogoItem';
-import './Button';
-import './SVGInjector';
+import type { LogoItem } from 'types/LogoItem';
+import { MyElement } from 'types/MyElement';
+import 'components/Button';
+import 'components/SVGInjector';
+import { NotifyEventDetail } from 'types/MyEvents';
 
 @customElement('my-menu-logo-select-item')
-export class MyMenuSelectLogos extends LitElement {
+export class MyMenuSelectLogos extends MyElement {
   @property({ type: Array }) items: LogoItem[] = [];
   @property({ type: Array }) selectedItems: LogoItem[] = [];
   @property({ type: Function }) onToggleItem!: (item: LogoItem) => void;
@@ -41,6 +43,30 @@ export class MyMenuSelectLogos extends LitElement {
     super.connectedCallback();
   }
 
+  private copyInfo(item: LogoItem): void {
+    const text = `
+      id: ${item.id}
+      title: ${item.title}
+      description: ${item.description}
+      url: ${item.url}
+    `;
+
+    navigator.clipboard.writeText
+      ? navigator.clipboard.writeText(text)
+      : prompt(
+          'Could not copy to clipboard!',
+          text.replace(/\n/g, ' ').replace(/\s+/g, ' ')
+        );
+
+    this.dispatchCustomEvent<NotifyEventDetail>({
+      target: 'notify',
+      detail: {
+        message: `Copied to clipboard: "${item.id}" info`,
+      },
+    });
+    console.log('Copied to clipboard');
+  }
+
   private renderItem(item: LogoItem): ReturnType<typeof html> {
     const isSelected = this.selectedItems.some((i) => i.id === item.id);
     return html`
@@ -54,6 +80,7 @@ export class MyMenuSelectLogos extends LitElement {
         "
         ?selected=${isSelected}
         @click=${() => this.onToggleItem(item)}
+        @contextmenu=${() => this.copyInfo(item)}
       >
         <my-svg-injector .svgContent="${item.svgContent}"></my-svg-injector>
         <span class="sr-only">

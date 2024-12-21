@@ -1,15 +1,16 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import 'lit-html/private-ssr-support.js';
-import { filterPreselected } from '../utils/preselectedSvgs';
-import { LogoItem } from '../types/LogoItem';
-import './_layout';
-import './_page';
-import '../components/Home';
-import '../components/Logo';
+import { filterPreselected } from 'utils/preselectedSvgs';
+import type { LogoItem } from 'types/LogoItem';
+import { MyElement } from 'types/MyElement';
+import 'pages/_layout';
+import 'pages/_page';
+import 'components/Home';
+import 'components/Logo';
 
 @customElement('my-index')
-export class Index extends LitElement {
+export class Index extends MyElement {
   @property({ type: String }) title = '';
   @property({ type: String }) description = '';
   @property({ type: String }) disclaimer = '';
@@ -150,8 +151,8 @@ export class Index extends LitElement {
             </p>
             <p>${this.disclaimer}</p>
             <p>
-              Thx to <a href="https://github.com/pheralb/svgl">svgl</a> for the
-              Developer SVG logos &hearts;
+              Thx to <a href="https://github.com/pheralb/svgl">svgl</a> for
+              ${this.allItems.length} Developer SVG logos &hearts;
             </p>
           </div>
         </my-layout>

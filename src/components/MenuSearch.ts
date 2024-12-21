@@ -1,11 +1,13 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { LogoItem } from '../types/LogoItem';
-import { debounce } from '../utils/debounce';
-import './Button';
+import { debounce } from 'utils/debounce';
+import { MyElement } from 'types/MyElement';
+import type { LogoItem } from 'types/LogoItem';
+import type { ChangeDisplayItemsEventDetails } from 'types/MyEvents';
+import 'components/Button';
 
 @customElement('my-menu-search')
-export class MenuSearch extends LitElement {
+export class MenuSearch extends MyElement {
   @property({ type: Array }) items!: LogoItem[];
   @property({ type: Array }) displayItems!: LogoItem[];
 
@@ -65,13 +67,12 @@ export class MenuSearch extends LitElement {
   }
 
   private dispatchSelectionChangeEvent(): void {
-    this.dispatchEvent(
-      new CustomEvent('change-display-items', {
-        detail: { displayItems: this.displayItems },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this.dispatchCustomEvent<ChangeDisplayItemsEventDetails>({
+      target: 'change-display-items',
+      detail: {
+        displayItems: this.displayItems,
+      },
+    });
   }
 
   private handleSearch(event: Event): void {

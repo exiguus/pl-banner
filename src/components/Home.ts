@@ -1,11 +1,16 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import './Menu';
-import './Banner';
-import { LogoItem } from '../types/LogoItem';
+import type { LogoItem } from 'types/LogoItem';
+import type {
+  SelectionChangeEventDetail,
+  WidthChangeEventDetail,
+} from 'types/MyEvents';
+import { MyElement } from 'types/MyElement';
+import 'components/Menu';
+import 'components/Banner';
 
 @customElement('my-home')
-export class Home extends LitElement {
+export class Home extends MyElement {
   @property({ type: Array }) allItems: LogoItem[] = [];
   @property({ type: Array }) preselectedItems: LogoItem[] = [];
 
@@ -13,6 +18,8 @@ export class Home extends LitElement {
   @state() private isLoadingDownload: boolean = false;
   @state() private bannerWidth: number = 100;
 
+  // LinkedIn Personal Profiles Banner/Background Photo Size 1584 x 396 pixels
+  //  see: https://www.linkedin.com/pulse/linkedin-image-size-guide-julie-thomas-tftwc
   static BANNER_WIDTH = 1584;
   static BANNER_HEIGHT = 396;
 
@@ -55,6 +62,15 @@ export class Home extends LitElement {
       'orientationchange',
       this.scrollBannerIntoView.bind(this)
     );
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('resize', this.scrollBannerIntoView.bind(this));
+    window.removeEventListener(
+      'orientationchange',
+      this.scrollBannerIntoView.bind(this)
+    );
+    super.disconnectedCallback();
   }
 
   private scrollBannerIntoView(): void {
@@ -111,16 +127,20 @@ export class Home extends LitElement {
     }
   }
 
-  private handleSelectionChanged(event: CustomEvent): void {
-    this.items = this.allItems
-      .filter((item) =>
-        event.detail.selectedItems.some(
-          (selectedIcon: LogoItem) => selectedIcon.id === item.id
-        )
+  private handleSelectionChanged(
+    event: CustomEvent<SelectionChangeEventDetail>
+  ): void {
+    const { selectedItems, random, scrollIntoView } = event.detail;
+    const newItems = this.allItems.filter((item) =>
+      selectedItems.some(
+        (selectedIcon: LogoItem) => selectedIcon.id === item.id
       )
-      .sort(() => Math.random() - 0.5);
+    );
 
-    this.scrollBannerIntoView();
+    this.items = random
+      ? [...newItems].sort(() => Math.random() - 0.5)
+      : (this.items = [...newItems]);
+    if (scrollIntoView) this.scrollBannerIntoView();
   }
 
   private updateWidth(width: number): void {
@@ -129,10 +149,10 @@ export class Home extends LitElement {
     this.scrollBannerIntoView();
   }
 
-  private handleWithChange(event: CustomEvent): void {
-    const hasWidth = typeof event.detail.width === 'number';
-    if (hasWidth && event.detail.width !== this.bannerWidth) {
-      this.updateWidth(event.detail.width);
+  private handleWithChange(event: CustomEvent<WidthChangeEventDetail>): void {
+    const { width } = event.detail;
+    if (width !== this.bannerWidth) {
+      this.updateWidth(width);
     }
   }
 
@@ -160,7 +180,10 @@ export class Home extends LitElement {
   render(): ReturnType<typeof html> {
     return html`
       <div class="container">
-        <my-banner .items=${this.items}></my-banner>
+        <my-banner
+          .items=${this.items}
+          @selection-changed=${this.handleSelectionChanged.bind(this)}
+        ></my-banner>
         ${this.renderMenu()}
       </div>
     `;

@@ -1,8 +1,9 @@
-import { LitElement, html } from 'lit';
+import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { MyElement } from 'types/MyElement';
 
 @customElement('my-footer')
-export class Footer extends LitElement {
+export class Footer extends MyElement {
   connectedCallback(): void {
     super.connectedCallback();
   }

@@ -1,14 +1,16 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { LogoItem } from '../types/LogoItem';
-import './SVGInjector';
-import './LoadingSpinner';
-import './Logo';
+import { MyElement } from 'types/MyElement';
+import type { LogoItem } from 'types/LogoItem';
+import type { SelectionChangeEventDetail } from 'types/MyEvents';
+import 'components/SVGInjector';
+import 'components/LoadingSpinner';
+import 'components/Logo';
 
 @customElement('my-banner')
-export class Banner extends LitElement {
-  @property({ type: Array }) items: LogoItem[] = [];
+export class Banner extends MyElement {
+  @property({ type: Array }) items!: LogoItem[];
 
   static styles = css`
     :host {
@@ -63,6 +65,33 @@ export class Banner extends LitElement {
     }
   `;
 
+  private handleUnselect(item: LogoItem): void {
+    this.items = this.items.filter((i) => i.id !== item.id);
+    this.dispatchCustomEvent<SelectionChangeEventDetail>({
+      target: 'selection-changed',
+      detail: {
+        selectedItems: this.items,
+        random: false,
+        scrollIntoView: false,
+      },
+    });
+  }
+
+  private renderButton(item: LogoItem) {
+    return html`
+      <my-button
+        variant="button-banner"
+        title=${`
+          ${item.title}
+          ${item.description}
+          ${item.url}
+        `}
+        @click=${() => this.handleUnselect(item)}
+      >
+        <my-logo .item=${item}></my-logo>
+      </my-button>
+    `;
+  }
   render(): ReturnType<typeof html> {
     return html`
       <div class="banner-container">
@@ -73,7 +102,7 @@ export class Banner extends LitElement {
                 ${repeat(
                   this.items,
                   (item) => item.id,
-                  (item) => html`<my-logo .item=${item}></my-logo>`
+                  (item) => this.renderButton(item)
                 )}
               </div>
             </div>

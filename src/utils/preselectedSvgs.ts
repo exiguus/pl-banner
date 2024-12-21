@@ -1,4 +1,4 @@
-import { LogoItem } from '../types/LogoItem';
+import { LogoItem } from 'types/LogoItem';
 
 const PRESELECTED = [
   'apple-light',

@@ -3,6 +3,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Node",
+    "baseUrl": "./src",
     "strict": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -10,6 +11,6 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "types": ["node"]
+    "lib": ["ESNext", "DOM", "DOM.Iterable", "ScriptHost"]
   }
 }
