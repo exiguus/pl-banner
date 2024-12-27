@@ -1,14 +1,15 @@
-import { html } from 'lit';
+import { html, css, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { MyElement } from 'types/MyElement';
 
 @customElement('my-footer')
-export class Footer extends MyElement {
-  connectedCallback(): void {
-    super.connectedCallback();
-  }
+export class Footer extends LitElement {
+  static styles = css`
+    :host {
+      display: block;
+    }
+  `;
 
-  render(): ReturnType<typeof html> {
-    return html` <slot name="content"></slot> `;
+  render() {
+    return html`<slot name="content"></slot>`;
   }
 }

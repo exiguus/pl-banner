@@ -4,7 +4,7 @@ import { MyElement } from 'types/MyElement';
 
 @customElement('my-svg-injector')
 export class SvgInjector extends MyElement {
-  @property({ type: String }) svgContent: string = '';
+  @property({ type: String, reflect: true }) svgContent: string = '';
 
   static styles = css`
     :host {

@@ -7,7 +7,7 @@ import 'components/MenuCategories';
 import 'components/MenuSearch';
 
 @customElement('my-menu-logo-select-options')
-export class MyMenuSelectOptions extends MyElement {
+export class MenuLogoSelectOptions extends MyElement {
   @property({ type: Array }) items!: LogoItem[];
   @property({ type: Array }) displayItems!: LogoItem[];
   @property({ type: Function }) onToggleItem!: (item: LogoItem) => void;
@@ -56,32 +56,40 @@ export class MyMenuSelectOptions extends MyElement {
     }
   `;
 
-  render() {
+  render(): ReturnType<typeof html> {
     return html`
       <div class="menu">
         <div class="container">
           <div class="button-group">
-            <my-button variant="button left" @click=${this.onSelectAll}
+            <my-button
+              data-testid="menu-select-all"
+              variant="button left"
+              @click=${this.onSelectAll}
               >Select All</my-button
             >
-            <my-button variant="button center" @click=${this.onUnselectAll}
+            <my-button
+              data-testid="menu-unselect-all"
+              variant="button center"
+              @click=${this.onUnselectAll}
               >None</my-button
             >
             <my-button
+              data-testid="menu-preselected"
               variant="button center"
               @click=${this.onSelectPreselected}
+              >Pre-Set</my-button
             >
-              Pre-Set
-            </my-button>
-            <my-button variant="button right" @click=${this.onSelectRandom}
+            <my-button
+              data-testid="menu-random"
+              variant="button right"
+              @click=${this.onSelectRandom}
               >Random</my-button
             >
           </div>
           <my-menu-categories
             .items=${this.items}
             .onToggleItem=${this.onToggleItem.bind(this)}
-          >
-          </my-menu-categories>
+          ></my-menu-categories>
           <my-menu-search
             .items=${this.items}
             .displayItems=${this.displayItems}

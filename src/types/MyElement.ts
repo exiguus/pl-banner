@@ -1,4 +1,5 @@
 import { LitElement } from 'lit';
+import { customElement } from 'lit/decorators.js';
 
 export type MyCustomEventProps<Detail> = {
   target: string;
@@ -7,11 +8,8 @@ export type MyCustomEventProps<Detail> = {
   composed?: boolean;
 };
 
+@customElement('my-element')
 export class MyElement extends LitElement {
-  constructor() {
-    super();
-  }
-
   dispatchCustomEvent<Detail>({
     target,
     detail,

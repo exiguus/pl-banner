@@ -4,6 +4,7 @@ import type { LogoItem } from 'types/LogoItem';
 import type { Categories } from 'types/Categories';
 import { MyElement } from 'types/MyElement';
 import 'components/Button';
+import 'components/LoadingSpinner';
 import { ChangeDisplayItemsEventDetails } from 'types/MyEvents';
 
 export type CategoryItem = {
@@ -18,7 +19,6 @@ export type CategoryItem = {
 export class MenuCategories extends MyElement {
   @property({ type: Array }) items!: LogoItem[];
   @property({ type: Function }) onToggleItem!: (item: LogoItem) => void;
-
   @state() private categories: CategoryItem[] = [];
 
   static styles = css`
@@ -159,24 +159,27 @@ export class MenuCategories extends MyElement {
         <div class="button-group">
           <details>
             <summary>Filter Categories</summary>
-            <label class="sr-only" for="categories">Categories</label>
-            <select id="categories" @change=${this.handleSelect} multiple>
-              ${this.categories.map(
-                (category) => html`
-                  <option
-                    value="${category.id}"
-                    .selected=${category.selected && 'selected'}
-                  >
-                    ${category.title}
-                    <small
-                      >${category.count}<span class="sr-only"
-                        >Items</span
-                      ></small
-                    >
-                  </option>
+            ${this.categories.length > 0
+              ? html`
+                  <label class="sr-only" for="categories">Categories</label>
+                  <select id="categories" @change=${this.handleSelect} multiple>
+                    ${this.categories.map(
+                      (category) => html`
+                        <option
+                          value="${category.id}"
+                          .selected=${category.selected && 'selected'}
+                        >
+                          <strong>${category.title}</strong>
+                          <small
+                            >${category.count}
+                            <span class="sr-only">Items Count</span></small
+                          >
+                        </option>
+                      `
+                    )}
+                  </select>
                 `
-              )}
-            </select>
+              : html`<my-loading-spinner></my-loading-spinner>`}
           </details>
           <my-button variant="button right" @click=${this.reset}
             >Reset</my-button

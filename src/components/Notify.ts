@@ -7,11 +7,8 @@ import 'components/LoadingSpinner';
 
 @customElement('my-notify')
 export class Notify extends MyElement {
-  @state() notification: {
-    message: string;
-    duration: number;
-    type: string;
-  } | null = null;
+  @state() notification: NotifyEventDetail | null = null;
+  private timeout: NodeJS.Timeout | null = null;
 
   static styles = css`
     :host {
@@ -51,6 +48,26 @@ export class Notify extends MyElement {
       }
     }
 
+    .error {
+      border-color: var(--error-color, red);
+      background: var(--error-bg-color, pink);
+    }
+
+    .warning {
+      border-color: var(--warning-color, yellow);
+      background: var(--warning-bg-color, lightyellow);
+    }
+
+    .info {
+      border-color: var(--info-color, blue);
+      background: var(--info-bg-color, lightblue);
+    }
+
+    .success {
+      border-color: var(--success-color, green);
+      background: var(--success-bg-color, lightgreen);
+    }
+
     @keyframes wobble {
       0% {
         transform: rotate(0);
@@ -77,7 +94,6 @@ export class Notify extends MyElement {
       }
       100% {
         transform: rotate(0deg);
-        );
       }
     }
   `;
@@ -98,12 +114,11 @@ export class Notify extends MyElement {
       ((e: Event) =>
         this.notifyEventHandler(e as CustomEvent<NotifyEventDetail>)).bind(this)
     );
+    if (this.timeout) clearTimeout(this.timeout);
   }
 
-  private timeout: NodeJS.Timeout | null = null;
-
-  private notifyEventHandler(event: CustomEvent<NotifyEventDetail>): void {
-    const { message, duration = 4200, type = 'info' } = event.detail;
+  private notifyEventHandler(e: CustomEvent<NotifyEventDetail>): void {
+    const { message, duration = 4200, type = 'info' } = e.detail;
 
     if (this.timeout) {
       clearTimeout(this.timeout);
@@ -129,15 +144,8 @@ export class Notify extends MyElement {
       ${guard([this.notification], () =>
         this.notification !== null
           ? html`
-              <div
-                class="notify"
-                style="--default-background-dark: ${this.notification.type ===
-                'error'
-                  ? '#f00'
-                  : '#0f0'}"
-                aria-live="assertive"
-              >
-                <div class="container">
+              <div class="notify" aria-live="assertive">
+                <div class="container ${this.notification.type}">
                   <p>${this.notification.message}</p>
                 </div>
               </div>

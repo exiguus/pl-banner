@@ -8,8 +8,6 @@ export class AppButton extends MyElement {
   @property({ type: String }) variant: string = 'button'; // e.g., primary, secondary
   @property({ type: String }) disabled: string = '';
   @property({ type: Boolean }) selected: boolean = false;
-  @property({ type: Boolean }) preventDefault: boolean = true; // Prevent default behavior on click
-  @property({ type: Boolean }) preserveScroll: boolean = true; // Preserve scroll position
   @property({ type: Boolean }) isLoading: boolean = false;
   @property({ type: String }) title: string = '';
 
@@ -77,6 +75,30 @@ export class AppButton extends MyElement {
       all: unset;
       display: block;
       cursor: pointer;
+    }
+
+    .button-gradient {
+      width: 40px;
+      height: 42px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+      background: var(
+        --button-gradient-bg,
+        linear-gradient(135deg, #639381, #533ebb)
+      );
+      border-color: var(--button-gradient-border-color, #639381);
+    }
+    .button-gradient:hover {
+      border-color: var(--button-gradient-hover-border-color, #533ebb);
+    }
+    .button-gradient[disabled] {
+      filter: grayscale(80%);
+      cursor: not-allowed;
+    }
+    .button-gradient.selected {
+      border-color: var(--button-gradient-selected-border-color, #533ebb);
     }
 
     .button-img {
@@ -158,38 +180,14 @@ export class AppButton extends MyElement {
     });
   }
 
-  private _handleClick(event: MouseEvent) {
-    if (this.disabled) {
-      event.preventDefault();
-      return;
-    }
-
-    if (this.preventDefault) {
-      event.preventDefault(); // Prevent default behavior if set
-    }
-
-    if (this.preserveScroll) {
-      // Preserve scroll position
-      const scrollContainer = this.closest('.scroll-container') as HTMLElement;
-      if (scrollContainer) {
-        const { scrollTop, scrollLeft } = scrollContainer;
-        // Perform the click action
-        this.dispatchEvent(new Event('button-click'));
-        // Restore the scroll position
-        scrollContainer.scrollTo({ top: scrollTop, left: scrollLeft });
-        return;
-      }
-    }
-
-    this.dispatchEvent(new Event('button-click'));
-  }
-
   render(): ReturnType<typeof html> {
     return html`
       <button
         class="${this.variant}${this.selected ? ' selected' : ''}"
         ?disabled=${this.disabled}
         title=${this.title}
+        ${this.isLoading ? 'aria-busy="true"' : ''}
+        ${this.isLoading ? 'aria-label="Loading"' : ''}
       >
         ${this.isLoading
           ? html`<div class="container-fluid-spinner">

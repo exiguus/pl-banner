@@ -69,9 +69,7 @@ export class MenuSearch extends MyElement {
   private dispatchSelectionChangeEvent(): void {
     this.dispatchCustomEvent<ChangeDisplayItemsEventDetails>({
       target: 'change-display-items',
-      detail: {
-        displayItems: this.displayItems,
-      },
+      detail: { displayItems: this.displayItems },
     });
   }
 
@@ -80,32 +78,30 @@ export class MenuSearch extends MyElement {
     this.debouncedSearch(value);
   }
 
-  private performSearch = (searchTerm: string): void => {
+  public performSearch = (searchTerm: string): void => {
     this.search = searchTerm.toLocaleLowerCase().trim();
-    if (this.search) {
-      this.displayItems = this.search
-        .split(' ')
-        .map((s) => this.filterItems(s))
-        .flat();
-    } else {
-      this.displayItems = [...this.items];
-    }
+    this.displayItems = this.search
+      ? this.search.split(' ').map(this.filterItems).flat()
+      : [...this.items];
     this.dispatchSelectionChangeEvent();
   };
 
+  private matchItems = (searchTerm: string, item: LogoItem): boolean =>
+    searchTerm.length > 0 &&
+    (item.title.toLowerCase().trim().includes(searchTerm) ||
+      [item.category]
+        .flat()
+        .join(' ')
+        .toLowerCase()
+        .trim()
+        .includes(searchTerm));
+
   private filterItems = (searchTerm: string): LogoItem[] =>
-    this.items.filter(
-      (item) =>
-        item.title.toLowerCase().includes(searchTerm) ||
-        [item.category]
-          .flat()
-          .some((c) => c.toLowerCase().includes(searchTerm)) ||
-        item.description?.toLowerCase().includes(searchTerm)
-    );
+    this.items.filter((item) => this.matchItems(searchTerm, item));
 
   private debouncedSearch = debounce(this.performSearch, 600);
 
-  private handleClear(event: Event): void {
+  public handleClear(event: Event): void {
     event.preventDefault();
     this.performSearch('');
   }
@@ -119,13 +115,14 @@ export class MenuSearch extends MyElement {
   render(): ReturnType<typeof html> {
     return html`
       <div class="menu">
-        <label class="sr-only" for="filter">Filter</label>
+        <label class="sr-only" for="search-filter">Filter</label>
         <input
           type="search"
-          id="filter"
-          .value=${this.search}
+          data-testid="search-filter"
+          id="search-filter"
           placeholder="Filter Logos"
-          autocomplete="search"
+          autocomplete="on"
+          value=${this.search}
           @input=${this.handleSearch}
         />
         <my-button
