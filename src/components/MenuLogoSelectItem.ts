@@ -8,9 +8,9 @@ import 'components/SVGInjector';
 import { NotifyEventDetail } from 'types/MyEvents';
 
 @customElement('my-menu-logo-select-item')
-export class MyMenuSelectLogos extends MyElement {
-  @property({ type: Array }) items: LogoItem[] = [];
-  @property({ type: Array }) selectedItems: LogoItem[] = [];
+export class MenuLogoSelectItem extends MyElement {
+  @property({ type: Array }) items!: LogoItem[];
+  @property({ type: Array }) selectedItems!: LogoItem[];
   @property({ type: Function }) onToggleItem!: (item: LogoItem) => void;
 
   static styles = css`
@@ -60,11 +60,8 @@ export class MyMenuSelectLogos extends MyElement {
 
     this.dispatchCustomEvent<NotifyEventDetail>({
       target: 'notify',
-      detail: {
-        message: `Copied to clipboard: "${item.id}" info`,
-      },
+      detail: { message: `Copied to clipboard: "${item.id}" info` },
     });
-    console.log('Copied to clipboard');
   }
 
   private renderItem(item: LogoItem): ReturnType<typeof html> {
@@ -91,20 +88,19 @@ export class MyMenuSelectLogos extends MyElement {
     `;
   }
 
-  render() {
-    const sortedLogoItems = [...this.items].sort((a, b) =>
-      a.id.localeCompare(b.id)
-    );
+  render(): ReturnType<typeof html> {
     return html`
-      ${sortedLogoItems.length > 0
-        ? html` <div class="item-selector">
-            ${repeat(
-              sortedLogoItems,
-              (item) => item.id,
-              (item) => this.renderItem(item)
-            )}
-          </div>`
-        : html`<p>No items to display</p>`}
+      ${this.items.length > 0
+        ? html`
+            <div class="item-selector">
+              ${repeat(
+                [...this.items].sort((a, b) => a.id?.localeCompare(b.id)),
+                (item) => item.id,
+                (item) => this.renderItem(item)
+              )}
+            </div>
+          `
+        : html`<p data-testid="no-items">No items to display</p>`}
     `;
   }
 }

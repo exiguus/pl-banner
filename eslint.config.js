@@ -17,7 +17,12 @@ const config = [
       '@typescript-eslint': typescriptEslintPlugin,
     },
     files: ['src/*.ts', 'src/**/*.ts'],
-    ignores: [' **/dist/**'],
+    ignores: [
+      '**/dist/**',
+      '**/node_modules/**',
+      '**/build/**',
+      '**/coverage/**',
+    ],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',

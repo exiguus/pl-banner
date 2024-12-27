@@ -4,27 +4,27 @@ import { compileLitTemplates } from '@lit-labs/compiler';
 import { resolve } from 'path';
 const __dirname = new URL('.', import.meta.url).pathname;
 
-const transformHtmlPlugin = (data) => ({
+const transformHtmlPlugin = (data: {
+  [x: string]: any;
+  title?: string;
+  description?: string;
+  disclaimer?: string;
+}) => ({
   name: 'transform-html',
   transformIndexHtml: {
-    enforce: 'pre',
-    transform(html) {
+    enforce: 'pre' as const,
+    transform(html: string) {
       return html.replace(/<%=\s*(\w+)\s*%>/gi, (match, p1) => data[p1] || '');
     },
   },
 });
 
-export default defineConfig(({ command }) => {
+export default defineConfig(() => {
   return {
     root: 'src',
     plugins: [
       typescript({
         tsconfig: 'tsconfig.json',
-        transformers: {
-          // fails in build mode because of already declared transformer
-          before: [command === 's' && compileLitTemplates()],
-          after: [],
-        },
       }),
       transformHtmlPlugin({
         title: 'My LinkedIn Banner',
@@ -44,6 +44,20 @@ export default defineConfig(({ command }) => {
       manifest: true,
       input: {
         main: resolve(__dirname, 'index.html'),
+      },
+    },
+    test: {
+      globals: true,
+      testMatch: ['src/**/*.test.ts'],
+      environment: 'jsdom',
+      setupFiles: './test-setup.ts', // Optional setup for global configurations
+      coverage: {
+        exclude: [
+          '**/*.test.ts',
+          '**/*.spec.ts',
+          'types/MyEvents.ts',
+          'types/svgl/**.ts',
+        ],
       },
     },
   };

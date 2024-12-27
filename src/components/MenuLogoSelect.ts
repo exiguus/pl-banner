@@ -8,17 +8,16 @@ import 'components/MenuLogoSelectItem';
 import 'components/MenuLogoSelectOptions';
 
 @customElement('my-menu-logo-select')
-export class MenuSelect extends MyElement {
+export class MenuLogoSelect extends MyElement {
   @property({ type: Array }) items!: LogoItem[];
   @property({ type: Array }) selectedItems!: LogoItem[];
-
   @state() private displayItems: LogoItem[] = [];
 
   static styles = css`
     :host {
       display: block;
     }
-    .container-select {
+    .menu {
       opacity: 0;
       animation: fadeIn 0.3s 1.5s forwards;
       will-change: opacity;
@@ -35,7 +34,7 @@ export class MenuSelect extends MyElement {
     }
 
     @media (prefers-color-scheme: dark) {
-      .container-select {
+      .menu {
         background: var(--default-background-dark);
       }
     }
@@ -59,9 +58,7 @@ export class MenuSelect extends MyElement {
   private dispatchSelectionChangeEvent(): void {
     this.dispatchCustomEvent<SelectionChangeEventDetail>({
       target: 'selection-changed',
-      detail: {
-        selectedItems: this.selectedItems,
-      },
+      detail: { selectedItems: this.selectedItems },
     });
   }
 
@@ -110,31 +107,35 @@ export class MenuSelect extends MyElement {
     this.displayItems = displayItems;
   }
 
-  render() {
+  render(): ReturnType<typeof html> {
     return html`
-    <div class="container-select">
-      <h2>Select logos</h2>
-      <p>Select the logos you want to include in the banner and determine the order.</p>
-      <div class="container-fluid">
-        <div class="container">
-          <my-menu-logo-select-options
-            .items=${this.items}
-            .displayItems=${this.displayItems}
-            .onToggleItem=${this.onToggleItem.bind(this)}
-            .onSelectAll=${this.selectAllItems.bind(this)}
-            .onUnselectAll=${this.unselectAllItems.bind(this)}
-            .onSelectPreselected=${this.selectPreselectedItems.bind(this)}
-            .onSelectRandom=${this.selectRandom.bind(this)}
-            @change-display-items=${this.handleChangeDisplayItems.bind(this)}
-          ></my-menu-select-options>
+      <div class="menu">
+        <h2>Select logos</h2>
+        <p>
+          Select the logos you want to include in the banner and determine the
+          order.
+        </p>
+        <div class="container-fluid">
+          <div class="container">
+            <my-menu-logo-select-options
+              .items=${this.items}
+              .displayItems=${this.displayItems}
+              .onToggleItem=${this.onToggleItem.bind(this)}
+              .onSelectAll=${this.selectAllItems.bind(this)}
+              .onUnselectAll=${this.unselectAllItems.bind(this)}
+              .onSelectPreselected=${this.selectPreselectedItems.bind(this)}
+              .onSelectRandom=${this.selectRandom.bind(this)}
+              @change-display-items=${this.handleChangeDisplayItems.bind(this)}
+            ></my-menu-logo-select-options>
+          </div>
         </div>
+        <my-menu-logo-select-item
+          .items=${this.displayItems}
+          .selectedItems=${this.selectedItems}
+          .onToggleItem=${this.onToggleItem.bind(this)}
+          @change-display-items=${this.handleChangeDisplayItems.bind(this)}
+        ></my-menu-logo-select-item>
       </div>
-      <my-menu-logo-select-item
-        .items=${this.displayItems}
-        .selectedItems=${this.selectedItems}
-        .onToggleItem=${this.onToggleItem.bind(this)}
-        @change-display-items=${this.handleChangeDisplayItems.bind(this)}
-      ></my-menu-logo-select-item>
     `;
   }
 }

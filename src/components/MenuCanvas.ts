@@ -81,6 +81,14 @@ export class MenuCanvas extends MyElement {
     }
   `;
 
+  connectedCallback(): void {
+    super.connectedCallback();
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+  }
+
   private dispatchWidthChangeCustomEvent(width: number) {
     this.dispatchCustomEvent<WidthChangeEventDetail>({
       target: 'width-changed',
@@ -119,35 +127,51 @@ export class MenuCanvas extends MyElement {
 
     return html`
       <my-button
-        variant="button ${option}"
+        data-testid="menu-width-${value}"
+        disabled=${this.bannerWidth === value ? 'disabled' : undefined}
+        .variant="button ${option}"
+        .title="Change Banner Width to ${text}"
         @click=${() => this.onWidthChange(value)}
-        .disabled=${this.bannerWidth === value ? 'disabled' : undefined}
         >${text}</my-button
       >
     `;
   }
 
-  render() {
+  render(): ReturnType<typeof html> {
     return html`
       <div class="container">
         <my-button
           variant="button primary"
+          data-testid="menu-download"
           @click=${this.onDownload}
           .isLoading=${this.isLoadingDownload}
         >
           Save Banner
         </my-button>
-        <my-button @click=${this.onRandomize}>Randomize</my-button>
-        <my-button @click=${() => this.onSort('asc')}>Sort A-Z</my-button>
-        <my-button @click=${() => this.onSort('desc')}>Sort Z-A</my-button>
-        <my-button @click=${this.handleRandomBackgroundGradient}>
+        <my-button data-testid="menu-randomize" @click=${this.onRandomize}
+          >Randomize</my-button
+        >
+        <my-button
+          data-testid="menu-sort-asc"
+          @click=${() => this.onSort('asc')}
+          >Sort A-Z</my-button
+        >
+        <my-button
+          data-testid="menu-sort-desc"
+          @click=${() => this.onSort('desc')}
+          >Sort Z-A</my-button
+        >
+        <my-button
+          data-testid="menu-random-gradient"
+          @click=${this.handleRandomBackgroundGradient}
+        >
           Random Gradient
         </my-button>
-        <label>
+        <label for="color" data-testid="menu-color">
           <span>Color</span>
-          <input type="color" @input=${this.handeColorChange} />
+          <input id="color" type="color" @input=${this.handeColorChange} />
         </label>
-        <label id="width">
+        <label for="width" data-testid="menu-width">
           <span>Width</span>
           <input
             id="width"
@@ -155,7 +179,7 @@ export class MenuCanvas extends MyElement {
             min="5"
             max="100"
             step="5"
-            .value=${this.bannerWidth}
+            value=${this.bannerWidth}
             @change=${this.handleWidthChangeRange}
           />
         </label>

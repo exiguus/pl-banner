@@ -17,6 +17,8 @@ export const isLogoItem = (value: unknown): value is LogoItem =>
   typeof value.id === 'string' &&
   'title' in value &&
   typeof value.title === 'string' &&
+  'description' in value &&
+  typeof value.description === 'string' &&
   'category' in value &&
   typeof value.category === 'string' &&
   'path' in value &&

@@ -87,12 +87,18 @@ export class Index extends MyElement {
   `;
 
   connectedCallback(): void {
-    super.connectedCallback();
-    this.initializeItems().then(() => {
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 100);
-    });
+    this.initializeItems()
+      .then(() => {
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 100);
+      })
+      .finally(() => super.connectedCallback());
+  }
+
+  disconnectedCallback(): void {
+    this.isLoading = true;
+    super.disconnectedCallback();
   }
 
   private async initializeItems(): Promise<void> {

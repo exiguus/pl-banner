@@ -1,4 +1,4 @@
-import { html, css } from 'lit';
+import { html, css, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { LogoItem } from 'types/LogoItem';
 import type {
@@ -6,6 +6,7 @@ import type {
   WidthChangeEventDetail,
 } from 'types/MyEvents';
 import { MyElement } from 'types/MyElement';
+import { bannerWidth, bannerHeight, gradients } from 'types/CSS';
 import 'components/Menu';
 import 'components/Banner';
 
@@ -20,18 +21,15 @@ export class Home extends MyElement {
 
   // LinkedIn Personal Profiles Banner/Background Photo Size 1584 x 396 pixels
   //  see: https://www.linkedin.com/pulse/linkedin-image-size-guide-julie-thomas-tftwc
-  static BANNER_WIDTH = 1584;
-  static BANNER_HEIGHT = 396;
+  static BANNER_WIDTH = bannerWidth;
+  static BANNER_HEIGHT = bannerHeight;
+  static GRADIENT = gradients[0];
 
   static styles = css`
     :host {
       --spinner-color1: #639381;
       --spinner-color2: #533ebb;
-      --bg-color: linear-gradient(
-        135deg,
-        var(--spinner-color1),
-        var(--spinner-color2)
-      );
+      --bg-color: ${unsafeCSS(Home.GRADIENT)};
       --banner-width: ${Home.BANNER_WIDTH}px;
       --banner-height: ${Home.BANNER_HEIGHT}px;
       --container-gap: 20px 10px;
@@ -87,7 +85,7 @@ export class Home extends MyElement {
     }, 100);
   }
 
-  private randomizeOrder(): void {
+  public randomizeOrder(): void {
     this.items = [...this.items].sort(() => Math.random() - 0.5);
   }
 
