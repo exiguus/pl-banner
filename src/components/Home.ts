@@ -52,7 +52,7 @@ export class Home extends MyElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.items = [...this.preselectedItems];
+    this.items = [...this.preselectedItems.sort(() => Math.random() - 0.5)];
     this.scrollBannerIntoView();
 
     window.addEventListener('resize', this.scrollBannerIntoView.bind(this));

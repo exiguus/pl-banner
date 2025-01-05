@@ -1,6 +1,6 @@
 import { LogoItem } from 'types/LogoItem';
 
-const PRESELECTED = [
+export const PRESELECTED = [
   'apple-light',
   'apple-dark',
   'astro',
