@@ -7,3 +7,4 @@ lighthouse
 src/data
 src/assets/svgl
 coverage
+.env

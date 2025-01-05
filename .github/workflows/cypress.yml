@@ -1,0 +1,127 @@
+name: E2E
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to test against'
+        required: true
+        default: 'https://pl-banner.vercel.app/'
+        type: string
+
+jobs:
+  test_setup:
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
+    name: Test Setup
+    runs-on: ubuntu-latest
+
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+    outputs:
+      preview_url: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
+      production_url: ${{ steps.waitForVercelProductionDeployment.outputs.url || env.VERCEL_DEPLOYMENT_URL }}
+
+    steps:
+      - name: Wait for Vercel preview deployment to be ready
+        if: github.event_name == 'pull_request'
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        id: waitForVercelPreviewDeployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 900
+          check_interval: 30
+          environment: Preview
+
+      - name: Wait for Vercel production deployment to be ready
+        if: github.event_name == 'push'
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        id: waitForVercelProductionDeployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 900
+          environment: Production
+
+  test_run:
+    needs: test_setup
+    if: always()
+    name: Test run
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: fail if no url is available to test against in non-manual runs
+        if: ${{ (github.event_name == 'pull_request' || github.event_name == 'push') && needs.test_setup.outputs.preview_url == '' && needs.test_setup.outputs.production_url == '' }}
+        run: exit 1
+
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Set locale
+        run: |
+          sudo apt-get update && sudo apt-get install tzdata locales -y
+          sudo locale-gen de_DE.UTF-8
+          sudo localectl set-locale LANG=de_DE.UTF-8
+          export LANG=de_DE.UTF-8
+          sudo update-locale
+          locale -a
+          locale
+
+      - uses: cypress-io/github-action@v6
+        name: Cypress E2E on Chrome
+        with:
+          install: true
+          browser: chrome
+        env:
+          TEST_URL: ${{ needs.test_setup.outputs.preview_url || needs.test_setup.outputs.production_url || inputs.environment }}
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-videos
+          path: cypress/videos
+          if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
+          retention-days: 7

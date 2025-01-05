@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 import typescript from '@rollup/plugin-typescript';
 import { compileLitTemplates } from '@lit-labs/compiler';
 import { resolve } from 'path';
+import i18n from './i18n.json';
+
 const __dirname = new URL('.', import.meta.url).pathname;
 
 const transformHtmlPlugin = (data: {
@@ -12,8 +14,8 @@ const transformHtmlPlugin = (data: {
 }) => ({
   name: 'transform-html',
   transformIndexHtml: {
-    enforce: 'pre' as const,
-    transform(html: string) {
+    order: 'pre' as const,
+    handler(html: string) {
       return html.replace(/<%=\s*(\w+)\s*%>/gi, (match, p1) => data[p1] || '');
     },
   },
@@ -26,12 +28,7 @@ export default defineConfig(() => {
       typescript({
         tsconfig: 'tsconfig.json',
       }),
-      transformHtmlPlugin({
-        title: 'My LinkedIn Banner',
-        description:
-          'Get your personalized LinkedIn banner with your favorite engineering SVG logos',
-        disclaimer: 'This tool is not affiliated with LinkedIn &trade;',
-      }),
+      transformHtmlPlugin(i18n.en),
     ],
     build: {
       outDir: resolve(__dirname, 'dist'),
@@ -39,6 +36,7 @@ export default defineConfig(() => {
       format: 'esm',
       sourcemap: true,
       preserveModules: true,
+      chunkSizeWarningLimit: 2000,
     },
     rollupOptions: {
       manifest: true,
