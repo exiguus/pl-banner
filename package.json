@@ -41,7 +41,8 @@
     "logo",
     "banner",
     "linkedin",
-    "profile"
+    "profile",
+    "engineering"
   ],
   "author": {
     "name": "Simon Gattner",
@@ -52,7 +53,7 @@
     "type": "git",
     "url": "https://github.com/exiguus/pl-banner"
   },
-  "homepage": "https://github.com/exiguus/pl-banner#readme",
+  "homepage": "https://plb.exiguus.app/",
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",
