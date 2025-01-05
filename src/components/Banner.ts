@@ -14,6 +14,8 @@ export class Banner extends MyElement {
 
   static styles = css`
     :host {
+      --banner-inner-width: 100%;
+
       display: block;
       position: sticky;
       top: 0;

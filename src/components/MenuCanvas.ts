@@ -169,7 +169,12 @@ export class MenuCanvas extends MyElement {
         </my-button>
         <label for="color" data-testid="menu-color">
           <span>Color</span>
-          <input id="color" type="color" @input=${this.handeColorChange} />
+          <input
+            id="color"
+            type="color"
+            @change=${this.handeColorChange}
+            @input=${this.handeColorChange}
+          />
         </label>
         <label for="width" data-testid="menu-width">
           <span>Width</span>

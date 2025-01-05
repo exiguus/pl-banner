@@ -29,5 +29,4 @@ export enum Categories {
   'Authentication' = 'Authentication',
   'IoT' = 'IoT',
   'Home Automation' = 'Home Automation',
-  Tool = 'Tool',
 }
