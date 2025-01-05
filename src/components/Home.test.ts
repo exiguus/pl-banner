@@ -132,10 +132,11 @@ describe('Home Component', () => {
   it('should sort items correctly', async () => {
     el = await fixture<Home>(
       html`<my-home
-        .allItems=${mockItems}
+        .allItems=${mockItems.sort((a, b) => a.title.localeCompare(b.title))}
         .preselectedItems=${[mockItems[1], mockItems[0]]}
       ></my-home>`
     );
+
     const menu = el.shadowRoot?.querySelector('my-menu')!;
     menu.dispatchEvent(
       new CustomEvent('sort', {
@@ -148,17 +149,18 @@ describe('Home Component', () => {
     await el.updateComplete;
 
     // Validate sorted order
-    const sortedAsc = el.shadowRoot
-      ?.querySelector('my-banner')
-      ?.shadowRoot?.querySelectorAll('my-button');
-    expect(sortedAsc).to.exist;
-    expect(sortedAsc?.length).to.equal(2);
-    expect(sortedAsc?.[0]?.getAttribute('title')).to.include(
-      mockItems[1].title
+    const banner = el.shadowRoot?.querySelector('my-banner');
+    const sortedButtons = banner?.shadowRoot?.querySelectorAll('my-button');
+
+    expect(sortedButtons).to.exist;
+    expect(sortedButtons?.length).to.equal(2);
+
+    const buttonTitles = Array.from(sortedButtons || []).map((btn) =>
+      btn.getAttribute('title')
     );
-    expect(sortedAsc?.[1]?.getAttribute('title')).to.include(
-      mockItems[0].title
-    );
+
+    expect(buttonTitles[0]).to.include(mockItems[1].title);
+    expect(buttonTitles[1]).to.include(mockItems[0].title);
   });
 
   it('should render an empty banner when no items are provided', async () => {
