@@ -18,6 +18,8 @@
     "test": "NODE_OPTIONS=--no-deprecation NODE_ENV=production vitest run",
     "test:watch": "NODE_OPTIONS=--no-deprecation NODE_ENV=production vitest --watch",
     "test:coverage": "NODE_OPTIONS=--no-deprecation NODE_ENV=production vitest run --coverage",
+    "cy:watch": "cypress open",
+    "cy:run": "cypress run --browser chrome",
     "lint": "pnpm lint:fix",
     "lint:fix": "eslint . --fix",
     "lint:check": "eslint . --max-warnings 0",
@@ -61,11 +63,14 @@
     "@rollup/plugin-typescript": "^12.1.2",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.2",
+    "@types/pixelmatch": "^5.2.6",
+    "@types/pngjs": "^6.0.5",
     "@types/sinon": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^8.18.1",
     "@typescript-eslint/parser": "^8.18.1",
     "@vitest/coverage-v8": "2.1.8",
     "axios": "^1.7.9",
+    "cypress": "^13.17.0",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-lit": "^1.15.0",
@@ -76,6 +81,8 @@
     "jest": "^29.7.0",
     "jsdom": "^25.0.1",
     "lint-staged": "^15.2.11",
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0",
     "prettier": "^3.4.2",
     "sinon": "^19.0.2",
     "tslib": "^2.8.1",
@@ -89,5 +96,10 @@
     "lit": "^3.2.1",
     "lit-html": "^3.2.1"
   },
-  "packageManager": "pnpm@10.0.0-beta.1+sha512.629de0531b9ae9a3f8e372d014ef8f5a57906d9a48095ced54bbfbd246b4136381478032c8d13819fd1eedde8330517a799ea6756eedd9a136e36524fa3083cf"
+  "packageManager": "pnpm@10.0.0-beta.1+sha512.629de0531b9ae9a3f8e372d014ef8f5a57906d9a48095ced54bbfbd246b4136381478032c8d13819fd1eedde8330517a799ea6756eedd9a136e36524fa3083cf",
+  "engines": {
+    "pnpm": ">=9.0.0 <11.0.0",
+    "npm": ">=10.0.0 <11.0.0",
+    "node": ">=22.0.0 <23.0.0"
+  }
 }
