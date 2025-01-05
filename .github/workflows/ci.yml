@@ -1,0 +1,84 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check-format:
+    name: Check Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: format
+        run: pnpm format:check
+
+      - name: lint
+        run: pnpm lint:check
+
+  analyze-typescript:
+    name: Analyze TypeScript
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: FTA Action
+        id: fta-action
+        uses: exiguus/fta-github-action@v0.1.2
+        with:
+          project_path: ./
+          config_path: fta.config.json
+
+      - name: Print Output Summary
+        id: output-summary
+        run: echo -e "\nSummary:\n${{ steps.fta-action.outputs.summary }}"
+
+      - name: Print Output Details
+        id: output-details
+        run: echo -e "\nDetails:\n${{ steps.fta-action.outputs.details }}"
+
+      - name: Upload Output Summary
+        id: upload-output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: output.json
