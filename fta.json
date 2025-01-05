@@ -1,0 +1,15 @@
+{
+  "output_limit": 250,
+  "score_cap": 90,
+  "exclude_directories": ["__mocks__", "mocks"],
+  "exclude_filenames": [
+    "*.test.{js,jsx,ts,tsx}",
+    "*.spec.{js,jsx,ts,tsx}",
+    "*.e2e.{js,jsx,ts,tsx}",
+    "*.stories.{js,jsx,ts,tsx}",
+    "*.d.ts"
+  ],
+  "extensions": [".cjs", ".js", ".jsx", ".mjs", ".ts", ".tsx"],
+  "include_comments": false,
+  "exclude_under": 10
+}
