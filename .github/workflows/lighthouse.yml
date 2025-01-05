@@ -1,0 +1,55 @@
+name: Lighthouse
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+
+jobs:
+  test_setup:
+    name: Test Setup
+    runs-on: ubuntu-latest
+    outputs:
+      preview_url: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
+      production_url: ${{ steps.waitForVercelProductionDeployment.outputs.url || env.VERCEL_DEPLOYMENT_URL }}
+
+    steps:
+      - name: Wait for Vercel preview deployment to be ready
+        if: github.event_name == 'pull_request'
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        id: waitForVercelPreviewDeployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 900
+          check_interval: 30
+          environment: Preview – pl-banner
+
+      - name: Wait for Vercel production deployment to be ready
+        if: github.event_name == 'push'
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        id: waitForVercelProductionDeployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 900
+          environment: Production – pl-banner
+
+  test_run:
+    needs: test_setup
+    name: Test run
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Audit URLs and validate Budget
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            ${{ needs.test_setup.outputs.preview_url || needs.test_setup.outputs.production_url }}
+          budgetPath: ./budget.json
+          uploadArtifacts: true
+          runs: 3
