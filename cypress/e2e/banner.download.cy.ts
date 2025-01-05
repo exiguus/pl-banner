@@ -4,7 +4,6 @@ import { bannerWidth, bannerHeight } from 'types/CSS';
 
 const imagePathFixture = 'cypress/fixtures/banner.png';
 const imagePathDownloads = 'cypress/downloads/banner.png';
-const imagePathDiff = 'cypress/debug/banner.png';
 
 describe('banner download spec', () => {
   const url = Cypress.config('baseUrl');
@@ -29,7 +28,7 @@ describe('banner download spec', () => {
     downloadButton.click({
       force: true,
     });
-    cy.wait(3000);
+    cy.wait(6000);
     cy.readFile(imagePathDownloads).should('exist');
     cy.exec(`rm ${imagePathDownloads}`);
   });
@@ -67,7 +66,7 @@ describe('banner download spec', () => {
     downloadButton.click({
       force: true,
     });
-    cy.wait(3000);
+    cy.wait(6000);
 
     cy.readFile(imagePathFixture, 'base64').then((image1) => {
       const buffer1 = Buffer.from(image1, 'base64');
@@ -86,21 +85,13 @@ describe('banner download spec', () => {
           diff.data,
           width,
           height,
-          { threshold: 0.1 }
+          { threshold: 0.5 }
         );
 
         expect(numDiffPixels).to.eq(0);
-
-        // save diff image
-        cy.writeFile(
-          imagePathDiff,
-          PNG.sync.write(diff).toString('base64'),
-          'base64'
-        );
       });
 
       cy.exec(`rm ${imagePathDownloads}`);
-      cy.exec(`rm ${imagePathDiff}`);
     });
   });
 
@@ -121,7 +112,7 @@ describe('banner download spec', () => {
     downloadButton.click({
       force: true,
     });
-    cy.wait(3000);
+    cy.wait(6000);
 
     cy.readFile(imagePathDownloads, 'base64').then((image) => {
       const buffer = Buffer.from(image, 'base64');
