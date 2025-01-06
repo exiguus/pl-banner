@@ -18,15 +18,18 @@ export class MenuLogoSelectOptions extends MyElement {
 
   static styles = css`
     :host {
-      display: block;
+      display: flex;
+      width: 100%;
     }
 
     .menu {
       display: flex;
-      padding: var(--menu-padding, 16px) 0;
+      padding-top: calc(var(--menu-padding, 16px) / 2);
+      padding-bottom: var(--menu-padding, 16px);
+      width: 100%;
       color: var(--default-color-light);
       background: var(--default-background-light);
-      border-bottom: 2px solid #d76d77;
+      border-bottom: 2px solid var(--menu-border-color);
     }
 
     @media (prefers-color-scheme: dark) {
@@ -35,20 +38,11 @@ export class MenuLogoSelectOptions extends MyElement {
         background: var(--default-background-dark);
       }
     }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      width: 100%;
-    }
     .container {
       display: flex;
-      flex-wrap: no-wrap;
       white-space: nowrap;
       align-items: center;
       gap: var(--container-gap, 8px);
-      width: 100%;
-      overflow-x: auto;
     }
     .button-group {
       display: flex;

@@ -70,13 +70,12 @@ export class MenuCanvas extends MyElement {
     }
     .container {
       display: flex;
-      flex-wrap: no-wrap;
       white-space: nowrap;
       align-items: center;
-
       gap: var(--container-gap, 8px);
-      width: 100%;
       overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
     }
     .button-group {
       display: flex;

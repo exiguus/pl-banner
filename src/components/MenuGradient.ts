@@ -10,26 +10,33 @@ export class MenuGradient extends MyElement {
   @property({ type: Function }) onPickGradient!: (gradient: string) => void;
   @state() private currentGradient: number = 0;
 
+  static gradientWidth = 40;
+  static gradientGap = 8;
+
   static styles = css`
     :host {
-      display: block;
+      --gradient-grid-gap: ${MenuGradient.gradientGap}px;
+      --gradient-grid-width: ${MenuGradient.gradientWidth}px;
     }
     .gradient-container {
       display: flex;
-      flex-wrap: nowrap;
-      gap: 0 8px;
+      white-space: nowrap;
+      align-items: center;
+      gap: var(--gradient-grid-gap);
       overflow-x: auto;
+      overflow-y: hidden;
       scroll-behavior: smooth;
     }
     .gradient-list {
       display: flex;
       flex-wrap: nowrap;
       align-items: center;
-
-      gap: 8px;
-      padding-bottom: 8px;
-      margin-right: 48px;
-      width: ${gradients.length * (40 + 8)}px;
+      gap: 0 var(--gradient-grid-gap);
+      padding-bottom: var(--gradient-grid-gap);
+      margin-right: calc(var(--gradient-grid-gap) + var(--gradient-grid-width));
+      margin-bottom: calc(-1 * var(--gradient-grid-gap));
+      width: ${gradients.length *
+      (MenuGradient.gradientWidth + MenuGradient.gradientGap)}px;
     }
   `;
 

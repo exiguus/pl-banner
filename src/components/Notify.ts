@@ -25,7 +25,7 @@ export class Notify extends MyElement {
       justify-content: center;
       align-items: center;
       padding: var(--default-padding, 20px);
-      width: calc(100vw - 8em);
+      width: calc(100% - 2 * var(--default-padding, 20px));
       max-width: 480px;
       border-radius: var(--default-border-radius, 20px);
       background: var(--default-background-dark);
@@ -34,7 +34,7 @@ export class Notify extends MyElement {
       border-width: 2px;
       border-style: solid;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-      opacity: 0.8;
+      opacity: 0.99;
       animation: wobble 0.5s ease-out;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
@@ -118,6 +118,7 @@ export class Notify extends MyElement {
   }
 
   private notifyEventHandler(e: CustomEvent<NotifyEventDetail>): void {
+    e.preventDefault();
     const { message, duration = 4200, type = 'info' } = e.detail;
 
     if (this.timeout) {

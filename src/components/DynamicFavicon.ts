@@ -67,7 +67,7 @@ export class DynamicFavicon extends LitElement {
     return item.svgContent;
   }
 
-  render() {
+  render(): ReturnType<typeof html> {
     return html`<slot></slot>`;
   }
 }

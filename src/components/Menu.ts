@@ -24,6 +24,7 @@ export class Menu extends MyElement {
   static styles = css`
     :host {
       display: block;
+      --menu-border-color: #d76d77;
     }
     .container-fluid {
       position: sticky;
@@ -37,10 +38,11 @@ export class Menu extends MyElement {
       display: flex;
       flex-direction: column;
       gap: var(--menu-gap, 16px);
+      padding: var(--menu-gap, 16px) 0;
       width: 100%;
-      padding: var(--menu-padding, 16px) 0;
       color: var(--default-color-light);
       background: var(--default-background-light);
+      border-bottom: 2px solid var(--menu-border-color);
     }
     @media (prefers-color-scheme: dark) {
       .container {

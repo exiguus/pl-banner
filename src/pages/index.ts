@@ -35,18 +35,32 @@ export class Index extends MyElement {
       will-change: opacity;
     }
 
+    @media (max-width: 1024px) {
+      .logo-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+      }
+    }
+
     .logo-container :where(h1, p, .logo) {
       line-height: 1.2;
     }
 
     .logo {
       display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 10px;
       margin-left: -2px;
       min-width: 32px;
       align-self: flex-start;
-      padding: 24px 0;
     }
-
+    @media (min-width: 1025px) {
+      .logo {
+        padding: 24px 0;
+      }
+    }
     .subtitle-container {
       display: flex;
       flex-wrap: wrap;
@@ -120,8 +134,8 @@ export class Index extends MyElement {
                 ? nothing
                 : html` <div class="logo">
                     <my-logo .item=${this.logoItem}></my-logo>
+                    <h1>${this.title}</h1>
                   </div>`}
-              <h1>${this.title}</h1>
               <p class="disclaimer">${this.disclaimer}</p>
             </div>
             <div class="subtitle-container">

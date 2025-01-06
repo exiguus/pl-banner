@@ -14,9 +14,6 @@ export class MenuLogoSelect extends MyElement {
   @state() private displayItems: LogoItem[] = [];
 
   static styles = css`
-    :host {
-      display: block;
-    }
     .menu {
       opacity: 0;
       animation: fadeIn 0.3s 1.5s forwards;
@@ -24,17 +21,33 @@ export class MenuLogoSelect extends MyElement {
     }
 
     .container-fluid {
-      position: sticky;
-      top: 530px;
-      z-index: 1;
+      display: flex;
+      width: 100%;
+    }
+    @media (max-width: 1024px) {
+      .container-fluid {
+        position: fixed;
+        left: var(--container-padding, 20px);
+        bottom: 0;
+        z-index: 10;
+        width: calc(100% - 2 * var(--container-padding, 20px));
+      }
     }
 
     .container {
+      display: flex;
+      width: 100%;
+      white-space: nowrap;
+      align-items: center;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      border-top-left-radius: var(--menu-border-radius, 5px);
       background: var(--default-background-light);
     }
 
     @media (prefers-color-scheme: dark) {
-      .menu {
+      .container {
         background: var(--default-background-dark);
       }
     }
