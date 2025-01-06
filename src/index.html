@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark light" />
     <meta name="description" content="<%= description %>" />
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTAwIiBoZWlnaHQ9IjI1MDAiIHZpZXdCb3g9IjAgMCAxMDUyIDEwNTIiPjxwYXRoIGZpbGw9IiNmMGRiNGYiIGQ9Ik0wIDBoMTA1MnYxMDUySDB6Ii8+PHBhdGggZD0iTTk2NS45IDgwMS4xYy03LjctNDgtMzktODguMy0xMzEuNy0xMjUuOS0zMi4yLTE0LjgtNjguMS0yNS4zOTktNzguOC00OS44LTMuOC0xNC4yLTQuMy0yMi4yLTEuOS0zMC44IDYuOS0yNy45IDQwLjItMzYuNiA2Ni42LTI4LjYgMTcgNS43IDMzLjEgMTguODAxIDQyLjggMzkuNyA0NS40LTI5LjM5OSA0NS4zLTI5LjIgNzctNDkuMzk5LTExLjYtMTgtMTcuOC0yNi4zMDEtMjUuNC0zNC0yNy4zLTMwLjUtNjQuNS00Ni4yLTEyNC00NS0xMC4zIDEuMy0yMC42OTkgMi42OTktMzEgNC0yOS42OTkgNy41LTU4IDIzLjEtNzQuNiA0NC00OS44IDU2LjUtMzUuNiAxNTUuMzk5IDI1IDE5Ni4xIDU5LjcgNDQuOCAxNDcuNCA1NSAxNTguNiA5Ni45IDEwLjkgNTEuMy0zNy42OTkgNjcuODk5LTg2IDYyLTM1LjYtNy40LTU1LjM5OS0yNS41LTc2LjgtNTguNC0zOS4zOTkgMjIuOC0zOS4zOTkgMjIuOC03OS44OTkgNDYuMSA5LjYgMjEgMTkuNjk5IDMwLjUgMzUuOCA0OC43IDc2LjIgNzcuMyAyNjYuODk5IDczLjUgMzAxLjEtNDMuNSAxLjM5OS00LjAwMSAxMC42LTMwLjgwMSAzLjE5OS03Mi4xMDF6bS0zOTQtMzE3LjZoLTk4LjRjMCA4NS0uMzk5IDE2OS40LS4zOTkgMjU0LjQgMCA1NC4xIDIuOCAxMDMuNy02IDExOC45LTE0LjQgMjkuODk5LTUxLjcgMjYuMi02OC43IDIwLjM5OS0xNy4zLTguNS0yNi4xLTIwLjYtMzYuMy0zNy42OTktMi44LTQuOS00LjktOC43LTUuNjAxLTktMjYuNjk5IDE2LjMtNTMuMyAzMi42OTktODAgNDkgMTMuMzAxIDI3LjMgMzIuOSA1MSA1OCA2Ni4zOTkgMzcuNSAyMi41IDg3LjkgMjkuNCAxNDAuNjAxIDE3LjMgMzQuMy0xMCA2My44OTktMzAuNjk5IDc5LjM5OS02Mi4xOTkgMjIuNC00MS4zIDE3LjYtOTEuMyAxNy40LTE0Ni42LjUtOTAuMiAwLTE4MC40IDAtMjcwLjl6IiBmaWxsPSIjMzIzMzMwIi8+PC9zdmc+"
+    />
     <title><%= title %></title>
     <style>
       :root {
@@ -18,6 +22,7 @@
         padding: 0;
       }
     </style>
+    <my-dynamic-favicon></my-dynamic-favicon>
   </head>
 
   <body>
@@ -27,5 +32,6 @@
       disclaimer="<%= disclaimer %>"
     ></my-index>
     <script type="module" src="pages/index.ts"></script>
+    <script type="module" src="components/DynamicFavicon.ts"></script>
   </body>
 </html>
