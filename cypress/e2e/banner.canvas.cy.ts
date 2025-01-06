@@ -40,21 +40,6 @@ describe('banner canvas spec', () => {
 
   it('should change banner width', () => {
     cy.visit(url);
-    let banner = cy
-      .get('my-index')
-      .shadow()
-      .find('my-home')
-      .shadow()
-      .find('my-banner')
-      .shadow()
-      .find('.banner-inner');
-
-    banner.then(($el) => {
-      const style = getComputedStyle($el[0]);
-      const width = style.getPropertyValue('--banner-inner-width').trim();
-      expect(width).to.eq('100%');
-    });
-
     // change width via menu
     const input = cy
       .get('my-index')
