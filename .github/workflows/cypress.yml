@@ -109,6 +109,7 @@ jobs:
           install: true
           browser: chrome
         env:
+          CYPRESS_CACHE_FOLDER: ${{ env.STORE_PATH }}
           TEST_URL: ${{ needs.test_setup.outputs.preview_url || needs.test_setup.outputs.production_url || inputs.environment }}
 
       - uses: actions/upload-artifact@v4
