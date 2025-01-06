@@ -56,6 +56,14 @@ export class Layout extends MyElement {
       gap: 0 var(--default-gap);
       margin-bottom: var(--default-margin);
     }
+
+    @media (max-width: 1024px) {
+      footer ::slotted(*) {
+        gap: calc(var(--default-gap) / 2) 0;
+        padding: 1rem 0 3rem 0;
+        text-align: center;
+      }
+    }
   `;
 
   render(): ReturnType<typeof html> {

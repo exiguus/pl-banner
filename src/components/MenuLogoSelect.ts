@@ -29,7 +29,7 @@ export class MenuLogoSelect extends MyElement {
         position: fixed;
         left: var(--container-padding, 20px);
         bottom: 0;
-        z-index: 10;
+        z-index: 2;
         width: calc(100% - 2 * var(--container-padding, 20px));
       }
     }

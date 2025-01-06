@@ -22,6 +22,7 @@ export class Index extends MyElement {
 
   static styles = css`
     :host {
+      --linkedin-color: #0a66c2;
       display: block;
     }
 
@@ -56,10 +57,19 @@ export class Index extends MyElement {
       min-width: 32px;
       align-self: flex-start;
     }
-    @media (min-width: 1025px) {
-      .logo {
-        padding: 24px 0;
-      }
+    .logo h1 {
+      display: flex;
+      align-items: center;
+      font-size: 1.4rem;
+      gap: 0 0.5rem;
+    }
+    .logo .linkedin {
+      display: flex;
+      align-items: center;
+      gap: 0 0.25rem;
+      color: var(--linkedin-color);
+      font-size: 1.8rem;
+      line-height: 1;
     }
     .subtitle-container {
       display: flex;
@@ -80,6 +90,12 @@ export class Index extends MyElement {
       font-size: 0.75em;
       opacity: 0.5;
       margin-top: -10px;
+    }
+
+    @media (max-width: 1024px) {
+      div[slot='footer'] p {
+        margin: 0;
+      }
     }
 
     .loading-container {
@@ -133,8 +149,12 @@ export class Index extends MyElement {
               ${this.isLoading
                 ? nothing
                 : html` <div class="logo">
-                    <my-logo .item=${this.logoItem}></my-logo>
-                    <h1>${this.title}</h1>
+                    <h1>
+                      <span class="linkedin"
+                        >Linked<my-logo .item=${this.logoItem}></my-logo
+                      ></span>
+                      ${this.title}
+                    </h1>
                   </div>`}
               <p class="disclaimer">${this.disclaimer}</p>
             </div>
@@ -153,7 +173,7 @@ export class Index extends MyElement {
                 ></my-home> `}
           </div>
           <div slot="footer">
-            <p>${this.title} &ndash; ${this.description}</p>
+            <p>LinkedIn ${this.title} &ndash; ${this.description}</p>
             <p>
               &para; Made by
               <a
@@ -163,17 +183,27 @@ export class Index extends MyElement {
               >, for developers
             </p>
             <p>
-              @customElement("<a
-                href="https://www.gattner.name"
-                title="Simon Gatter"
-                >simon-gattner</a
-              >")
+              GitHub
+              <a href="https://github.com/exiguus/pl-banner">
+                @exiguus/pl-banner
+              </a>
             </p>
             <p>${this.disclaimer}</p>
             <p>
               Thx to <a href="https://github.com/pheralb/svgl">svgl</a> for
               ${this.allItems.length} Developer SVG logos &hearts;
             </p>
+            <p>
+              If you are the owner of an SVG and prefer it not to be displayed
+              here, create an
+              <a
+                href="https://github.com/exiguus/pl-banner/issues"
+                title="GitHub Issues"
+                >issue</a
+              >
+              on GitHub.
+            </p>
+            <p>Last update: ${new Date().toISOString()}</p>
           </div>
         </my-layout>
       </my-page>

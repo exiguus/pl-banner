@@ -13,6 +13,7 @@ describe('banner download spec', () => {
 
   it('should download banner image as png', () => {
     cy.visit(url);
+    cy.wait(6000);
     const downloadButton = cy
       .get('my-index')
       .shadow()
@@ -35,6 +36,7 @@ describe('banner download spec', () => {
 
   it('should download banner image look like expected', () => {
     cy.visit(url);
+    cy.wait(6000);
     const sortAscButton = cy
       .get('my-index')
       .shadow()
@@ -97,6 +99,7 @@ describe('banner download spec', () => {
 
   it('should download banner image with correct dimensions', () => {
     cy.visit(url);
+    cy.wait(6000);
     const downloadButton = cy
       .get('my-index')
       .shadow()

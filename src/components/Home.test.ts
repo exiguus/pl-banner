@@ -1,6 +1,6 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './Home'; // Import the Home component
-import type { Home } from './Home';
+import { Home } from './Home';
 import type { LogoItem } from 'types/LogoItem';
 import { Categories } from 'types/Categories';
 
@@ -45,7 +45,7 @@ describe('Home Component', () => {
     );
   });
 
-  it('should render correctly', () => {
+  it('should render correctly', async () => {
     expect(el).to.exist;
 
     // Check if the container exists
@@ -53,6 +53,9 @@ describe('Home Component', () => {
     expect(container).to.exist;
 
     // Check if my-banner exists
+    await new Promise((resolve) =>
+      setTimeout(resolve, Home.showProfileIdTimeout + 500)
+    );
     const banner = el.shadowRoot?.querySelector('my-banner');
     expect(banner).to.exist;
 
@@ -62,6 +65,9 @@ describe('Home Component', () => {
   });
 
   it('should handle selection-changed event', async () => {
+    await new Promise((resolve) =>
+      setTimeout(resolve, Home.showProfileIdTimeout + 500)
+    );
     const banner = el.shadowRoot?.querySelector('my-banner')!;
     banner.dispatchEvent(
       new CustomEvent('selection-changed', {
@@ -132,9 +138,12 @@ describe('Home Component', () => {
   it('should sort items correctly', async () => {
     el = await fixture<Home>(
       html`<my-home
-        .allItems=${mockItems.sort((a, b) => a.title.localeCompare(b.title))}
+        .allItems=${mockItems}
         .preselectedItems=${[mockItems[1], mockItems[0]]}
       ></my-home>`
+    );
+    await new Promise((resolve) =>
+      setTimeout(resolve, Home.showProfileIdTimeout + 500)
     );
 
     const menu = el.shadowRoot?.querySelector('my-menu')!;
@@ -149,26 +158,27 @@ describe('Home Component', () => {
     await el.updateComplete;
 
     // Validate sorted order
-    const banner = el.shadowRoot?.querySelector('my-banner');
-    const sortedButtons = banner?.shadowRoot?.querySelectorAll('my-button');
-
-    expect(sortedButtons).to.exist;
-    expect(sortedButtons?.length).to.equal(2);
-
-    const buttonTitles = Array.from(sortedButtons || []).map((btn) =>
-      btn.getAttribute('title')
+    const sortedAsc = el.shadowRoot
+      ?.querySelector('my-banner')
+      ?.shadowRoot?.querySelectorAll('my-button');
+    expect(sortedAsc).to.exist;
+    expect(sortedAsc?.length).to.equal(2);
+    expect(sortedAsc?.[0]?.getAttribute('title')).to.include(
+      mockItems[1].title
     );
-
-    expect(buttonTitles[0]).to.include(mockItems[1].title);
-    expect(buttonTitles[1]).to.include(mockItems[0].title);
+    expect(sortedAsc?.[1]?.getAttribute('title')).to.include(
+      mockItems[0].title
+    );
   });
 
   it('should render an empty banner when no items are provided', async () => {
     el = await fixture<Home>(html`<my-home .allItems=${[]}></my-home>`);
 
+    await new Promise((resolve) =>
+      setTimeout(resolve, Home.showProfileIdTimeout + 500)
+    );
     const banner = el.shadowRoot?.querySelector('my-banner');
     expect(banner).to.exist;
-
     const bannerItems = banner?.getAttribute('items');
     expect(bannerItems).to.equal(null);
   });

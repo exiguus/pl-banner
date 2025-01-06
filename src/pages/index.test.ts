@@ -31,7 +31,7 @@ describe('Index Component', () => {
     const title = headerContainer.querySelector('h1');
     const disclaimer = headerContainer.querySelector('.disclaimer');
 
-    expect(title?.textContent).to.equal('Test Title');
+    expect(title?.textContent).to.include('Test Title');
     expect(disclaimer?.textContent).to.equal('Test Disclaimer');
   });
 

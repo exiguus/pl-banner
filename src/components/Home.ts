@@ -9,6 +9,7 @@ import { MyElement } from 'types/MyElement';
 import { bannerWidth, bannerHeight, gradients } from 'types/CSS';
 import 'components/Menu';
 import 'components/Banner';
+import 'components/Profile';
 
 @customElement('my-home')
 export class Home extends MyElement {
@@ -18,6 +19,10 @@ export class Home extends MyElement {
   @state() private items: LogoItem[] = [];
   @state() private isLoadingDownload: boolean = false;
   @state() private bannerWidth: number = 100;
+  @state() private showProfile: boolean = true;
+
+  static showProfileIdTimeout = 3000;
+  private showProfileId: ReturnType<typeof setTimeout> | null = null;
 
   // LinkedIn Personal Profiles Banner/Background Photo Size 1584 x 396 pixels
   //  see: https://www.linkedin.com/pulse/linkedin-image-size-guide-julie-thomas-tftwc
@@ -52,17 +57,20 @@ export class Home extends MyElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.items = [...this.preselectedItems.sort(() => Math.random() - 0.5)];
-    this.scrollBannerIntoView();
-
-    window.addEventListener('resize', this.scrollBannerIntoView.bind(this));
-    window.addEventListener(
-      'orientationchange',
-      this.scrollBannerIntoView.bind(this)
-    );
+    this.showProfileId = setTimeout(() => {
+      window.addEventListener('resize', this.scrollBannerIntoView.bind(this));
+      window.addEventListener(
+        'orientationchange',
+        this.scrollBannerIntoView.bind(this)
+      );
+      this.showProfile = false;
+      this.items = [...this.preselectedItems.sort(() => Math.random() - 0.5)];
+      this.scrollBannerIntoView();
+    }, Home.showProfileIdTimeout);
   }
 
   disconnectedCallback() {
+    if (this.showProfileId) clearTimeout(this.showProfileId);
     window.removeEventListener('resize', this.scrollBannerIntoView.bind(this));
     window.removeEventListener(
       'orientationchange',
@@ -178,10 +186,14 @@ export class Home extends MyElement {
   render(): ReturnType<typeof html> {
     return html`
       <div class="container">
-        <my-banner
-          .items=${this.items}
-          @selection-changed=${this.handleSelectionChanged.bind(this)}
-        ></my-banner>
+        ${this.showProfile
+          ? html`<my-profile></my-profile>`
+          : html`
+              <my-banner
+                .items=${this.items}
+                @selection-changed=${this.handleSelectionChanged.bind(this)}
+              ></my-banner>
+            `}
         ${this.renderMenu()}
       </div>
     `;
