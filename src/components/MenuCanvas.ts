@@ -50,20 +50,23 @@ export class MenuCanvas extends MyElement {
     label:hover {
       background-color: var(--input-button-hover-bg-color, #533ebb);
     }
-    input[type='color'] {
+    input[type='color'],
+    input[type='range'] {
       border: none;
       border-radius: var(--input-border-radius, 5px);
       cursor: pointer;
-      width: calc(
-        var(--input-button-padding, 10px) * 2 +
-          var(--input-button-font-size, 14px)
-      );
       height: calc(
         var(--input-button-padding, 10px) * 2 +
           var(--input-button-font-size, 14px)
       );
       margin: calc(var(--input-button-padding, 10px) / -2) 0;
       background: none;
+    }
+    input[type='color'] {
+      width: calc(
+        var(--input-button-padding, 10px) * 2 +
+          var(--input-button-font-size, 14px)
+      );
     }
     .container {
       display: flex;
