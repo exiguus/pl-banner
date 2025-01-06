@@ -82,17 +82,6 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: pnpm install
-
       - name: Set locale
         run: |
           sudo apt-get update && sudo apt-get install tzdata locales -y
@@ -103,10 +92,18 @@ jobs:
           locale -a
           locale
 
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - uses: cypress-io/github-action@v6
         name: Cypress E2E on Chrome
         with:
-          install: true
+          install-command: pnpm install
           browser: chrome
         env:
           CYPRESS_CACHE_FOLDER: ${{ env.STORE_PATH }}
