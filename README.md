@@ -26,6 +26,25 @@ I created this project driven by two core motivations:
    - Vitest and @open-wc/testing for component testing.
    - Cypress for end-to-end testing.
 
+## Development
+
+### Installation
+
+1. Clone the repository.
+2. Install dependencies with `pnpm install`.
+3. Fetch all needed assets (svgl logos) with `pnpm assets`.
+4. Start the development server with `pnpm dev`.
+5. Component tests can be run with `pnpm test`.
+6. End-to-end tests can be run with `pnpm cy:watch`.
+
+### Testing
+
+- Run component tests with `pnpm test`.
+- Before running end-to-end tests, run `pnpm build` to generate the production build and serve it with `pnpm serve`.
+- Run end-to-end tests with `pnpm cy:run`.
+
+See [Svgl.md](./Svgl.md) for more information on the asset management and data processing scripts.
+
 ## License
 
 MIT License
