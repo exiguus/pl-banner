@@ -8,3 +8,4 @@ src/data
 src/assets/svgl
 coverage
 .env
+cypress/screenshots/**

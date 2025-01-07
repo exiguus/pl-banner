@@ -36,7 +36,7 @@ export default defineConfig(() => {
       format: 'esm',
       sourcemap: true,
       preserveModules: true,
-      chunkSizeWarningLimit: 2000,
+      chunkSizeWarningLimit: 2500,
     },
     rollupOptions: {
       manifest: true,

@@ -6,6 +6,10 @@ export default defineConfig({
     env: {
       ...process.env,
     },
+    retries: {
+      runMode: 2, // Retries when running tests in the CLI
+      openMode: 1, // Retries when running tests in the Cypress GUI
+    },
     viewportWidth: 1280,
     viewportHeight: 720,
     experimentalMemoryManagement: true,
