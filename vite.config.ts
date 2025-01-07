@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import typescript from '@rollup/plugin-typescript';
 import { compileLitTemplates } from '@lit-labs/compiler';
+import svg from 'vite-plugin-svgo';
 import { resolve } from 'path';
 import i18n from './i18n.json';
 
@@ -29,14 +30,26 @@ export default defineConfig(() => {
         tsconfig: 'tsconfig.json',
       }),
       transformHtmlPlugin(i18n.en),
+      svg(),
     ],
     build: {
       outDir: resolve(__dirname, 'dist'),
       emptyOutDir: true,
       format: 'esm',
-      sourcemap: true,
-      preserveModules: true,
       chunkSizeWarningLimit: 2500,
+      preserveModules: true,
+      sourcemap: true,
+      cssMinify: true,
+      cssCodeSplit: true,
+      minify: true,
+      target: 'esnext',
+      brotliSize: true,
+      manifest: true,
+      polyfillDynamicImport: true,
+      modulePreload: true,
+    },
+    optimizeDeps: {
+      force: true,
     },
     rollupOptions: {
       manifest: true,

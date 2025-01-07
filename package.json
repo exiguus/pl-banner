@@ -89,6 +89,7 @@
     "tslib": "^2.8.1",
     "typescript": "^5.7.2",
     "vite": "^5.4.11",
+    "vite-plugin-svgo": "^1.6.2",
     "vitest": "^2.1.8"
   },
   "dependencies": {
