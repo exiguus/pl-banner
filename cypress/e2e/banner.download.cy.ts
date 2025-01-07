@@ -127,4 +127,53 @@ describe('banner download spec', () => {
 
     cy.exec(`rm ${imagePathDownloads}`);
   });
+
+  it('should download banner image with correct dimensions on a mobile device with devicePixelRatio 2', () => {
+    cy.viewport('iphone-x');
+
+    cy.wrap(
+      Cypress.automation('remote:debugger:protocol', {
+        command: 'Emulation.setDeviceMetricsOverride',
+        params: {
+          // target DPR
+          deviceScaleFactor: 2,
+          // width and height set to 0 remove overrides
+          width: 0,
+          height: 0,
+          mobile: true,
+        },
+      })
+    );
+
+    cy.visit(url);
+    cy.window().its('devicePixelRatio').should('equal', 2);
+
+    cy.wait(6000);
+    const downloadButton = cy
+      .get('my-index')
+      .shadow()
+      .find('my-home')
+      .shadow()
+      .find('my-menu')
+      .shadow()
+      .find('my-menu-canvas')
+      .shadow()
+      .find('[data-testid="menu-download"]')
+      .shadow()
+      .find('button');
+    downloadButton.click({
+      force: true,
+    });
+    cy.wait(6000);
+
+    cy.readFile(imagePathDownloads, 'base64').then((image) => {
+      const buffer = Buffer.from(image, 'base64');
+      const png = PNG.sync.read(buffer);
+
+      expect(png.width).to.eq(bannerWidth);
+      expect(png.height).to.eq(bannerHeight);
+    });
+
+    cy.exec(`rm ${imagePathDownloads}`);
+  });
 });

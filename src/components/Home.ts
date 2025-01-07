@@ -121,6 +121,9 @@ export class Home extends MyElement {
       const html2canvas = (await import('html2canvas')).default;
       const canvas = await html2canvas(bannerElement as HTMLElement, {
         useCORS: true,
+        width: Home.BANNER_WIDTH,
+        height: Home.BANNER_HEIGHT,
+        scale: 1,
       });
       const link = document.createElement('a');
       link.download = 'banner.png';
