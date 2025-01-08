@@ -1,6 +1,6 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './SVGInjector';
-import { SvgInjector } from './SVGInjector';
+import type { SvgInjector } from './SVGInjector';
 
 describe('SvgInjector Component', () => {
   it('should render correctly', async () => {
@@ -27,7 +27,7 @@ describe('SvgInjector Component', () => {
   });
 
   it('should clear invalid SVG content', async () => {
-    const invalidSvgContent = `<div>Not an SVG</div>`;
+    const invalidSvgContent = '<div>Not an SVG</div>';
     const el = await fixture<SvgInjector>(
       html`<my-svg-injector .svgContent=${invalidSvgContent}></my-svg-injector>`
     );

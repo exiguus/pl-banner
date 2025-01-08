@@ -5,11 +5,11 @@ import 'components/LoadingSpinner';
 
 @customElement('my-button')
 export class AppButton extends MyElement {
-  @property({ type: String }) variant: string = 'button'; // e.g., primary, secondary
-  @property({ type: String }) disabled: string = '';
-  @property({ type: Boolean }) selected: boolean = false;
-  @property({ type: Boolean }) isLoading: boolean = false;
-  @property({ type: String }) title: string = '';
+  @property({ type: String }) variant = 'button'; // e.g., primary, secondary
+  @property({ type: String }) disabled = '';
+  @property({ type: Boolean }) selected = false;
+  @property({ type: Boolean }) isLoading = false;
+  @property({ type: String }) title = '';
 
   static styles = css`
     :host {

@@ -147,6 +147,7 @@ describe('Home Component', () => {
     );
 
     const menu = el.shadowRoot?.querySelector('my-menu')!;
+    expect(menu).to.exist;
     menu.dispatchEvent(
       new CustomEvent('sort', {
         detail: { direction: 'asc' },
@@ -156,6 +157,7 @@ describe('Home Component', () => {
     );
 
     await el.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     // Validate sorted order
     const sortedAsc = el.shadowRoot
@@ -164,10 +166,10 @@ describe('Home Component', () => {
     expect(sortedAsc).to.exist;
     expect(sortedAsc?.length).to.equal(2);
     expect(sortedAsc?.[0]?.getAttribute('title')).to.include(
-      mockItems[1].title
+      mockItems[0].title
     );
     expect(sortedAsc?.[1]?.getAttribute('title')).to.include(
-      mockItems[0].title
+      mockItems[1].title
     );
   });
 

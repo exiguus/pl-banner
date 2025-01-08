@@ -18,7 +18,7 @@ export class Index extends MyElement {
   @state() private allItems: LogoItem[] = [];
   @state() private preselectedItems: LogoItem[] = [];
   @state() private logoItem: LogoItem | null = null;
-  @state() private isLoading: boolean = true;
+  @state() private isLoading = true;
 
   static styles = css`
     :host {

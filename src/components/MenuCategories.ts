@@ -2,10 +2,10 @@ import { html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { LogoItem } from 'types/LogoItem';
 import type { Categories } from 'types/Categories';
+import type { ChangeDisplayItemsEventDetails } from 'types/MyEvents';
 import { MyElement } from 'types/MyElement';
 import 'components/Button';
 import 'components/LoadingSpinner';
-import { ChangeDisplayItemsEventDetails } from 'types/MyEvents';
 
 export type CategoryItem = {
   id: string;

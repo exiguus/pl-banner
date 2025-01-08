@@ -17,9 +17,9 @@ export class Home extends MyElement {
   @property({ type: Array }) preselectedItems: LogoItem[] = [];
 
   @state() private items: LogoItem[] = [];
-  @state() private isLoadingDownload: boolean = false;
-  @state() private bannerWidth: number = 100;
-  @state() private showProfile: boolean = true;
+  @state() private isLoadingDownload = false;
+  @state() private bannerWidth = 100;
+  @state() private showProfile = true;
 
   static showProfileIdTimeout = 3000;
   private showProfileId: ReturnType<typeof setTimeout> | null = null;

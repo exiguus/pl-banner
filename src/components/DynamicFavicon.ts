@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { LogoItem } from 'types/LogoItem';
+import type { LogoItem } from 'types/LogoItem';
 
 @customElement('my-dynamic-favicon')
 export class DynamicFavicon extends LitElement {

@@ -1,8 +1,8 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './MenuSearch';
-import { MenuSearch } from './MenuSearch';
+import type { MenuSearch } from './MenuSearch';
 import { Categories } from 'types/Categories';
-import { LogoItem } from 'types/LogoItem';
+import type { LogoItem } from 'types/LogoItem';
 
 const items: LogoItem[] = [
   {

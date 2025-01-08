@@ -10,7 +10,7 @@ describe('home layout spec', () => {
     cy.visit(url);
     const element = cy.get('my-index');
     element.should('exist');
-    let dom = element.shadow();
+    const dom = element.shadow();
     dom.find('h1').contains(i18n.en.title);
   });
 
@@ -18,7 +18,7 @@ describe('home layout spec', () => {
     cy.visit(url);
     const element = cy.get('my-index');
     element.should('exist');
-    let dom = element.shadow();
+    const dom = element.shadow();
     dom.find('.disclaimer').contains(i18n.en.disclaimer.replace(/&.*;/g, ''));
   });
 
@@ -26,7 +26,7 @@ describe('home layout spec', () => {
     cy.visit(url);
     const element = cy.get('my-index');
     element.should('exist');
-    let dom = element.shadow();
+    const dom = element.shadow();
     dom.find('.subtitle-container').contains(i18n.en.description);
   });
 
@@ -35,7 +35,7 @@ describe('home layout spec', () => {
     const element = cy.get('my-index');
     element.should('exist');
 
-    let dom = element.shadow();
+    const dom = element.shadow();
     const layout = dom.find('my-layout');
     const home = dom.find('my-home');
 
@@ -61,7 +61,7 @@ describe('home layout spec', () => {
     const element = cy.get('my-index');
     element.should('exist');
 
-    let dom = element.shadow();
+    const dom = element.shadow();
     const layout = dom.find('my-layout');
     const home = dom.find('my-home');
 
@@ -92,7 +92,7 @@ describe('home layout spec', () => {
     const element = cy.get('my-index');
     element.should('exist');
 
-    let dom = element.shadow();
+    const dom = element.shadow();
     const layout = dom.find('my-layout');
     const footer = layout.find('div[slot="footer"]');
 

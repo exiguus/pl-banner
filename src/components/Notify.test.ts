@@ -1,6 +1,6 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './Notify';
-import { Notify } from './Notify';
+import type { Notify } from './Notify';
 
 describe('Notify Component', () => {
   it('should render correctly when no notification is present', async () => {

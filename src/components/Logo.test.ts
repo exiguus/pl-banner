@@ -1,9 +1,9 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './Logo';
-import { Logo } from './Logo';
+import type { Logo } from './Logo';
 import type { LogoItem } from 'types/LogoItem';
 import { Categories } from 'types/Categories';
-import { LitElement } from 'lit';
+import type { LitElement } from 'lit';
 
 describe('Logo Component', () => {
   let el: Logo;

@@ -1,9 +1,9 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './MenuCategories';
-import { MenuCategories } from './MenuCategories';
+import type { MenuCategories } from './MenuCategories';
 import sinon from 'sinon';
 import { Categories } from 'types/Categories';
-import { LogoItem } from 'types/LogoItem';
+import type { LogoItem } from 'types/LogoItem';
 import categories from '../data/categories.json';
 
 describe('MenuCategories Component', () => {
@@ -45,6 +45,9 @@ describe('MenuCategories Component', () => {
         .items=${items}
         .onToggleItem=${onToggleItem}
       ></my-menu-categories>
+      <script id="categories" type="application/json">
+        ${JSON.stringify(categories)}
+      </script>
     `);
 
     await el.updateComplete;

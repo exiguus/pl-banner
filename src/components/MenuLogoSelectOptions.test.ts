@@ -1,7 +1,7 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './MenuLogoSelectOptions';
-import { MenuLogoSelectOptions } from './MenuLogoSelectOptions';
-import { LogoItem } from 'types/LogoItem';
+import type { MenuLogoSelectOptions } from './MenuLogoSelectOptions';
+import type { LogoItem } from 'types/LogoItem';
 import { Categories } from 'types/Categories';
 import sinon from 'sinon';
 

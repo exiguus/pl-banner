@@ -1,5 +1,5 @@
 import { Categories } from './Categories';
-import { isLogoItem, LogoItem } from './LogoItem';
+import { isLogoItem, type LogoItem } from './LogoItem';
 import { expect } from '@open-wc/testing';
 
 describe('LogoItem', () => {

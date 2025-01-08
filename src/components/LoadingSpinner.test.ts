@@ -1,6 +1,6 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './LoadingSpinner';
-import { LoadingSpinner } from './LoadingSpinner';
+import type { LoadingSpinner } from './LoadingSpinner';
 
 describe('LoadingSpinner Component', () => {
   let el: LoadingSpinner;

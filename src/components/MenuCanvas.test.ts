@@ -1,6 +1,6 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './MenuCanvas';
-import { MenuCanvas } from './MenuCanvas';
+import type { MenuCanvas } from './MenuCanvas';
 import sinon from 'sinon';
 
 describe('MenuCanvas Component', () => {

@@ -1,6 +1,6 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './MenuGradient';
-import { MenuGradient } from './MenuGradient';
+import type { MenuGradient } from './MenuGradient';
 import { gradients } from 'types/CSS';
 import sinon from 'sinon';
 

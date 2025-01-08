@@ -11,7 +11,7 @@ export class MenuSearch extends MyElement {
   @property({ type: Array }) items!: LogoItem[];
   @property({ type: Array }) displayItems!: LogoItem[];
 
-  @state() private search: string = '';
+  @state() private search = '';
 
   static styles = css`
     :host {
@@ -81,7 +81,7 @@ export class MenuSearch extends MyElement {
   public performSearch = (searchTerm: string): void => {
     this.search = searchTerm.toLocaleLowerCase().trim();
     this.displayItems = this.search
-      ? this.search.split(' ').map(this.filterItems).flat()
+      ? this.search.split(' ').flatMap(this.filterItems)
       : [...this.items];
     this.dispatchSelectionChangeEvent();
   };

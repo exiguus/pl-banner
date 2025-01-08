@@ -1,9 +1,10 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './MenuLogoSelect';
-import { MenuLogoSelect } from './MenuLogoSelect';
-import { LogoItem } from 'types/LogoItem';
+import type { MenuLogoSelect } from './MenuLogoSelect';
+import type { LogoItem } from 'types/LogoItem';
 import { Categories } from 'types/Categories';
-import { LitElement } from 'lit';
+import categories from '../data/categories.json';
+import type { LitElement } from 'lit';
 
 const items: LogoItem[] = [
   {
@@ -97,6 +98,9 @@ describe('MenuLogoSelect Component', () => {
     const el = await fixture<MenuLogoSelect>(html`
       <my-menu-logo-select .items=${items} .selectedItems=${selectedItems}>
       </my-menu-logo-select>
+      <script id="categories" type="application/json">
+        ${JSON.stringify(categories)}
+      </script>
     `);
 
     const categoryMenu = el.shadowRoot

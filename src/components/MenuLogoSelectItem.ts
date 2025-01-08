@@ -5,7 +5,7 @@ import type { LogoItem } from 'types/LogoItem';
 import { MyElement } from 'types/MyElement';
 import 'components/Button';
 import 'components/SVGInjector';
-import { NotifyEventDetail } from 'types/MyEvents';
+import type { NotifyEventDetail } from 'types/MyEvents';
 
 @customElement('my-menu-logo-select-item')
 export class MenuLogoSelectItem extends MyElement {

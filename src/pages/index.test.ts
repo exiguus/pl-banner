@@ -1,6 +1,6 @@
 import { html, fixture, expect } from '@open-wc/testing';
-import './index'; // Ensure the correct path to the Index component
-import { Index } from './index';
+import './index';
+import type { Index } from './index';
 
 describe('Index Component', () => {
   it('should render header slot with dynamic content', async () => {

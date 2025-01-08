@@ -13,7 +13,7 @@ export class MenuCanvas extends MyElement {
   @property({ type: Function }) onRandomBackgroundGradient!: (
     gradient: string
   ) => void;
-  @property({ type: Boolean }) isLoadingDownload: boolean = false;
+  @property({ type: Boolean }) isLoadingDownload = false;
   @property({ type: Number }) bannerWidth!: number;
 
   private generateRandomGradient(): string {
@@ -99,8 +99,8 @@ export class MenuCanvas extends MyElement {
   }
 
   private handleWidthChangeRange(e: Event) {
-    const width = parseFloat((e.target as HTMLInputElement).value);
-    if (!isNaN(width)) {
+    const width = Number.parseFloat((e.target as HTMLInputElement).value);
+    if (!Number.isNaN(width)) {
       this.dispatchWidthChangeCustomEvent(width);
     }
   }

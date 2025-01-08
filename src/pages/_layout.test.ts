@@ -1,5 +1,5 @@
 import { html, fixture, expect } from '@open-wc/testing';
-import './_layout'; // Ensure the correct path to the Layout component
+import './_layout';
 
 describe('Layout Component', () => {
   it('should render correctly', async () => {

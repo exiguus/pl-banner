@@ -1,6 +1,6 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import './_page'; // Import the Page component
-import { Page } from './_page';
+import type { Page } from './_page';
 
 describe('Page Component', () => {
   it('should render correctly', async () => {

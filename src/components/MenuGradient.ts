@@ -8,7 +8,7 @@ import 'components/Button';
 @customElement('my-menu-gradient')
 export class MenuGradient extends MyElement {
   @property({ type: Function }) onPickGradient!: (gradient: string) => void;
-  @state() private currentGradient: number = 0;
+  @state() private currentGradient = 0;
 
   static gradientWidth = 40;
   static gradientGap = 8;

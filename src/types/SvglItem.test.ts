@@ -1,5 +1,5 @@
 import { expect } from '@open-wc/testing';
-import { isSvglItem, SvglItem } from './SvglItem';
+import { isSvglItem, type SvglItem } from './SvglItem';
 
 describe('isSvglItem', () => {
   it('should return true for a valid SvglItem with basic properties', () => {
