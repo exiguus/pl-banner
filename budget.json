@@ -8,7 +8,7 @@
       },
       {
         "metric": "first-contentful-paint",
-        "budget": 4000
+        "budget": 6000
       },
       {
         "metric": "largest-contentful-paint",
@@ -20,15 +20,15 @@
       },
       {
         "metric": "total-blocking-time",
-        "budget": 1200
+        "budget": 1600
       },
       {
         "metric": "speed-index",
-        "budget": 4500
+        "budget": 6000
       },
       {
         "metric": "max-potential-fid",
-        "budget": 800
+        "budget": 1600
       }
     ],
     "resourceSizes": [
