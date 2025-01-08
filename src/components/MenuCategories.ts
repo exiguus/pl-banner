@@ -108,14 +108,21 @@ export class MenuCategories extends MyElement {
   }
 
   private async initializeCategories(): Promise<void> {
-    const categories = await import('../data/categories.json').then(
-      (module) => module.default
-    );
-    this.categories = categories.map((category) => ({
-      ...category,
-      selected: true,
-      count: category.items.length,
-    })) as CategoryItem[];
+    try {
+      const items = document.querySelector(
+        'script[type="application/json"]#categories'
+      )?.textContent;
+      if (items) {
+        const categories = JSON.parse(items) as CategoryItem[];
+        this.categories = categories.map((category) => ({
+          ...category,
+          selected: true,
+          count: category.items.length,
+        })) as CategoryItem[];
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   private handleSelect(event: Event): void {

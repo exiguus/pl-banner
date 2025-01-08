@@ -132,12 +132,20 @@ export class Index extends MyElement {
   }
 
   private async initializeItems(): Promise<void> {
-    const items = await import('../data/categories/all.json').then(
-      (module) => module.default
-    );
-    this.allItems = items as LogoItem[];
-    this.preselectedItems = filterPreselected(this.allItems);
-    this.logoItem = this.allItems.filter((item) => item.id === 'linkedin')?.[0];
+    try {
+      const items = document.querySelector(
+        'script[type="application/json"]#items'
+      )?.textContent;
+      if (items) {
+        this.allItems = JSON.parse(items) as LogoItem[];
+        this.preselectedItems = filterPreselected(this.allItems);
+        this.logoItem = this.allItems.filter(
+          (item) => item.id === 'linkedin'
+        )?.[0];
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   render(): ReturnType<typeof html> {

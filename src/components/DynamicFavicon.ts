@@ -21,10 +21,16 @@ export class DynamicFavicon extends LitElement {
   }
 
   private async initializeItems(): Promise<void> {
-    const items = await import('../data/categories/all.json').then(
-      (module) => module.default
-    );
-    this.allItems = items as LogoItem[];
+    try {
+      const items = document.querySelector(
+        'script[type="application/json"]#items'
+      )?.textContent;
+      if (items) {
+        this.allItems = JSON.parse(items) as LogoItem[];
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   startFaviconRotation() {
