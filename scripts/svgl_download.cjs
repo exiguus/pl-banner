@@ -70,6 +70,7 @@ async function downloadAllFiles(forceDownload = false) {
   try {
     const fileData = await fs.promises.readFile(JSON_FILE, 'utf8');
     const files = JSON.parse(fileData);
+    let downloadCount = 0;
 
     for (const file of files) {
       const routes = [];
@@ -97,6 +98,8 @@ async function downloadAllFiles(forceDownload = false) {
         }
       }
 
+      downloadCount += routes.length;
+
       const downloadFiles = async (routes) => {
         const downloadTasks = routes.map(async ({ url, type }) => {
           const fileName = sanitizeFileName(
@@ -122,6 +125,8 @@ async function downloadAllFiles(forceDownload = false) {
         console.error('Error downloading files:', error);
       });
     }
+
+    console.log(`Processed ${downloadCount} files to Download`);
   } catch (error) {
     console.error(`Error: ${error.message}`);
   }
