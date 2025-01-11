@@ -2,11 +2,12 @@
 
 Create and download a LinkedIn banner with your favorite engineering SVG logos!
 
-![Personal LinkedIn Banner](./cypress/fixtures/banner.png)
+![LinkedIn Profile Banner](./src/assets/og-image.png)
 
 Showcase your skills with a personalized LinkedIn banner featuring your favorite engineering tools. This simple web app lets you select the tools you love and create a custom banner to highlight your expertise. Perfect for developers looking to stand out on LinkedIn and proudly display their skill set.
 
-Visit: <https://plb.exiguus.app/>.
+Visit: <https://plb.exiguus.app/> and download a personalized LinkedIn banner:
+![Personal LinkedIn Banner](./cypress/fixtures/banner.png)
 
 ## Features
 

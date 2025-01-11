@@ -1,5 +1,10 @@
 {
   "en": {
+    "og_title": "Banner Generator",
+    "og_description": "Get your personalized LinkedIn banner with your favorite engineering SVG logos",
+    "og_image": "https://plb.exiguus.app/assets/og-image.png",
+    "og_image_alt": "LinkedIn Profile with Banner",
+    "og_url": "https://plb.exiguus.app/",
     "title": "Banner Generator",
     "description": "Get your personalized LinkedIn banner with your favorite engineering SVG logos",
     "disclaimer": "This tool is not affiliated with LinkedIn &trade;"
