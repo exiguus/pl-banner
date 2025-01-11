@@ -1,19 +1,11 @@
 import { html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { LogoItem } from 'types/LogoItem';
-import type { Categories } from 'types/Categories';
+import type { CategoryItem } from 'types/CategoryItem';
 import type { ChangeDisplayItemsEventDetails } from 'types/MyEvents';
 import { MyElement } from 'types/MyElement';
 import 'components/Button';
 import 'components/LoadingSpinner';
-
-export type CategoryItem = {
-  id: string;
-  title: keyof Categories;
-  selected: boolean;
-  items: LogoItem[];
-  count: number;
-};
 
 @customElement('my-menu-categories')
 export class MenuCategories extends MyElement {
@@ -113,7 +105,7 @@ export class MenuCategories extends MyElement {
         'script[type="application/json"]#categories'
       )?.textContent;
       if (items) {
-        const categories = JSON.parse(items) as CategoryItem[];
+        const categories = JSON.parse(items || '[]') as CategoryItem[];
         this.categories = categories.map((category) => ({
           ...category,
           selected: true,

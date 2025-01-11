@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { convertCategoriesToLogoItems } from 'utils/convertCategories';
 import type { LogoItem } from 'types/LogoItem';
 
 @customElement('my-dynamic-favicon')
@@ -22,12 +23,11 @@ export class DynamicFavicon extends LitElement {
 
   private async initializeItems(): Promise<void> {
     try {
-      const items = document.querySelector(
-        'script[type="application/json"]#items'
+      const data = document.querySelector(
+        'script[type="application/json"]#categories'
       )?.textContent;
-      if (items) {
-        this.allItems = JSON.parse(items) as LogoItem[];
-      }
+      const categories = JSON.parse(data ?? '[]');
+      this.allItems = convertCategoriesToLogoItems(categories);
     } catch (e) {
       console.error(e);
     }

@@ -2,6 +2,7 @@ import { html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import 'lit-html/private-ssr-support.js';
 import { filterPreselected } from 'utils/preselectedSvgs';
+import { convertCategoriesToLogoItems } from 'utils/convertCategories';
 import type { LogoItem } from 'types/LogoItem';
 import { MyElement } from 'types/MyElement';
 import 'pages/_layout';
@@ -133,16 +134,17 @@ export class Index extends MyElement {
 
   private async initializeItems(): Promise<void> {
     try {
-      const items = document.querySelector(
-        'script[type="application/json"]#items'
+      const data = document.querySelector(
+        'script[type="application/json"]#categories'
       )?.textContent;
-      if (items) {
-        this.allItems = JSON.parse(items) as LogoItem[];
-        this.preselectedItems = filterPreselected(this.allItems);
-        this.logoItem = this.allItems.filter(
-          (item) => item.id === 'linkedin'
-        )?.[0];
-      }
+      const categories = JSON.parse(data ?? '[]');
+      const items = convertCategoriesToLogoItems(categories);
+
+      this.allItems = items as LogoItem[];
+      this.preselectedItems = filterPreselected(this.allItems);
+      this.logoItem = this.allItems.filter(
+        (item) => item.id === 'linkedin'
+      )?.[0];
     } catch (e) {
       console.error(e);
     }

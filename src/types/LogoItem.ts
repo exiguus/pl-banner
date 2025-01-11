@@ -20,7 +20,7 @@ export const isLogoItem = (value: unknown): value is LogoItem =>
   'description' in value &&
   typeof value.description === 'string' &&
   'category' in value &&
-  typeof value.category === 'string' &&
+  (typeof value.category === 'string' || Array.isArray(value.category)) &&
   'path' in value &&
   typeof value.path === 'string' &&
   'svgContent' in value &&

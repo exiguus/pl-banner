@@ -1,5 +1,5 @@
 import { html, fixture, expect } from '@open-wc/testing';
-import './Home'; // Import the Home component
+import './Home';
 import { Home } from './Home';
 import type { LogoItem } from 'types/LogoItem';
 import { Categories } from 'types/Categories';
@@ -96,14 +96,16 @@ describe('Home Component', () => {
   });
 
   it('should update banner width on width-changed event', async () => {
-    const menu = el.shadowRoot?.querySelector('my-menu')!;
-    menu.dispatchEvent(
-      new CustomEvent('width-changed', {
-        detail: { width: 80 },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    const menu = el.shadowRoot?.querySelector('my-menu');
+    if (menu) {
+      menu.dispatchEvent(
+        new CustomEvent('width-changed', {
+          detail: { width: 80 },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }
 
     await el.updateComplete;
 
@@ -146,11 +148,16 @@ describe('Home Component', () => {
       setTimeout(resolve, Home.showProfileIdTimeout + 500)
     );
 
-    const menu = el.shadowRoot?.querySelector('my-menu')!;
+    const menu = el.shadowRoot
+      ?.querySelector('my-menu')
+      ?.shadowRoot?.querySelector('my-menu-canvas');
     expect(menu).to.exist;
-    menu.dispatchEvent(
-      new CustomEvent('sort', {
-        detail: { direction: 'asc' },
+    const button = menu?.shadowRoot?.querySelector(
+      '[data-testid="menu-sort-asc"]'
+    );
+    expect(button).to.exist;
+    button?.dispatchEvent(
+      new CustomEvent('click', {
         bubbles: true,
         composed: true,
       })
