@@ -67,7 +67,7 @@
     "@types/pixelmatch": "^5.2.6",
     "@types/pngjs": "^6.0.5",
     "@types/sinon": "^17.0.3",
-    "@typescript-eslint/eslint-plugin": "^8.19.0",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.19.0",
     "@vitest/coverage-v8": "2.1.8",
     "axios": "^1.7.9",
