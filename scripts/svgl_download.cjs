@@ -12,7 +12,7 @@ const JSON_FILE = path.join(__dirname, '../src/data/svgs.json');
 const TARGET_FOLDER = path.join(__dirname, '../src/assets/svgl');
 
 /** Base URL for file downloads. */
-const BASE_URL = 'https://raw.githubusercontent.com/pheralb/svgl/main/static/';
+const BASE_URL = 'https://raw.githubusercontent.com/pheralb/svgl/main/static';
 
 /**
  * Ensures the target folder exists, creating it if necessary.
@@ -101,7 +101,7 @@ async function downloadAllFiles(forceDownload = false) {
       downloadCount += routes.length;
 
       const downloadFiles = async (routes) => {
-        const downloadTasks = routes.map(async ({ url, type }) => {
+        const downloadTasks = routes.map(async ({ url }) => {
           const fileName = sanitizeFileName(
             `${path.basename(url, '.svg')}.svg`
           );

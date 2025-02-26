@@ -127,6 +127,7 @@ export const PRESELECTED = [
   'vim',
   'vite',
   'vitest',
+  'visual-studio-code',
   'vscode',
   'vue',
   'vuetify',
