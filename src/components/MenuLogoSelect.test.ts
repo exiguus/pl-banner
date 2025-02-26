@@ -122,7 +122,6 @@ describe('MenuLogoSelect Component', () => {
     selectElement.querySelectorAll('option').forEach((option) => {
       option.selected = false;
     });
-    console.log(selectElement);
     expect(selectElement?.selectedOptions.length).to.equal(0);
 
     if (selectElement) {

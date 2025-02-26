@@ -100,4 +100,68 @@ describe('MyElement', () => {
     expect(event.bubbles).to.be.false;
     expect(event.composed).to.be.false;
   });
+
+  it('should dispatch a custom event with the correct target', async () => {
+    const el = await fixture<MyElement>(html`<my-element></my-element>`);
+
+    const detail = { message: 'Test Event' };
+    const eventProps = {
+      target: 'custom-event',
+      detail,
+    };
+
+    // Set up a listener for the custom event
+    const listener = oneEvent(el, 'custom-event');
+
+    // Dispatch the custom event
+    el.dispatchCustomEvent(eventProps);
+
+    // Wait for the event and validate its target
+    const event = await listener;
+    expect(event).to.exist;
+    expect(event.target).to.equal(el);
+  });
+
+  it('should dispatch a custom event with the correct detail', async () => {
+    const el = await fixture<MyElement>(html`<my-element></my-element>`);
+
+    const detail = { message: 'Test Event' };
+    const eventProps = {
+      target: 'custom-event',
+      detail,
+    };
+
+    // Set up a listener for the custom event
+    const listener = oneEvent(el, 'custom-event');
+
+    // Dispatch the custom event
+    el.dispatchCustomEvent(eventProps);
+
+    // Wait for the event and validate its detail
+    const event = await listener;
+    expect(event).to.exist;
+    expect(event.detail).to.deep.equal(detail);
+  });
+
+  it('should dispatch a custom event with the correct bubbles value', async () => {
+    const el = await fixture<MyElement>(html`<my-element></my-element>`);
+
+    const detail = { message: 'Test Event' };
+    const eventProps = {
+      target: 'custom-event',
+      detail,
+      bubbles: false,
+    };
+
+    // Set up a listener for the custom event
+    const listener = oneEvent(el, 'custom-event');
+
+    // Dispatch the custom event
+    el.dispatchCustomEvent(eventProps);
+
+    // Wait for the event and validate its bubbles value
+    const event = await listener;
+    expect(event).to.exist;
+    expect(event.bubbles).to.be.false;
+  });
 });

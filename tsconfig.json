@@ -11,7 +11,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "types": ["node", "cypress"],
+    "types": ["node", "cypress", "sinon"],
     "lib": ["ESNext", "DOM", "DOM.Iterable", "ScriptHost"]
   }
 }

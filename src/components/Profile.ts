@@ -64,7 +64,7 @@ export class Profile extends MyElement {
     }
     @media (max-width: 1024px) {
       .profile-banner {
-        aspect-ratio: 21 / 9;
+        aspect-ratio: 21 / 6;
       }
     }
     .profile-overview {

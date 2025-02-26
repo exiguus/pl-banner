@@ -23,10 +23,5 @@ export const convertCategoriesToLogoItems = (
     }
   }
 
-  console.log(
-    'convertCategoriesToLogoItems: Unique items count',
-    uniqueItemsMap.size
-  );
-  console.log(uniqueItemsMap.values());
   return Array.from(uniqueItemsMap.values());
 };

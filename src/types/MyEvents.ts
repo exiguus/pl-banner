@@ -39,3 +39,18 @@ export type NotifyEvent = {
   target: 'notify';
   detail: NotifyEventDetail;
 };
+
+export interface ComponentErrorEventDetail {
+  message: string;
+  stack?: string;
+  error?: Error;
+  component: string;
+}
+
+export type ComponentErrorEvent = CustomEvent<ComponentErrorEventDetail>;
+
+declare global {
+  interface HTMLElementEventMap {
+    'component-error': ComponentErrorEvent;
+  }
+}

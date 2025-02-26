@@ -8,6 +8,8 @@ import type {
   ChangeDisplayItemsEventDetails,
   NotifyEvent,
   NotifyEventDetail,
+  ComponentErrorEvent,
+  ComponentErrorEventDetail,
 } from './MyEvents';
 import { Categories } from './Categories';
 
@@ -162,5 +164,82 @@ describe('Event Types', () => {
       'This is a test notification'
     );
     expect(event.detail).to.have.property('type', 'success');
+  });
+
+  it('should correctly define ComponentErrorEventDetail', () => {
+    const error = new Error('Test error');
+    const detail: ComponentErrorEventDetail = {
+      component: 'TestComponent',
+      message: 'This is a test error',
+      stack: error.stack,
+      error,
+    };
+
+    expect(detail).to.have.property('component', 'TestComponent');
+    expect(detail).to.have.property('message', 'This is a test error');
+    expect(detail).to.have.property('stack', error.stack);
+    expect(detail).to.have.property('error', error);
+  });
+
+  it('should correctly define ComponentErrorEvent', () => {
+    const error = new Error('Test error');
+    const event: ComponentErrorEvent = {
+      target: 'component-error' as unknown as EventTarget,
+      detail: {
+        component: 'TestComponent',
+        message: 'This is a test error',
+        stack: error.stack,
+        error,
+      },
+      initCustomEvent: function (
+        _type: string,
+        _bubbles?: boolean,
+        _cancelable?: boolean,
+        _detail?: ComponentErrorEventDetail | undefined
+      ): void {
+        throw new Error('Function not implemented.');
+      },
+      bubbles: false,
+      cancelBubble: false,
+      cancelable: false,
+      composed: false,
+      currentTarget: null,
+      defaultPrevented: false,
+      eventPhase: 0,
+      isTrusted: false,
+      returnValue: false,
+      srcElement: null,
+      timeStamp: 0,
+      type: '',
+      composedPath: function (): EventTarget[] {
+        throw new Error('Function not implemented.');
+      },
+      initEvent: function (
+        _type: string,
+        _bubbles?: boolean,
+        _cancelable?: boolean
+      ): void {
+        throw new Error('Function not implemented.');
+      },
+      preventDefault: function (): void {
+        throw new Error('Function not implemented.');
+      },
+      stopImmediatePropagation: function (): void {
+        throw new Error('Function not implemented.');
+      },
+      stopPropagation: function (): void {
+        throw new Error('Function not implemented.');
+      },
+      NONE: 0,
+      CAPTURING_PHASE: 1,
+      AT_TARGET: 2,
+      BUBBLING_PHASE: 3,
+    };
+
+    expect(event).to.have.property('target', 'component-error');
+    expect(event.detail).to.have.property('component', 'TestComponent');
+    expect(event.detail).to.have.property('message', 'This is a test error');
+    expect(event.detail).to.have.property('stack', error.stack);
+    expect(event.detail).to.have.property('error', error);
   });
 });
