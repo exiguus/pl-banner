@@ -30,17 +30,22 @@
         padding: 0;
       }
     </style>
-    <my-dynamic-favicon></my-dynamic-favicon>
+    <my-error-boundary>
+      <my-dynamic-favicon></my-dynamic-favicon>
+    </my-error-boundary>
   </head>
 
   <body>
-    <my-index
-      title="<%= title %>"
-      description="<%= description %>"
-      disclaimer="<%= disclaimer %>"
-    ></my-index>
+    <my-error-boundary>
+      <my-index
+        title="<%= title %>"
+        description="<%= description %>"
+        disclaimer="<%= disclaimer %>"
+      ></my-index>
+    </my-error-boundary>
     <script type="module" src="pages/index.ts"></script>
     <script type="module" src="components/DynamicFavicon.ts"></script>
+    <script type="module" src="components/ErrorBoundary.ts"></script>
     <script
       id="categories"
       type="application/json"
