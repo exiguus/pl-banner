@@ -18,8 +18,9 @@ export class Profile extends MyElement {
       --profile-image-height: 128px;
       --profile-image-border-radius: 50%;
       --profile-image-background: #f2f2f2;
-      --profile-image-box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-        rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.3) 0px 4px 12px 0px;
+      --profile-image-box-shadow:
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0.3) 0px 4px 12px 0px;
       --profile-banner-background: ${Profile.profileBannerBackground};
       --profile-social-icon-background: ${Profile.profileSocialIconBackground};
       --profile-gap: 8px;
