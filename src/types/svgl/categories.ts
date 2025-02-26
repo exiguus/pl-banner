@@ -55,7 +55,9 @@ export type tCategory =
   | 'Vercel'
   | 'Google'
   | 'Payment'
-  | 'void(0)'
+  | 'VoidZero'
   | 'Authentication'
   | 'IoT'
-  | 'Home Automation';
+  | 'Home Automation'
+  | 'Config'
+  | 'Secrets';

@@ -25,8 +25,10 @@ export enum Categories {
   'Vercel' = 'Vercel',
   'Google' = 'Google',
   'Payment' = 'Payment',
-  'void' = 'void(0)',
+  'VoidZero' = 'VoidZero',
   'Authentication' = 'Authentication',
   'IoT' = 'IoT',
   'Home Automation' = 'Home Automation',
+  'Config' = 'Config',
+  'Secrets' = 'Secrets',
 }

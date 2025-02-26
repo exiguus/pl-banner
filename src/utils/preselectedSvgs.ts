@@ -24,6 +24,7 @@ export const PRESELECTED = [
   'copilot',
   'css',
   'cypress',
+  'deepseek',
   'discord',
   'docker',
   'edge',
@@ -81,6 +82,7 @@ export const PRESELECTED = [
   'openai-light',
   'opera',
   'parcel',
+  'paypal',
   'photoshop',
   'playwright',
   'pnpm',
@@ -127,6 +129,7 @@ export const PRESELECTED = [
   'vim',
   'vite',
   'vitest',
+  'visual-studio-code',
   'vscode',
   'vue',
   'vuetify',
@@ -138,6 +141,7 @@ export const PRESELECTED = [
   'windows',
   'yarn',
   'zed',
+  'zod',
   'zoom',
 ];
 

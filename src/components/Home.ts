@@ -29,6 +29,7 @@ export class Home extends MyElement {
   static BANNER_WIDTH = bannerWidth;
   static BANNER_HEIGHT = bannerHeight;
   static GRADIENT = gradients[0];
+  static ITEM_COUNT = 6 * 16;
 
   static styles = css`
     :host {
@@ -193,7 +194,7 @@ export class Home extends MyElement {
           ? html`<my-profile></my-profile>`
           : html`
               <my-banner
-                .items=${this.items}
+                .items=${this.items.slice(0, Home.ITEM_COUNT)}
                 @selection-changed=${this.handleSelectionChanged.bind(this)}
               ></my-banner>
             `}

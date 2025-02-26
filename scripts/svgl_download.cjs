@@ -34,7 +34,7 @@ async function ensureTargetFolderExists() {
  * @param {string} filePath - The local file path where the file will be saved.
  * @return {Promise<void>}
  */
-async function downloadFile(url, filePath) {
+async function downloadFile(url, filePath, count = 0) {
   try {
     const response = await axios.get(url, { responseType: 'stream' });
     const writer = fs.createWriteStream(filePath);
@@ -45,9 +45,13 @@ async function downloadFile(url, filePath) {
       writer.on('error', reject);
     });
 
+    count += 1;
+
     console.log(`Downloaded: ${filePath}`);
   } catch (error) {
     console.error(`Failed to download ${url}: ${error.message}`);
+    // retry two more times
+    if (count < 4) downloadFile(url, filePath, count);
   }
 }
 
@@ -101,7 +105,7 @@ async function downloadAllFiles(forceDownload = false) {
       downloadCount += routes.length;
 
       const downloadFiles = async (routes) => {
-        const downloadTasks = routes.map(async ({ url, type }) => {
+        const downloadTasks = routes.map(async ({ url }) => {
           const fileName = sanitizeFileName(
             `${path.basename(url, '.svg')}.svg`
           );
