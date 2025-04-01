@@ -62,7 +62,7 @@
     "@lit-labs/compiler": "^1.1.1",
     "@open-wc/testing": "^4.0.0",
     "@rollup/plugin-typescript": "^12.1.2",
-    "@types/node": "^22.13.5",
+    "@types/node": "^22.13.16",
     "@types/pixelmatch": "^5.2.6",
     "@types/pngjs": "^6.0.5",
     "@types/sinon": "^17.0.4",
