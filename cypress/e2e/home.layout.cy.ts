@@ -45,7 +45,7 @@ describe('home layout spec', () => {
     const banner = home.shadow().find('my-banner').shadow();
     const buttons = banner.find('.banner-grid my-button');
 
-    buttons.should('have.length', 159);
+    buttons.should('have.length', 16 * 6);
 
     buttons.each((button) => {
       const wrap = cy.wrap(button);
