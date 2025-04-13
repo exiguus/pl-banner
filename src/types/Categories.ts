@@ -28,7 +28,6 @@ export enum Categories {
   'VoidZero' = 'VoidZero',
   'Authentication' = 'Authentication',
   'IoT' = 'IoT',
-  'Home Automation' = 'Home Automation',
   'Config' = 'Config',
   'Secrets' = 'Secrets',
 }

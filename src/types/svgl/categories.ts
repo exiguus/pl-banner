@@ -58,6 +58,5 @@ export type tCategory =
   | 'VoidZero'
   | 'Authentication'
   | 'IoT'
-  | 'Home Automation'
   | 'Config'
   | 'Secrets';
