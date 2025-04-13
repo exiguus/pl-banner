@@ -69,14 +69,14 @@ importers:
         specifier: ^9.24.0
         version: 9.24.0(jiti@2.4.2)
       eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@9.24.0(jiti@2.4.2))
+        specifier: ^10.1.2
+        version: 10.1.2(eslint@9.24.0(jiti@2.4.2))
       eslint-plugin-lit:
         specifier: ^1.15.0
         version: 1.15.0(eslint@9.24.0(jiti@2.4.2))
       eslint-plugin-prettier:
         specifier: ^5.2.6
-        version: 5.2.6(eslint-config-prettier@9.1.0(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3)
+        version: 5.2.6(eslint-config-prettier@10.1.2(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3)
       eslint-plugin-wc:
         specifier: ^2.2.1
         version: 2.2.1(eslint@9.24.0(jiti@2.4.2))
@@ -93,8 +93,8 @@ importers:
         specifier: ^15.5.1
         version: 15.5.1
       pixelmatch:
-        specifier: ^6.0.0
-        version: 6.0.0
+        specifier: ^7.1.0
+        version: 7.1.0
       pngjs:
         specifier: ^7.0.0
         version: 7.0.0
@@ -2573,10 +2573,10 @@ packages:
       }
     engines: { node: '>=10' }
 
-  eslint-config-prettier@9.1.0:
+  eslint-config-prettier@10.1.2:
     resolution:
       {
-        integrity: sha512-NSWl5BFQWEPi1j4TjVNItzYV7dZXZ+wP6I6ZhrBGpChQhZRUaElihE9uRRkcbRnNb76UMKDF3r+WTmNcGPKsqw==,
+        integrity: sha512-Epgp/EofAUeEpIdZkW60MHKvPyru1ruQJxPL+WIycnaPApuseK0Zpkrh/FwL9oIpQvIhJwV7ptOy0DWUjTlCiA==,
       }
     hasBin: true
     peerDependencies:
@@ -4431,10 +4431,10 @@ packages:
       }
     engines: { node: '>=0.10.0' }
 
-  pixelmatch@6.0.0:
+  pixelmatch@7.1.0:
     resolution:
       {
-        integrity: sha512-FYpL4XiIWakTnIqLqvt3uN4L9B3TsuHIvhLILzTiJZMJUsGvmKNeL4H3b6I99LRyerK9W4IuOXw+N28AtRgK2g==,
+        integrity: sha512-1wrVzJ2STrpmONHKBy228LM1b84msXDUoAzVEl0R8Mz4Ce6EPr+IVtxm8+yvrqLYMHswREkjYFaMxnyGnaY3Ng==,
       }
     hasBin: true
 
@@ -7069,7 +7069,7 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-prettier@9.1.0(eslint@9.24.0(jiti@2.4.2)):
+  eslint-config-prettier@10.1.2(eslint@9.24.0(jiti@2.4.2)):
     dependencies:
       eslint: 9.24.0(jiti@2.4.2)
 
@@ -7080,14 +7080,14 @@ snapshots:
       parse5-htmlparser2-tree-adapter: 6.0.1
       requireindex: 1.2.0
 
-  eslint-plugin-prettier@5.2.6(eslint-config-prettier@9.1.0(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3):
+  eslint-plugin-prettier@5.2.6(eslint-config-prettier@10.1.2(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3):
     dependencies:
       eslint: 9.24.0(jiti@2.4.2)
       prettier: 3.5.3
       prettier-linter-helpers: 1.0.0
       synckit: 0.11.3
     optionalDependencies:
-      eslint-config-prettier: 9.1.0(eslint@9.24.0(jiti@2.4.2))
+      eslint-config-prettier: 10.1.2(eslint@9.24.0(jiti@2.4.2))
 
   eslint-plugin-wc@2.2.1(eslint@9.24.0(jiti@2.4.2)):
     dependencies:
@@ -8164,7 +8164,7 @@ snapshots:
 
   pify@2.3.0: {}
 
-  pixelmatch@6.0.0:
+  pixelmatch@7.1.0:
     dependencies:
       pngjs: 7.0.0
 
