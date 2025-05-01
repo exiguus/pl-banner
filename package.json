@@ -73,7 +73,7 @@
     "cypress": "^14.3.0",
     "eslint": "^9.24.0",
     "eslint-config-prettier": "^10.1.2",
-    "eslint-plugin-lit": "^1.15.0",
+    "eslint-plugin-lit": "^2.1.1",
     "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-wc": "^2.2.1",
     "global": "^4.4.0",
