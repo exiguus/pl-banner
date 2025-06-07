@@ -72,8 +72,8 @@ importers:
         specifier: ^10.1.5
         version: 10.1.5(eslint@9.28.0(jiti@2.4.2))
       eslint-plugin-lit:
-        specifier: ^1.15.0
-        version: 1.15.0(eslint@9.28.0(jiti@2.4.2))
+        specifier: ^2.1.1
+        version: 2.1.1(eslint@9.28.0(jiti@2.4.2))
       eslint-plugin-prettier:
         specifier: ^5.4.1
         version: 5.4.1(eslint-config-prettier@10.1.5(eslint@9.28.0(jiti@2.4.2)))(eslint@9.28.0(jiti@2.4.2))(prettier@3.5.3)
@@ -2612,14 +2612,14 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-plugin-lit@1.15.0:
+  eslint-plugin-lit@2.1.1:
     resolution:
       {
-        integrity: sha512-Yhr2MYNz6Ln8megKcX503aVZQln8wsywCG49g0heiJ/Qr5UjkE4pGr4Usez2anNcc7NvlvHbQWMYwWcgH3XRKA==,
+        integrity: sha512-qmyAOnnTCdS+vDnNxtCoF0icSKIio4GUv6ZLnaCtTX6G/YezRa6Ag6tOQ+MfV5Elvtw9CIXeliRX4mIBSwrPIA==,
       }
-    engines: { node: '>= 12' }
+    engines: { node: '>= 18' }
     peerDependencies:
-      eslint: '>= 5'
+      eslint: '>= 8'
 
   eslint-plugin-prettier@5.4.1:
     resolution:
@@ -4620,13 +4620,6 @@ packages:
         integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==,
       }
     engines: { node: '>=0.10.0' }
-
-  requireindex@1.2.0:
-    resolution:
-      {
-        integrity: sha512-L9jEkOi3ASd9PYit2cwRfyppc9NoABujTP8/5gFcbERmo5jUoAKovIC3fsF17pkTnGsrByysqX+Kxd2OTNI1ww==,
-      }
-    engines: { node: '>=0.10.5' }
 
   resolve-from@4.0.0:
     resolution:
@@ -7163,12 +7156,11 @@ snapshots:
     dependencies:
       eslint: 9.28.0(jiti@2.4.2)
 
-  eslint-plugin-lit@1.15.0(eslint@9.28.0(jiti@2.4.2)):
+  eslint-plugin-lit@2.1.1(eslint@9.28.0(jiti@2.4.2)):
     dependencies:
       eslint: 9.28.0(jiti@2.4.2)
       parse5: 6.0.1
       parse5-htmlparser2-tree-adapter: 6.0.1
-      requireindex: 1.2.0
 
   eslint-plugin-prettier@5.4.1(eslint-config-prettier@10.1.5(eslint@9.28.0(jiti@2.4.2)))(eslint@9.28.0(jiti@2.4.2))(prettier@3.5.3):
     dependencies:
@@ -8325,8 +8317,6 @@ snapshots:
   require-directory@2.1.1: {}
 
   require-from-string@2.0.2: {}
-
-  requireindex@1.2.0: {}
 
   resolve-from@4.0.0: {}
 
