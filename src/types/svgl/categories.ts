@@ -59,4 +59,5 @@ export type tCategory =
   | 'Authentication'
   | 'IoT'
   | 'Config'
-  | 'Secrets';
+  | 'Secrets'
+  | 'IaC';

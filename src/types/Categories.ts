@@ -30,4 +30,5 @@ export enum Categories {
   'IoT' = 'IoT',
   'Config' = 'Config',
   'Secrets' = 'Secrets',
+  'IaC' = 'IaC',
 }
