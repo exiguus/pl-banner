@@ -78,8 +78,8 @@ importers:
         specifier: ^5.4.1
         version: 5.4.1(eslint-config-prettier@10.1.5(eslint@9.28.0(jiti@2.4.2)))(eslint@9.28.0(jiti@2.4.2))(prettier@3.5.3)
       eslint-plugin-wc:
-        specifier: ^2.2.1
-        version: 2.2.1(eslint@9.28.0(jiti@2.4.2))
+        specifier: ^3.0.1
+        version: 3.0.1(eslint@9.28.0(jiti@2.4.2))
       global:
         specifier: ^4.4.0
         version: 4.4.0
@@ -2638,10 +2638,10 @@ packages:
       eslint-config-prettier:
         optional: true
 
-  eslint-plugin-wc@2.2.1:
+  eslint-plugin-wc@3.0.1:
     resolution:
       {
-        integrity: sha512-KstLqGmyQz088DvFlDYHg0sHih+w2QeulreCi1D1ftr357klO2zqHdG/bbnNMmuQdVFDuNkopNIyNhmG0XCT/g==,
+        integrity: sha512-0p1wkSlA2Ue3FA4qW+5LZ+15sy0p1nUyVl1eyBMLq4rtN1LtE9IdI49BXNWMz8N8bM/y7Ulx8SWGAni5f8XO5g==,
       }
     peerDependencies:
       eslint: '>=8.40.0'
@@ -3593,10 +3593,10 @@ packages:
       }
     hasBin: true
 
-  js-levenshtein-esm@1.2.0:
+  js-levenshtein-esm@2.0.0:
     resolution:
       {
-        integrity: sha512-fzreKVq1eD7eGcQr7MtRpQH94f8gIfhdrc7yeih38xh684TNMK9v5aAu2wxfIRMk/GpAJRrzcirMAPIaSDaByQ==,
+        integrity: sha512-1n4LEPOL4wRXY8rOQcuA7Iuaphe5xCMayvufCzlLAi+hRsnBRDbSS6XPuV58CBVJxj5D9ApFLyjQ7KzFToyHBw==,
       }
 
   js-tokens@4.0.0:
@@ -7171,11 +7171,11 @@ snapshots:
     optionalDependencies:
       eslint-config-prettier: 10.1.5(eslint@9.28.0(jiti@2.4.2))
 
-  eslint-plugin-wc@2.2.1(eslint@9.28.0(jiti@2.4.2)):
+  eslint-plugin-wc@3.0.1(eslint@9.28.0(jiti@2.4.2)):
     dependencies:
       eslint: 9.28.0(jiti@2.4.2)
       is-valid-element-name: 1.0.0
-      js-levenshtein-esm: 1.2.0
+      js-levenshtein-esm: 2.0.0
 
   eslint-scope@8.3.0:
     dependencies:
@@ -7752,7 +7752,7 @@ snapshots:
 
   jiti@2.4.2: {}
 
-  js-levenshtein-esm@1.2.0: {}
+  js-levenshtein-esm@2.0.0: {}
 
   js-tokens@4.0.0: {}
 
