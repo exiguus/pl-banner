@@ -78,7 +78,7 @@ jobs:
 
       - name: Upload Output Summary
         id: upload-output
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: output
           path: output.json
