@@ -96,14 +96,14 @@ jobs:
         env:
           TEST_URL: ${{ needs.test_setup.outputs.preview_url || needs.test_setup.outputs.production_url || inputs.environment }}
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: cypress-screenshots
           path: cypress/screenshots
           if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
           retention-days: 7
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: cypress-videos
