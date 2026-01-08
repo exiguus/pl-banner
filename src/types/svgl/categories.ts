@@ -28,8 +28,7 @@
  *
  */
 
-export type tCategory =
-  | 'All'
+export type Category =
   | 'AI'
   | 'Software'
   | 'Hardware'
@@ -60,4 +59,12 @@ export type tCategory =
   | 'IoT'
   | 'Config'
   | 'Secrets'
-  | 'IaC';
+  | 'IaC'
+  | 'Analytics'
+  | 'Sync Engine'
+  | 'Platform'
+  | 'Automation'
+  | 'Nuxt'
+  | 'Microsoft'
+  | 'Privacy'
+  | 'Communications';
