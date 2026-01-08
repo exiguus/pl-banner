@@ -11,7 +11,7 @@ const JSON_FILE = path.join(__dirname, '../src/data/svgs.json');
 /** Target folder for downloaded SVGs. */
 const TARGET_FOLDER = path.join(__dirname, '../src/assets/svgl');
 
-/** Base URL for file downloads. */
+/** Base URL for file downloads. Includes a trailing slash. */
 const BASE_URL = 'https://raw.githubusercontent.com/pheralb/svgl/main/static/';
 
 /**
@@ -116,7 +116,8 @@ async function downloadAllFiles(forceDownload = false) {
             return; // Skip the download
           }
 
-          const fileUrl = `${BASE_URL}${url}`;
+          const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
+          const fileUrl = `${BASE_URL}${cleanUrl}`;
           console.log(`Downloading: ${fileName}`);
           await downloadFile(fileUrl, localFilePath);
         });
