@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Wait for Vercel preview deployment to be ready
         if: github.event_name == 'pull_request'
-        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
         id: waitForVercelPreviewDeployment
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -30,7 +30,7 @@ jobs:
 
       - name: Wait for Vercel production deployment to be ready
         if: github.event_name == 'push'
-        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
         id: waitForVercelProductionDeployment
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
