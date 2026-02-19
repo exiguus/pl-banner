@@ -3,17 +3,17 @@ on:
   push:
     branches: [main]
     paths:
-      - "src/**"
+      - 'src/**'
   pull_request:
     branches: [main]
     paths:
-      - "src/**"
+      - 'src/**'
   workflow_dispatch:
     inputs:
       environment:
-        description: "Environment to test against"
+        description: 'Environment to test against'
         required: true
-        default: "https://pl-banner.vercel.app/"
+        default: 'https://pl-banner.vercel.app/'
         type: string
 
 jobs:
@@ -87,7 +87,7 @@ jobs:
           locale -a
           locale
 
-      - uses: cypress-io/github-action@v6
+      - uses: cypress-io/github-action@v7
         name: Cypress E2E on Chrome
         with:
           install-command: pnpm install
