@@ -100,7 +100,7 @@ function adjustSvgsTs() {
 
   const sourceContent = fs.readFileSync(sourceFilePath, 'utf-8');
   const adjustedContent = sourceContent.replace(
-    /'\@\/types\/svg'/g,
+    /\"\@\/types\/svg\"/g,
     "'types/svgl/svg'"
   );
   fs.writeFileSync(sourceFilePath, adjustedContent, 'utf-8');
