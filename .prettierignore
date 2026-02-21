@@ -7,3 +7,4 @@ playwright-report
 .next
 .turbo
 lighthouse
+pnpm-lock.yaml
