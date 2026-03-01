@@ -23,13 +23,13 @@ importers:
     devDependencies:
       '@commitlint/cli':
         specifier: ^20.4.2
-        version: 20.4.2(@types/node@25.3.0)(typescript@5.9.3)
+        version: 20.4.2(@types/node@25.3.3)(typescript@5.9.3)
       '@commitlint/config-conventional':
         specifier: ^20.4.2
         version: 20.4.2
       '@commitlint/prompt-cli':
         specifier: ^20.4.2
-        version: 20.4.2(@types/node@25.3.0)(typescript@5.9.3)
+        version: 20.4.2(@types/node@25.3.3)(typescript@5.9.3)
       '@lit-labs/compiler':
         specifier: ^1.1.2
         version: 1.1.2
@@ -40,8 +40,8 @@ importers:
         specifier: ^12.3.0
         version: 12.3.0(rollup@4.58.0)(tslib@2.8.1)(typescript@5.9.3)
       '@types/node':
-        specifier: ^25.3.0
-        version: 25.3.0
+        specifier: ^25.3.3
+        version: 25.3.3
       '@types/pixelmatch':
         specifier: ^5.2.6
         version: 5.2.6
@@ -59,7 +59,7 @@ importers:
         version: 8.56.0(eslint@10.0.1(jiti@2.6.1))(typescript@5.9.3)
       '@vitest/coverage-v8':
         specifier: ^3.2.4
-        version: 3.2.4(vitest@3.2.4(@types/node@25.3.0)(jiti@2.6.1)(jsdom@26.1.0)(yaml@2.8.2))
+        version: 3.2.4(vitest@3.2.4(@types/node@25.3.3)(jiti@2.6.1)(jsdom@26.1.0)(yaml@2.8.2))
       axios:
         specifier: ^1.13.5
         version: 1.13.5
@@ -113,13 +113,13 @@ importers:
         version: 5.9.3
       vite:
         specifier: ^7.3.1
-        version: 7.3.1(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2)
+        version: 7.3.1(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2)
       vite-plugin-svgo:
         specifier: ^2.0.0
-        version: 2.0.0(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2))
+        version: 2.0.0(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.4
-        version: 3.2.4(@types/node@25.3.0)(jiti@2.6.1)(jsdom@26.1.0)(yaml@2.8.2)
+        version: 3.2.4(@types/node@25.3.3)(jiti@2.6.1)(jsdom@26.1.0)(yaml@2.8.2)
 
 packages:
 
@@ -820,8 +820,8 @@ packages:
   '@types/koa@2.15.0':
     resolution: {integrity: sha512-7QFsywoE5URbuVnG3loe03QXuGajrnotr3gQkXcEBShORai23MePfFYdhz90FEtBBpkyIYQbVD+evKtloCgX3g==}
 
-  '@types/node@25.3.0':
-    resolution: {integrity: sha512-4K3bqJpXpqfg2XKGK9bpDTc6xO/xoUP/RBWS7AtRMug6zZFaRekiLzjVtAoZMquxoAbzBvy5nxQ7veS5eYzf8A==}
+  '@types/node@25.3.3':
+    resolution: {integrity: sha512-DpzbrH7wIcBaJibpKo9nnSQL0MTRdnWttGyE5haGwK86xgMOkFLp7vEyfQPGLOJh5wNYiJ3V9PmUMDhV9u8kkQ==}
 
   '@types/parse5@6.0.3':
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
@@ -3248,11 +3248,11 @@ snapshots:
 
   '@bcoe/v8-coverage@1.0.2': {}
 
-  '@commitlint/cli@20.4.2(@types/node@25.3.0)(typescript@5.9.3)':
+  '@commitlint/cli@20.4.2(@types/node@25.3.3)(typescript@5.9.3)':
     dependencies:
       '@commitlint/format': 20.4.0
       '@commitlint/lint': 20.4.2
-      '@commitlint/load': 20.4.0(@types/node@25.3.0)(typescript@5.9.3)
+      '@commitlint/load': 20.4.0(@types/node@25.3.3)(typescript@5.9.3)
       '@commitlint/read': 20.4.0
       '@commitlint/types': 20.4.0
       tinyexec: 1.0.2
@@ -3299,14 +3299,14 @@ snapshots:
       '@commitlint/rules': 20.4.2
       '@commitlint/types': 20.4.0
 
-  '@commitlint/load@20.4.0(@types/node@25.3.0)(typescript@5.9.3)':
+  '@commitlint/load@20.4.0(@types/node@25.3.3)(typescript@5.9.3)':
     dependencies:
       '@commitlint/config-validator': 20.4.0
       '@commitlint/execute-rule': 20.0.0
       '@commitlint/resolve-extends': 20.4.0
       '@commitlint/types': 20.4.0
       cosmiconfig: 9.0.0(typescript@5.9.3)
-      cosmiconfig-typescript-loader: 6.2.0(@types/node@25.3.0)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3)
+      cosmiconfig-typescript-loader: 6.2.0(@types/node@25.3.3)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3)
       is-plain-obj: 4.1.0
       lodash.mergewith: 4.6.2
       picocolors: 1.1.1
@@ -3322,21 +3322,21 @@ snapshots:
       conventional-changelog-angular: 8.1.0
       conventional-commits-parser: 6.2.1
 
-  '@commitlint/prompt-cli@20.4.2(@types/node@25.3.0)(typescript@5.9.3)':
+  '@commitlint/prompt-cli@20.4.2(@types/node@25.3.3)(typescript@5.9.3)':
     dependencies:
-      '@commitlint/prompt': 20.4.2(@types/node@25.3.0)(typescript@5.9.3)
-      inquirer: 9.3.8(@types/node@25.3.0)
+      '@commitlint/prompt': 20.4.2(@types/node@25.3.3)(typescript@5.9.3)
+      inquirer: 9.3.8(@types/node@25.3.3)
       tinyexec: 1.0.2
     transitivePeerDependencies:
       - '@types/node'
       - typescript
 
-  '@commitlint/prompt@20.4.2(@types/node@25.3.0)(typescript@5.9.3)':
+  '@commitlint/prompt@20.4.2(@types/node@25.3.3)(typescript@5.9.3)':
     dependencies:
       '@commitlint/ensure': 20.4.1
-      '@commitlint/load': 20.4.0(@types/node@25.3.0)(typescript@5.9.3)
+      '@commitlint/load': 20.4.0(@types/node@25.3.3)(typescript@5.9.3)
       '@commitlint/types': 20.4.0
-      inquirer: 9.3.8(@types/node@25.3.0)
+      inquirer: 9.3.8(@types/node@25.3.3)
       picocolors: 1.1.1
     transitivePeerDependencies:
       - '@types/node'
@@ -3550,12 +3550,12 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@inquirer/external-editor@1.0.3(@types/node@25.3.0)':
+  '@inquirer/external-editor@1.0.3(@types/node@25.3.3)':
     dependencies:
       chardet: 2.1.1
       iconv-lite: 0.7.2
     optionalDependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
 
   '@inquirer/figures@1.0.15': {}
 
@@ -3779,14 +3779,14 @@ snapshots:
 
   '@types/accepts@1.3.7':
     dependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
 
   '@types/babel__code-frame@7.27.0': {}
 
   '@types/body-parser@1.19.6':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
 
   '@types/chai-dom@1.11.3':
     dependencies:
@@ -3801,12 +3801,12 @@ snapshots:
 
   '@types/co-body@6.1.3':
     dependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
       '@types/qs': 6.14.0
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
 
   '@types/content-disposition@0.5.9': {}
 
@@ -3817,7 +3817,7 @@ snapshots:
       '@types/connect': 3.4.38
       '@types/express': 5.0.6
       '@types/keygrip': 1.0.6
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
 
   '@types/debounce@1.2.4': {}
 
@@ -3829,7 +3829,7 @@ snapshots:
 
   '@types/express-serve-static-core@5.1.1':
     dependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
       '@types/qs': 6.14.0
       '@types/range-parser': 1.2.7
       '@types/send': 1.2.1
@@ -3871,9 +3871,9 @@ snapshots:
       '@types/http-errors': 2.0.5
       '@types/keygrip': 1.0.6
       '@types/koa-compose': 3.2.9
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
 
-  '@types/node@25.3.0':
+  '@types/node@25.3.3':
     dependencies:
       undici-types: 7.18.2
 
@@ -3881,11 +3881,11 @@ snapshots:
 
   '@types/pixelmatch@5.2.6':
     dependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
 
   '@types/pngjs@6.0.5':
     dependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
 
   '@types/qs@6.14.0': {}
 
@@ -3893,12 +3893,12 @@ snapshots:
 
   '@types/send@1.2.1':
     dependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
 
   '@types/serve-static@2.2.0':
     dependencies:
       '@types/http-errors': 2.0.5
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
 
   '@types/sinon-chai@3.2.12':
     dependencies:
@@ -3925,11 +3925,11 @@ snapshots:
 
   '@types/ws@7.4.7':
     dependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.56.0(@typescript-eslint/parser@8.56.0(eslint@10.0.1(jiti@2.6.1))(typescript@5.9.3))(eslint@10.0.1(jiti@2.6.1))(typescript@5.9.3)':
@@ -4023,7 +4023,7 @@ snapshots:
       '@typescript-eslint/types': 8.56.0
       eslint-visitor-keys: 5.0.1
 
-  '@vitest/coverage-v8@3.2.4(vitest@3.2.4(@types/node@25.3.0)(jiti@2.6.1)(jsdom@26.1.0)(yaml@2.8.2))':
+  '@vitest/coverage-v8@3.2.4(vitest@3.2.4(@types/node@25.3.3)(jiti@2.6.1)(jsdom@26.1.0)(yaml@2.8.2))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 1.0.2
@@ -4038,7 +4038,7 @@ snapshots:
       std-env: 3.10.0
       test-exclude: 7.0.1
       tinyrainbow: 2.0.0
-      vitest: 3.2.4(@types/node@25.3.0)(jiti@2.6.1)(jsdom@26.1.0)(yaml@2.8.2)
+      vitest: 3.2.4(@types/node@25.3.3)(jiti@2.6.1)(jsdom@26.1.0)(yaml@2.8.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -4050,13 +4050,13 @@ snapshots:
       chai: 5.3.3
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@3.2.4(vite@7.3.1(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2))':
+  '@vitest/mocker@3.2.4(vite@7.3.1(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2))':
     dependencies:
       '@vitest/spy': 3.2.4
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.1(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2)
+      vite: 7.3.1(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2)
 
   '@vitest/pretty-format@3.2.4':
     dependencies:
@@ -4454,9 +4454,9 @@ snapshots:
 
   core-util-is@1.0.2: {}
 
-  cosmiconfig-typescript-loader@6.2.0(@types/node@25.3.0)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3):
+  cosmiconfig-typescript-loader@6.2.0(@types/node@25.3.3)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3):
     dependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
       cosmiconfig: 9.0.0(typescript@5.9.3)
       jiti: 2.6.1
       typescript: 5.9.3
@@ -5177,9 +5177,9 @@ snapshots:
 
   ini@4.1.1: {}
 
-  inquirer@9.3.8(@types/node@25.3.0):
+  inquirer@9.3.8(@types/node@25.3.3):
     dependencies:
-      '@inquirer/external-editor': 1.0.3(@types/node@25.3.0)
+      '@inquirer/external-editor': 1.0.3(@types/node@25.3.3)
       '@inquirer/figures': 1.0.15
       ansi-escapes: 4.3.2
       cli-width: 4.1.0
@@ -6199,13 +6199,13 @@ snapshots:
       core-util-is: 1.0.2
       extsprintf: 1.3.0
 
-  vite-node@3.2.4(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2):
+  vite-node@3.2.4(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3(supports-color@8.1.1)
       es-module-lexer: 1.7.0
       pathe: 2.0.3
-      vite: 7.3.1(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2)
+      vite: 7.3.1(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -6220,13 +6220,13 @@ snapshots:
       - tsx
       - yaml
 
-  vite-plugin-svgo@2.0.0(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2)):
+  vite-plugin-svgo@2.0.0(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2)):
     dependencies:
       svgo: 3.3.2
       typescript: 5.9.3
-      vite: 7.3.1(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2)
+      vite: 7.3.1(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2)
 
-  vite@7.3.1(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2):
+  vite@7.3.1(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2):
     dependencies:
       esbuild: 0.27.3
       fdir: 6.5.0(picomatch@4.0.3)
@@ -6235,16 +6235,16 @@ snapshots:
       rollup: 4.58.0
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
       fsevents: 2.3.3
       jiti: 2.6.1
       yaml: 2.8.2
 
-  vitest@3.2.4(@types/node@25.3.0)(jiti@2.6.1)(jsdom@26.1.0)(yaml@2.8.2):
+  vitest@3.2.4(@types/node@25.3.3)(jiti@2.6.1)(jsdom@26.1.0)(yaml@2.8.2):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/expect': 3.2.4
-      '@vitest/mocker': 3.2.4(vite@7.3.1(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2))
+      '@vitest/mocker': 3.2.4(vite@7.3.1(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2))
       '@vitest/pretty-format': 3.2.4
       '@vitest/runner': 3.2.4
       '@vitest/snapshot': 3.2.4
@@ -6262,11 +6262,11 @@ snapshots:
       tinyglobby: 0.2.15
       tinypool: 1.1.1
       tinyrainbow: 2.0.0
-      vite: 7.3.1(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2)
-      vite-node: 3.2.4(@types/node@25.3.0)(jiti@2.6.1)(yaml@2.8.2)
+      vite: 7.3.1(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2)
+      vite-node: 3.2.4(@types/node@25.3.3)(jiti@2.6.1)(yaml@2.8.2)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.3
       jsdom: 26.1.0
     transitivePeerDependencies:
       - jiti
