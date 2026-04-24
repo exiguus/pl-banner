@@ -8,6 +8,7 @@
     "assets:svgl:data": "node scripts/svgl_data.cjs",
     "assets:svgl:generate": "node scripts/svgl_generate.cjs",
     "assets:svgl:download": "node scripts/svgl_download.cjs",
+    "assets:svgl:clear": "node scripts/svgl_clear.cjs",
     "build:bundle": "vite build",
     "build:assets": "cp -r src/assets/ dist/",
     "build": "pnpm build:bundle && pnpm build:assets",
