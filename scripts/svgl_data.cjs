@@ -117,7 +117,7 @@ function generateSvgsJson() {
 
   if (!fs.existsSync(sourceFilePath)) {
     console.error(`Source file not found: ${sourceFilePath}`);
-    return;
+    return [];
   }
 
   const sourceContent = fs.readFileSync(sourceFilePath, 'utf-8');
@@ -127,7 +127,7 @@ function generateSvgsJson() {
 
   if (!match || !match[1]) {
     console.error('Unable to parse svgs from source file.');
-    return;
+    return [];
   }
 
   let svgContent;
@@ -135,12 +135,12 @@ function generateSvgsJson() {
     svgContent = eval(match[1]);
   } catch (err) {
     console.error('Error parsing svgs:', err.message);
-    return;
+    return [];
   }
 
   if (!Array.isArray(svgContent)) {
     console.error('Invalid svgs data.');
-    return;
+    return [];
   }
 
   ensureDirectory(targetFilePath);
@@ -150,38 +150,124 @@ function generateSvgsJson() {
     'utf-8'
   );
   console.log(`Generated file: ${targetFilePath}`);
+
+  return svgContent;
+}
+
+/**
+ * Gets unique category values used by SVG data entries.
+ * @param {Array<Record<string, unknown>>} svgs - Parsed SVG data.
+ * @returns {string[]} - Unique category literals.
+ */
+function getCategoriesFromSvgs(svgs) {
+  if (!Array.isArray(svgs)) {
+    return [];
+  }
+
+  const categories = new Set();
+  for (const item of svgs) {
+    const categoryValue = item && item.category;
+    if (typeof categoryValue === 'string') {
+      categories.add(categoryValue.trim());
+      continue;
+    }
+    if (Array.isArray(categoryValue)) {
+      for (const category of categoryValue) {
+        if (typeof category === 'string' && category.trim()) {
+          categories.add(category.trim());
+        }
+      }
+    }
+  }
+
+  return Array.from(categories).sort((a, b) => a.localeCompare(b));
+}
+
+/**
+ * Reads category literals from `src/types/svgl/categories.ts`.
+ * @returns {{ sourceContent: string, categories: string[] } | null}
+ */
+function readSvglCategoryType() {
+  const sourceFilePath = path.resolve(
+    __dirname,
+    '../src/types/svgl/categories.ts'
+  );
+
+  if (!fs.existsSync(sourceFilePath)) {
+    console.error(`Source file not found: ${sourceFilePath}`);
+    return null;
+  }
+
+  const sourceContent = fs.readFileSync(sourceFilePath, 'utf-8');
+  const match = sourceContent.match(
+    /export\s+type\s+(?:tCategory|Category)\s*=([\s\S]*?);/
+  );
+
+  if (!match || !match[1]) {
+    console.error('Unable to parse Category type from source file.');
+    return null;
+  }
+
+  const categoryLiterals = Array.from(
+    match[1].matchAll(/["']([^"']+)["']/g),
+    (result) => result[1].trim()
+  ).filter(Boolean);
+
+  return {
+    sourceContent,
+    categories: Array.from(new Set(categoryLiterals)).sort((a, b) =>
+      a.localeCompare(b)
+    ),
+  };
+}
+
+/**
+ * Synchronizes `src/types/svgl/categories.ts` with categories found in svgs data.
+ * @param {string[]} svgsCategories - Categories discovered in svgs data.
+ */
+function syncSvglCategoryType(svgsCategories = []) {
+  const sourceFilePath = path.resolve(
+    __dirname,
+    '../src/types/svgl/categories.ts'
+  );
+  const parsed = readSvglCategoryType();
+
+  if (!parsed) {
+    return;
+  }
+
+  const merged = Array.from(
+    new Set([...parsed.categories, ...svgsCategories])
+  ).sort((a, b) => a.localeCompare(b));
+
+  const nextTypeBlock = `export type Category =\n${merged
+    .map((category) => `  | "${category}"`)
+    .join('\n')};`;
+
+  const updatedContent = parsed.sourceContent.replace(
+    /export\s+type\s+(?:tCategory|Category)\s*=[\s\S]*?;/,
+    nextTypeBlock
+  );
+
+  fs.writeFileSync(sourceFilePath, updatedContent, 'utf-8');
+  console.log(`Synchronized category type: ${sourceFilePath}`);
 }
 
 /**
  * Generates `Categories.ts` from `categories.ts`.
  */
 function generateCategoriesFile() {
-  const sourceFilePath = path.resolve(
-    __dirname,
-    '../src/types/svgl/categories.ts'
-  );
   const targetFilePath = path.resolve(__dirname, '../src/types/Categories.ts');
 
-  if (!fs.existsSync(sourceFilePath)) {
-    console.error(`Source file not found: ${sourceFilePath}`);
+  const parsed = readSvglCategoryType();
+  if (!parsed) {
     return;
   }
 
-  const sourceContent = fs.readFileSync(sourceFilePath, 'utf-8');
-  const match = sourceContent.match(/export type tCategory =([\s\S]*?);/);
-
-  if (!match) {
-    console.error('Unable to parse tCategory from source file.');
-    return;
-  }
-
-  const categories = match[1]
-    .trim()
-    .split('|')
-    .map((item) => item.trim().replace(/'/g, ''))
-    .filter(Boolean);
+  const categories = parsed.categories;
 
   const enumContent = `export enum Categories {
+  'All' = 'All',
 ${categories.map((category) => `  '${category.replace(/\s+/g, ' ').replace(/\(.*?\)/g, '')}' = '${category}',`).join('\n')}
 }
 `;
@@ -216,8 +302,10 @@ async function processFiles() {
     }
   }
 
+  const svgs = generateSvgsJson();
+  const svgsCategories = getCategoriesFromSvgs(svgs);
+  syncSvglCategoryType(svgsCategories);
   generateCategoriesFile();
-  generateSvgsJson();
   adjustSvgsTs();
 }
 

@@ -5,6 +5,7 @@ LOG.md
 TODO.md
 lighthouse
 src/data
+!src/data/*.test.ts
 src/assets/svgl
 coverage
 .env
