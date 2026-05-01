@@ -81,7 +81,7 @@
     "husky": "^9.1.7",
     "jsdom": "^29.0.2",
     "lint-staged": "^16.4.0",
-    "pixelmatch": "^7.1.0",
+    "pixelmatch": "^7.2.0",
     "pngjs": "^7.0.0",
     "prettier": "^3.8.3",
     "sinon": "^21.1.2",
