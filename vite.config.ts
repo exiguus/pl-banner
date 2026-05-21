@@ -48,7 +48,7 @@ export default defineConfig(() => {
       globals: true,
       testMatch: ['src/**/*.test.ts'],
       environment: 'jsdom',
-      setupFiles: './test-setup.ts', // Optional setup for global configurations
+      setupFiles: '../test-setup.ts', // Optional setup for global configurations
       coverage: {
         exclude: [
           '**/*.test.ts',
