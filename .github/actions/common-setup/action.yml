@@ -1,0 +1,40 @@
+name: Common Setup
+description: |
+  This workflow sets up the environment for other workflows.
+  It installs Node.js, pnpm, configures the pnpm cache, and installs dependencies.
+
+inputs:
+  node-version-file:
+    description: Path to the Node.js version file
+    required: false
+    default: package.json
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version-file: ${{ inputs.node-version-file }}
+
+    - uses: pnpm/action-setup@v6
+      name: Install pnpm
+      with:
+        run_install: false
+
+    - name: Get pnpm store directory
+      shell: bash
+      run: |
+        echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+
+    - uses: actions/cache@v5
+      name: Setup pnpm cache
+      with:
+        path: ${{ env.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
+    - name: Install dependencies
+      shell: bash
+      run: NODE_OPTIONS=--max-old-space-size=4096 CI=1 pnpm install --frozen-lockfile
