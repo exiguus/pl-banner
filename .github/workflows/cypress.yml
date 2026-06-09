@@ -82,7 +82,7 @@ jobs:
       - uses: cypress-io/github-action@v7.3.0
         name: Cypress E2E on Chrome
         with:
-          install-command: NODE_OPTIONS=--max-old-space-size=4096 CI=1 pnpm ci
+          install-command: pnpm ci
           command: pnpm cy:run
           browser: chrome
         env:
