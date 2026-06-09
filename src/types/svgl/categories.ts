@@ -44,6 +44,7 @@ export type Category =
   | 'Cybersecurity'
   | 'Database'
   | 'Design'
+  | 'DevOps'
   | 'Devtool'
   | 'Education'
   | 'Entertainment'
@@ -68,5 +69,6 @@ export type Category =
   | 'Software'
   | 'Sync Engine'
   | 'Themes'
+  | 'Tools'
   | 'Vercel'
   | 'VoidZero';
