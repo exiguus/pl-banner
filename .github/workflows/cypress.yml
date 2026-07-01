@@ -79,7 +79,7 @@ jobs:
           locale -a
           locale
 
-      - uses: cypress-io/github-action@v7.3.0
+      - uses: cypress-io/github-action@v7.4.0
         name: Cypress E2E on Chrome
         with:
           install-command: pnpm ci
