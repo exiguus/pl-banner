@@ -64,7 +64,7 @@ jobs:
 
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Common Setup
         uses: ./.github/actions/common-setup
