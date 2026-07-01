@@ -59,7 +59,7 @@
   "devDependencies": {
     "@commitlint/cli": "^21.0.2",
     "@commitlint/config-conventional": "^21.0.2",
-    "@commitlint/prompt-cli": "^21.0.2",
+    "@commitlint/prompt-cli": "^21.1.0",
     "@lit-labs/compiler": "^1.1.2",
     "@open-wc/testing": "^4.0.0",
     "@rollup/plugin-typescript": "^12.3.0",
