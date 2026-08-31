@@ -4,7 +4,7 @@ import { compileLitTemplates } from '@lit-labs/compiler';
 import svg from 'vite-plugin-svgo';
 import { resolve } from 'node:path';
 import fs from 'node:fs';
-import i18n from './i18n.json';
+import i18n from './i18n.json' assert { type: 'json' };
 
 const __dirname = new URL('.', import.meta.url).pathname;
 
