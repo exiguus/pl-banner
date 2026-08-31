@@ -190,14 +190,16 @@ export class Home extends MyElement {
   render(): ReturnType<typeof html> {
     return html`
       <div class="container">
-        ${this.showProfile
-          ? html`<my-profile></my-profile>`
-          : html`
-              <my-banner
-                .items=${this.items.slice(0, Home.ITEM_COUNT)}
-                @selection-changed=${this.handleSelectionChanged.bind(this)}
-              ></my-banner>
-            `}
+        ${
+          this.showProfile
+            ? html`<my-profile></my-profile>`
+            : html`
+                <my-banner
+                  .items=${this.items.slice(0, Home.ITEM_COUNT)}
+                  @selection-changed=${this.handleSelectionChanged.bind(this)}
+                ></my-banner>
+              `
+        }
         ${this.renderMenu()}
       </div>
     `;

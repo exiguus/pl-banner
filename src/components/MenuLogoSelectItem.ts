@@ -90,17 +90,19 @@ export class MenuLogoSelectItem extends MyElement {
 
   render(): ReturnType<typeof html> {
     return html`
-      ${this.items.length > 0
-        ? html`
-            <div class="item-selector">
-              ${repeat(
-                [...this.items].sort((a, b) => a.id?.localeCompare(b.id)),
-                (item) => item.id,
-                (item) => this.renderItem(item)
-              )}
-            </div>
-          `
-        : html`<p data-testid="no-items">No items to display</p>`}
+      ${
+        this.items.length > 0
+          ? html`
+              <div class="item-selector">
+                ${repeat(
+                  [...this.items].sort((a, b) => a.id?.localeCompare(b.id)),
+                  (item) => item.id,
+                  (item) => this.renderItem(item)
+                )}
+              </div>
+            `
+          : html`<p data-testid="no-items">No items to display</p>`
+      }
     `;
   }
 }

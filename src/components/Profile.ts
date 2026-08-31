@@ -242,9 +242,9 @@ export class Profile extends MyElement {
                 <a href="https://github.com/exiguus/pl-banner"
                   ><span
                     class="profile-social-icon"
-                    style="background: ${gradients[
-                      Math.floor(Math.random() * gradients.length)
-                    ]}"
+                    style="background: ${
+                      gradients[Math.floor(Math.random() * gradients.length)]
+                    }"
                   ></span>
                   GitHub @exiguus/pl-banner
                   <span class="profile-icon"
@@ -256,9 +256,9 @@ export class Profile extends MyElement {
                 <a href="https://www.gattner.name/"
                   ><span
                     class="profile-social-icon"
-                    style="background: ${gradients[
-                      Math.floor(Math.random() * gradients.length)
-                    ]}"
+                    style="background: ${
+                      gradients[Math.floor(Math.random() * gradients.length)]
+                    }"
                   ></span>
                   Company Website
                   <span class="profile-icon"

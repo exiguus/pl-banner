@@ -35,8 +35,10 @@ export class MenuGradient extends MyElement {
       padding-bottom: var(--gradient-grid-gap);
       margin-right: calc(var(--gradient-grid-gap) + var(--gradient-grid-width));
       margin-bottom: calc(-1 * var(--gradient-grid-gap));
-      width: ${gradients.length *
-      (MenuGradient.gradientWidth + MenuGradient.gradientGap)}px;
+      width: ${
+        gradients.length *
+        (MenuGradient.gradientWidth + MenuGradient.gradientGap)
+      }px;
     }
   `;
 

@@ -158,27 +158,33 @@ export class MenuCategories extends MyElement {
         <div class="button-group">
           <details>
             <summary>Filter Categories</summary>
-            ${this.categories.length > 0
-              ? html`
-                  <label class="sr-only" for="categories">Categories</label>
-                  <select id="categories" @change=${this.handleSelect} multiple>
-                    ${this.categories.map(
-                      (category) => html`
-                        <option
-                          value="${category.id}"
-                          .selected=${category.selected && 'selected'}
-                        >
-                          <strong>${category.title}</strong>
-                          <small
-                            >${category.count}
-                            <span class="sr-only">Items Count</span></small
+            ${
+              this.categories.length > 0
+                ? html`
+                    <label class="sr-only" for="categories">Categories</label>
+                    <select
+                      id="categories"
+                      @change=${this.handleSelect}
+                      multiple
+                    >
+                      ${this.categories.map(
+                        (category) => html`
+                          <option
+                            value="${category.id}"
+                            .selected=${category.selected && 'selected'}
                           >
-                        </option>
-                      `
-                    )}
-                  </select>
-                `
-              : html`<my-loading-spinner></my-loading-spinner>`}
+                            <strong>${category.title}</strong>
+                            <small
+                              >${category.count}
+                              <span class="sr-only">Items Count</span></small
+                            >
+                          </option>
+                        `
+                      )}
+                    </select>
+                  `
+                : html`<my-loading-spinner></my-loading-spinner>`
+            }
           </details>
           <my-button variant="button right" @click=${this.reset}
             >Reset</my-button

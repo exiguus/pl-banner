@@ -189,14 +189,16 @@ export class AppButton extends MyElement {
         ${this.isLoading ? 'aria-busy="true"' : ''}
         ${this.isLoading ? 'aria-label="Loading"' : ''}
       >
-        ${this.isLoading
-          ? html`<div class="container-fluid-spinner">
-              <div class="container-spinner">
-                <my-loading-spinner></my-loading-spinner>
-              </div>
-              <span class="visible-hidden"><slot></slot></span>
-            </div>`
-          : html`<slot></slot>`}
+        ${
+          this.isLoading
+            ? html`<div class="container-fluid-spinner">
+                <div class="container-spinner">
+                  <my-loading-spinner></my-loading-spinner>
+                </div>
+                <span class="visible-hidden"><slot></slot></span>
+              </div>`
+            : html`<slot></slot>`
+        }
       </button>
     `;
   }

@@ -156,16 +156,18 @@ export class Index extends MyElement {
         <my-layout slot="layout">
           <div slot="header">
             <div class="logo-container">
-              ${this.isLoading
-                ? nothing
-                : html` <div class="logo">
-                    <h1>
-                      <span class="linkedin"
-                        >Linked<my-logo .item=${this.logoItem}></my-logo
-                      ></span>
-                      ${this.title}
-                    </h1>
-                  </div>`}
+              ${
+                this.isLoading
+                  ? nothing
+                  : html` <div class="logo">
+                      <h1>
+                        <span class="linkedin"
+                          >Linked<my-logo .item=${this.logoItem}></my-logo
+                        ></span>
+                        ${this.title}
+                      </h1>
+                    </div>`
+              }
               <p class="disclaimer">${this.disclaimer}</p>
             </div>
             <div class="subtitle-container">
@@ -173,14 +175,16 @@ export class Index extends MyElement {
             </div>
           </div>
           <div slot="main">
-            ${this.isLoading
-              ? html`<div class="loading-container">
-                  <my-loading-spinner></my-loading-spinner>
-                </div>`
-              : html`<my-home
-                  .allItems=${this.allItems}
-                  .preselectedItems=${this.preselectedItems}
-                ></my-home> `}
+            ${
+              this.isLoading
+                ? html`<div class="loading-container">
+                    <my-loading-spinner></my-loading-spinner>
+                  </div>`
+                : html`<my-home
+                    .allItems=${this.allItems}
+                    .preselectedItems=${this.preselectedItems}
+                  ></my-home> `
+            }
           </div>
           <div slot="footer">
             <p>LinkedIn ${this.title} &ndash; ${this.description}</p>
