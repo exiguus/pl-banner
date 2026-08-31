@@ -15,7 +15,6 @@ export enum Categories {
   Cybersecurity = 'Cybersecurity',
   Database = 'Database',
   Design = 'Design',
-  DevOps = 'DevOps',
   Devtool = 'Devtool',
   Education = 'Education',
   Entertainment = 'Entertainment',
@@ -40,7 +39,6 @@ export enum Categories {
   Software = 'Software',
   'Sync Engine' = 'Sync Engine',
   Themes = 'Themes',
-  Tools = 'Tools',
   Vercel = 'Vercel',
   VoidZero = 'VoidZero',
 }
